@@ -2245,7 +2245,14 @@ input, select, textarea {
 				background-size: cover;
 				background-position: center center;
 			}
-
+            .one.dark.cover {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start; /* Moves content to the top */
+                align-items: top center; /* Keeps the content centered horizontally */
+                height: 100vh; /* Ensures the section takes up the full viewport height */
+            }
+            
 			#main > section.one {
 				background-color: #81918E;
 				background-image: url("../../images/ucsd2.jpg");
