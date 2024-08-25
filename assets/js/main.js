@@ -135,3 +135,28 @@ document.querySelectorAll('.unflip-icon').forEach(function(icon) {
         card.classList.remove('flipped');
     });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Animate entry
+    const projectCards = document.querySelectorAll('.project-card');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    });
+
+    projectCards.forEach(card => {
+        observer.observe(card);
+    });
+
+    // Collapsible descriptions
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const card = btn.closest('.project-card');
+            card.classList.toggle('expanded');
+            btn.textContent = card.classList.contains('expanded') ? 'Show Less' : 'More Info';
+        });
+    });
+});

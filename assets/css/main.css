@@ -2842,3 +2842,67 @@ ul {
     border-radius: 3px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
 }
+
+.project-card {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 15px;
+    overflow: hidden;
+    position: relative;
+}
+
+.project-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.project-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.project-card .content {
+    padding: 20px;
+    text-align: center;
+}
+
+.project-card h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.project-card p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 15px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.project-card .more-info {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    font-size: 14px;
+    color: #555;
+    padding-top: 10px;
+}
+
+.project-card.expanded .more-info {
+    max-height: 200px;
+}
+
+.project-card .toggle-btn {
+    cursor: pointer;
+    color: #007BFF;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.project-card .toggle-btn:hover {
+    text-decoration: underline;
+}
