@@ -121,3 +121,17 @@
 				});
 
 })(jQuery);
+
+document.querySelectorAll('.flip-icon').forEach(function(icon) {
+    icon.addEventListener('click', function() {
+        const card = icon.closest('.timeline-card');
+        card.classList.add('flipped');
+    });
+});
+
+document.querySelectorAll('.unflip-icon').forEach(function(icon) {
+    icon.addEventListener('click', function() {
+        const card = icon.closest('.timeline-card');
+        card.classList.remove('flipped');
+    });
+});

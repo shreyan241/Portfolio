@@ -2638,3 +2638,207 @@ input, select, textarea {
 				}
 
 	}
+
+/* Timeline Card Styling */
+
+.timeline-card {
+    flex: 0 0 420px; /* Increased the width of the cards */
+    height: 320px; /* Increased the height of the cards */
+    margin: 15px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    position: relative;
+    perspective: 1000px; /* Enables 3D flipping */
+}
+
+.timeline-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Card Flip Styling */
+.timeline-card .card-content, .timeline-card .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Hides the back when not flipped */
+    border-radius: 15px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.timeline-card .card-content {
+    z-index: 2;
+    transform: rotateY(0deg);
+}
+
+.timeline-card .card-back {
+    background-color: #333;
+    color: white;
+    transform: rotateY(180deg);
+    z-index: 1;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.timeline-card.flipped .card-content {
+    transform: rotateY(180deg);
+    z-index: 1;
+}
+
+.timeline-card.flipped .card-back {
+    transform: rotateY(0deg);
+    z-index: 2;
+}
+
+/* Updated Year Label Styling */
+.year-label {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px; /* Slightly smaller font size */
+    color: #fff;
+    background-color: #c0392b; /* Red background color */
+    padding: 8px 20px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Custom Scrollbar */
+.timeline-horizontal {
+    display: flex;
+    overflow-x: scroll;
+    scrollbar-color: #c0392b #ffffff; /* Red scrollbar */
+    scrollbar-width: thin; /* Makes scrollbar thinner */
+    scroll-behavior: smooth;
+    position: relative;
+}
+
+.timeline-horizontal::-webkit-scrollbar {
+    height: 12px; /* Visible scrollbar */
+}
+
+.timeline-horizontal::-webkit-scrollbar-thumb {
+    background-color: #c0392b; /* Red scrollbar color */
+    border-radius: 6px;
+}
+
+.card-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.company-logo {
+    width: 140px; /* Slightly larger logos */
+    height: 140px;
+    margin-bottom: 15px;
+    border-radius: 50%; /* Circular logos */
+    object-fit: cover;
+}
+
+h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+h4 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+ul {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: #fff;
+    text-align: left;
+}
+
+.flip-icon, .unflip-icon {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.flip-icon:hover, .unflip-icon:hover {
+    color: #ff6347;
+}
+
+/* Custom Colors for Each Card */
+.timeline-card:nth-child(1) {
+    background-color: #5DADE2;
+}
+
+.timeline-card:nth-child(2) {
+    background-color: #4CAF50;
+}
+
+.timeline-card:nth-child(3) {
+    background-color: #FFC107;
+}
+
+.timeline-card:nth-child(4) {
+    background-color: #bf78d8;
+}
+
+.timeline-card:nth-child(5) {
+    background-color: #009688;
+}
+
+.flip-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.flip-icon:hover {
+    transform: scale(1.2);
+    color: #e74c3c; /* Change color on hover */
+}
+
+.pulsate {
+    animation: pulsate 1.5s infinite;
+}
+
+@keyframes pulsate {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Add a tooltip */
+.flip-icon:hover::after {
+    content: 'Click for details';
+    display: block;
+    font-size: 12px;
+    color: #000;
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    background-color: #fff;
+    padding: 2px 5px;
+    border-radius: 3px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
