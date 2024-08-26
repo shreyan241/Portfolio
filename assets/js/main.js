@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 const typewriter = document.querySelector('.typewriter');
-const words = ["a Data Science Grad", "a Machine Learning Researcher", "a Computer Vision Developer", "a Statistical Modeler", "a Data Storyteller"];
+const words = ["a Data Science Grad.", "a Machine Learning Researcher.", "a Computer Vision Developer.", "a Statistical Modeler.", "a Data Storyteller."];
 let i = 0;
 let j = 0;
 let currentWord = '';
