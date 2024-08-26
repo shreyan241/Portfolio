@@ -241,7 +241,7 @@ function drawRegressionLine() {
     ctx.stroke();
 
     if (progress < canvas.width) {
-        progress += 2; // Adjust this value to speed up or slow down the drawing
+        progress += 1.5; // Adjust this value to speed up or slow down the drawing
     } else {
         // Reset the progress to 0 to replay the animation
         progress = 0;
