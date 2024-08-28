@@ -198,7 +198,7 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 // Generate random data points
-const points = Array.from({ length: 50 }, () => ({
+const points = Array.from({ length: 60 }, () => ({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height
 }));
