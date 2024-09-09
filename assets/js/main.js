@@ -359,7 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (meteors.length < 3) { // Limit the number of meteors on screen
             meteors.push(new Meteor());
         }
-    }, Math.random() * 2000 + 6000); // Spawn every 6-8 seconds
+    }, Math.random() * 2000 + 4000); // Spawn every 4-6 seconds
 
     function animate() {
         // Clear the canvas
