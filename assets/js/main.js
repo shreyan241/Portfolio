@@ -414,3 +414,48 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projects = document.querySelectorAll('.project-card');
+    let activeFilter = null; // Track the currently active filter
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const filter = button.getAttribute('data-filter');
+
+            // If clicking the same active button, reset filter
+            if (activeFilter === filter) {
+                // Deselect the button and reset filter
+                button.classList.remove('active');
+                activeFilter = null;
+                showAllProjects();
+            } else {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+
+                // Set this button as active
+                button.classList.add('active');
+                activeFilter = filter;
+
+                // Show/hide projects based on the selected filter
+                projects.forEach(project => {
+                    const tags = project.getAttribute('data-tags').split(',').map(tag => tag.trim());
+
+                    if (tags.includes(filter)) {
+                        project.style.display = 'block'; // Show the project
+                    } else {
+                        project.style.display = 'none'; // Hide the project
+                    }
+                });
+            }
+        });
+    });
+
+    // Function to show all projects
+    function showAllProjects() {
+        projects.forEach(project => {
+            project.style.display = 'block';
+        });
+    }
+});

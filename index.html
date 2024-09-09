@@ -98,27 +98,37 @@
                     <div class="container">
                         <header>
                             <h2>Projects</h2>
-                            <p>Welcome to my project showcase! This collection highlights my research, academic, and 
-                                personal endeavors across a range of fields, including Computer Vision, Natural Language Processing, 
-                                Interpretable AI, Financial Modeling, Sports Analytics, and Reinforcement Learning.</p>
+                            <p>Welcome to my project showcase! This collection highlights my research, academic, and personal endeavors across a range of fields, including Computer Vision, Natural Language Processing, Interpretable AI, Financial Modeling, Sports Analytics, and Reinforcement Learning.</p>
                         </header>
+
+                        <div class="filter-buttons">
+                            <button class="filter-btn" data-filter="Reinforcement Learning">Reinforcement Learning</button>
+                            <button class="filter-btn" data-filter="Deep Learning">Deep Learning</button>
+                            <button class="filter-btn" data-filter="NLP">NLP</button>
+                            <button class="filter-btn" data-filter="Generative AI">Generative AI</button>
+                            <button class="filter-btn" data-filter="Interpretable AI">Interpretable AI</button>
+                            <button class="filter-btn" data-filter="Machine Learning">Machine Learning</button>
+                            <button class="filter-btn" data-filter="Financial Modelling">Financial Modelling</button>
+                            <button class="filter-btn" data-filter="Sports Analytics">Sports Analytics</button>
+                            <button class="filter-btn" data-filter="Time Series Analysis">Time Series Analysis</button>
+                            <button class="filter-btn" data-filter="Causal Inference">Causal Inference</button>
+                            <button class="filter-btn" data-filter="Computer Vision">Computer Vision</button>
+                            <button class="filter-btn" data-filter="Image Processing">Image Processing</button>
+                        </div>
                     
                         <div class="row">
                             <!-- Project Item 1 -->
                             <div class="col-4 col-12-mobile">
-                                <article class="item project-card">
+                                <article class="item project-card" data-tags="Reinforcement Learning, Deep Learning">
                                     <a target="_blank" href="https://github.com/shreyan241/RL_rubiks_visualizer" class="image fit">
                                         <img src="images/rubiks.png" alt="" />
                                     </a>
                                     <header>
                                         <h3>Rubik’s Cube 3D visualizer and Deep Reinforcement Learning Solver</h3>
-                                        <!-- <p class="brief-description">Developed a 3D visualizer for the Rubik's Cube using Quaternions.</p> -->
-                                        <!-- Demo Button and GIF Container -->
                                         <button class="demo-btn">Demo</button>
                                         <div class="gif-container">
                                             <img id="rubiksCubeGif" src="demos/rubiks.gif" alt="Rubik's Cube Solver Demo" class="rubiks-gif">
                                         </div>
-
                                         <span class="toggle-btn">More Info</span>
                                         <div class="more-info">
                                             <ul>
@@ -132,13 +142,12 @@
                             
                             <!-- Project Item 2 -->
                             <div class="col-4 col-12-mobile">
-                                <article class="item project-card">
+                                <article class="item project-card" data-tags="NLP, Deep Learning, Generative AI">
                                     <a target="_blank" href="https://huggingface.co/Medilora/Medilora-Mistral-7B/tree/main" class="image fit">
                                         <img src="images/fine-tune-loss.png" alt="" />
                                     </a>
                                     <header>
                                         <h3>MediLoRA: Mistral-7B fine-tuned for medical Q&A with QLoRA</h3>
-                                        <!-- <p class="brief-description">Improved PubMedQA and MedQA accuracy by over 20%.</p> -->
                                         <span class="toggle-btn">More Info</span>
                                         <div class="more-info">
                                             <ul>
@@ -152,13 +161,12 @@
 
                             <!-- Project Item 3 -->
                             <div class="col-4 col-12-mobile">
-                                <article class="item project-card">
+                                <article class="item project-card" data-tags="Computer Vision, Deep Learning, Generative AI">
                                     <a target="_blank" href="https://github.com/shreyan241/image-outpainting-sagan" class="image fit">
                                         <img src="images/SAGAN_final.png" alt="" />
                                     </a>
                                     <header>
                                         <h3>Image Outpainting with Self-Attention GAN</h3>
-                                        <!-- <p class="brief-description">Implemented Self-Attention Layers for a GAN from scratch.</p> -->
                                         <span class="toggle-btn">More Info</span>
                                         <div class="more-info">
                                             <ul>
@@ -172,13 +180,12 @@
                             
                             <!-- Project Item 4 -->
                             <div class="col-4 col-12-mobile">
-                                <article class="item project-card">
+                                <article class="item project-card" data-tags="Interpretable AI, Machine Learning">
                                     <a target="_blank" href="https://github.com/shreyan241/DSC-261-FINAL" class="image fit">
                                         <img src="images/foolinglimeshap.png" alt="" />
                                     </a>
                                     <header>
                                         <h3>Unfooling LIME and SHAP using superior focused sampling techniques</h3>
-                                        <!-- <p class="brief-description">Counteracted adversarial attacks on post-hoc explainability models.</p> -->
                                         <span class="toggle-btn">More Info</span>
                                         <div class="more-info">
                                             <ul>
@@ -192,13 +199,12 @@
                             
                             <!-- Project Item 5 -->
                             <div class="col-4 col-12-mobile">
-                                <article class="item project-card">
+                                <article class="item project-card" data-tags="Machine Learning, Financial Modelling, Time Series Analysis">
                                     <a target="_blank" href="https://link.springer.com/chapter/10.1007/978-981-19-6631-6_34" class="image fit">
                                         <img src="images/lstm.png" alt="" />
                                     </a>
                                     <header>
                                         <h3>Black–Scholes Option Pricing Using Machine Learning</h3>
-                                        <!-- <p class="brief-description">Outperformed the Black–Scholes Model using MLP and LSTM.</p> -->
                                         <span class="toggle-btn">More Info</span>
                                         <div class="more-info">
                                             <ul>
@@ -212,13 +218,12 @@
                             
                             <!-- Project Item 6 -->
                             <div class="col-4 col-12-mobile">
-                                <article class="item project-card">
+                                <article class="item project-card" data-tags="Machine Learning, Sports Analytics">
                                     <a target="_blank" href="https://github.com/shreyan241/DSC-241-Soccer-TDA" class="image fit">
                                         <img src="images/sample passing network.png" alt="" />
                                     </a>
                                     <header>
                                         <h3>Predicting Match Outcome using Passing Networks in Soccer</h3>
-                                        <!-- <p class="brief-description">Developed a predictive model based on topological features.</p> -->
                                         <span class="toggle-btn">More Info</span>
                                         <div class="more-info">
                                             <ul>
@@ -230,16 +235,14 @@
                                 </article>
                             </div>
                             
-                        
                             <!-- Project Item 7 -->
                             <div class="col-4 col-12-mobile">
-                                <article class="item project-card">
+                                <article class="item project-card" data-tags="Time Series Analysis, Causal Inference">
                                     <a target="_blank" href="https://drive.google.com/file/d/1rcIzcATkgwsguCx66nUQF98aj6xKxwmk/view?usp=sharing" class="image fit">
                                         <img src="images/PCMCI_1.png" alt="" />
                                     </a>
                                     <header>
                                         <h3>Causal Discovery in Lagged Time Series</h3>
-                                        <!-- <p class="brief-description">Evaluated the effectiveness of PCMCI and FullCI algorithms.</p> -->
                                         <span class="toggle-btn">More Info</span>
                                         <div class="more-info">
                                             <ul>
@@ -251,19 +254,14 @@
                                 </article>
                             </div>
                             
-                        
-                        
-                            
-
                             <!-- Project Item 8 -->
                             <div class="col-4 col-12-mobile">
-                                <article class="item project-card">
+                                <article class="item project-card" data-tags="Computer Vision, Image Processing, Deep Learning">
                                     <a target="_blank" href="https://ieeexplore.ieee.org/document/9591673" class="image fit" style="display: flex; justify-content: center;">
                                         <img src="images/stsiva.png" alt="" style="width: 70%;" />
                                     </a>
                                     <header>
                                         <h3>Selective Lossy Image Compression for Autonomous Systems</h3>
-                                        <!-- <p class="brief-description">Self-devised algorithms for K-Means, Genetic Algorithm and DCT.</p> -->
                                         <span class="toggle-btn">More Info</span>
                                         <div class="more-info">
                                             <ul>
