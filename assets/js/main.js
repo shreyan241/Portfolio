@@ -191,74 +191,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(type, 500);
 });
 
-// const canvas = document.getElementById('backgroundCanvas');
-// const ctx = canvas.getContext('2d');
-
-// canvas.width = window.innerWidth;
-// canvas.height = window.innerHeight;
-
-// // Generate random data points
-// const points = Array.from({ length: 60 }, () => ({
-//     x: Math.random() * canvas.width,
-//     y: Math.random() * canvas.height
-// }));
-
-// // Polynomial coefficients for a nonlinear regression line
-// const coefficients = [0.000001, -0.002, 1.3, 50]; // Example coefficients for a cubic regression line
-
-// let progress = 0;
-
-// function drawPoints() {
-//     ctx.clearRect(0, 0, canvas.width, canvas.height);
-//     ctx.fillStyle = 'rgba(175, 238, 238, 0.75)';
-
-//     points.forEach(point => {
-//         ctx.beginPath();
-//         ctx.arc(point.x, point.y, 5, 0, 2 * Math.PI);
-//         ctx.fill();
-//     });
-// }
-
-// function drawRegressionLine() {
-//     ctx.strokeStyle = 'rgba(255, 69, 0, 0.85)';
-//     ctx.lineWidth = 3;
-//     ctx.beginPath();
-
-//     for (let x = 0; x < canvas.width; x++) {
-//         let y = 0;
-//         for (let i = 0; i < coefficients.length; i++) {
-//             y += coefficients[i] * Math.pow(x, coefficients.length - 1 - i);
-//         }
-
-//         y = canvas.height - (y / canvas.height * canvas.height / 2) - canvas.height / 4;
-
-//         if (x === 0) {
-//             ctx.moveTo(x, y);
-//         } else if (x <= progress) {
-//             ctx.lineTo(x, y);
-//         }
-//     }
-//     ctx.stroke();
-
-//     if (progress < canvas.width) {
-//         progress += 1.5; // Adjust this value to speed up or slow down the drawing
-//     } else {
-//         // Reset the progress to 0 to replay the animation
-//         progress = 0;
-//     }
-
-//     requestAnimationFrame(draw);
-// }
-
-// function draw() {
-//     drawPoints();
-//     drawRegressionLine();
-// }
-
-// document.addEventListener('DOMContentLoaded', () => {
-//     draw();
-// });
-
 const canvas = document.getElementById('backgroundCanvas');
 const ctx = canvas.getContext('2d');
 
@@ -347,3 +279,113 @@ function draw() {
 document.addEventListener('DOMContentLoaded', () => {
     draw();
 });
+
+(function() {
+    const canvas = document.getElementById('meteorCanvas');
+    const context = canvas.getContext('2d');
+
+    // Set canvas size to match the window
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Meteor object definition
+    class Meteor {
+        constructor() {
+            this.reset();
+        }
+
+        reset() {
+            // Random starting position across the sky
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height * 0.5; // Keep meteors in the upper half of the canvas
+            this.length = Math.random() * 60 + 30; // Shorter meteors
+            this.speed = Math.random() * 0.15 + 0.05; // Slower speed
+            this.angle = Math.random() * (Math.PI / 3) + (Math.PI / 6); // Random angle
+            this.opacity = 1; // Start fully visible
+            this.fadeRate = 0.005; // Slow fade rate for demure effect
+            this.width = Math.random() * 2 + 1; // Thin meteor trails
+            this.color = 'rgba(255, 165, 0, 1)'; // Darker golden color
+            this.direction = Math.random() < 0.5 ? 1 : -1; // Random left-to-right or right-to-left
+            this.hasFaded = false; // Track fading status
+        }
+
+        update() {
+            // Move the meteor based on its speed and angle
+            this.x += this.direction * Math.cos(this.angle) * this.speed;
+            this.y += Math.sin(this.angle) * this.speed;
+            this.opacity -= this.fadeRate; // Gradually fade out
+
+            // Mark the meteor as having faded when the opacity is very low
+            if (this.opacity <= 0.1 && !this.hasFaded) {
+                this.hasFaded = true;
+            }
+
+            // Reset the meteor if it fades out completely or moves off-screen
+            if (this.opacity <= 0 || this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                this.reset();
+            }
+        }
+
+        draw() {
+            const gradient = context.createLinearGradient(
+                this.x - this.direction * Math.cos(this.angle) * this.length,
+                this.y - Math.sin(this.angle) * this.length,
+                this.x,
+                this.y
+            );
+
+            // Start with a darker, richer golden color and fade toward the tail
+            gradient.addColorStop(0, 'rgba(218, 165, 32, 0)'); // End of the tail (fading away)
+            gradient.addColorStop(0.7, `rgba(218, 165, 32, ${this.opacity})`); // Mid section (faded)
+            gradient.addColorStop(1, `rgba(255, 140, 0, ${this.opacity * 1.5})`); // Brighter head
+
+            context.strokeStyle = gradient;
+            context.lineWidth = this.width;
+            context.beginPath();
+            context.moveTo(this.x, this.y);
+            context.lineTo(
+                this.x - this.direction * Math.cos(this.angle) * this.length,
+                this.y - Math.sin(this.angle) * this.length
+            );
+            context.stroke();
+        }
+    }
+
+    // Create an array for meteors
+    let meteors = [];
+
+    // Function to spawn meteors less frequently (every 6-8 seconds)
+    setInterval(() => {
+        if (meteors.length < 3) { // Limit the number of meteors on screen
+            meteors.push(new Meteor());
+        }
+    }, Math.random() * 2000 + 6000); // Spawn every 6-8 seconds
+
+    function animate() {
+        // Clear the canvas
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw and update meteors
+        meteors.forEach(meteor => {
+            meteor.update();
+            meteor.draw();
+        });
+
+        // Remove meteors that have fully faded out
+        meteors = meteors.filter(meteor => meteor.opacity > 0);
+
+        // Loop the animation
+        requestAnimationFrame(animate);
+    }
+
+    // Initialize animation when the document is fully loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        animate();
+    });
+
+    // Adjust the canvas size when the window is resized
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+})();
