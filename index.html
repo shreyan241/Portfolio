@@ -113,6 +113,12 @@
                                     <header>
                                         <h3>Rubik’s Cube 3D visualizer and Deep Reinforcement Learning Solver</h3>
                                         <!-- <p class="brief-description">Developed a 3D visualizer for the Rubik's Cube using Quaternions.</p> -->
+                                        <!-- Demo Button and GIF Container -->
+                                        <button class="demo-btn">Demo</button>
+                                        <div class="gif-container">
+                                            <img id="rubiksCubeGif" src="demos/rubiks.gif" alt="Rubik's Cube Solver Demo" class="rubiks-gif">
+                                        </div>
+
                                         <span class="toggle-btn">More Info</span>
                                         <div class="more-info">
                                             <ul>
@@ -461,6 +467,14 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+    
+            <!-- Modal Structure -->
+            <div id="demoModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn">&times;</span>
+                    <img id="rubiksCubeGifInModal" src="demos/rubiks.gif" alt="Rubik's Cube Solver Demo" class="modal-gif">
+                </div>
+            </div>
 
 	</body>
 </html>

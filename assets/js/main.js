@@ -389,3 +389,28 @@ document.addEventListener('DOMContentLoaded', () => {
         canvas.height = window.innerHeight;
     });
 })();
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Get modal elements
+    const modal = document.getElementById('demoModal');
+    const closeBtn = document.querySelector('.close-btn');
+
+    // Open modal on demo button click
+    document.querySelectorAll('.demo-btn').forEach(demoBtn => {
+        demoBtn.addEventListener('click', function () {
+            modal.style.display = 'flex'; // Show the modal (flex for centering)
+        });
+    });
+
+    // Close the modal when the close button is clicked
+    closeBtn.addEventListener('click', function () {
+        modal.style.display = 'none';
+    });
+
+    // Close the modal when the user clicks outside the modal content
+    window.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+});
