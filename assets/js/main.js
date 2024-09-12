@@ -191,13 +191,109 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(type, 500);
 });
 
+// const canvas = document.getElementById('backgroundCanvas');
+// const ctx = canvas.getContext('2d');
+
+// canvas.width = window.innerWidth;
+// canvas.height = window.innerHeight;
+
+// // Define an array of colors for the points
+// const pointColors = [
+//     'rgb(173, 216, 230)', 'rgb(152, 251, 152)', 'rgb(240, 128, 128)',
+//     'rgb(255, 218, 185)', 'rgb(230, 230, 250)', 'rgb(250, 250, 210)',
+//     'rgb(176, 224, 230)', 'rgb(255, 228, 225)', 'rgb(255, 182, 193)',
+//     'rgb(175, 238, 238)'
+// ];
+
+// // Generate random data points with random colors
+// const points = Array.from({ length: 60 }, () => ({
+//     x: Math.random() * canvas.width,
+//     y: Math.random() * canvas.height,
+//     color: pointColors[Math.floor(Math.random() * pointColors.length)]
+// }));
+
+// let progress = 0;
+
+// function drawPoints() {
+//     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+//     points.forEach(point => {
+//         ctx.fillStyle = point.color;
+//         ctx.beginPath();
+//         ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+//         ctx.fill();
+//     });
+// }
+
+// function drawRegressionLine() {
+//     const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+//     gradient.addColorStop(0, 'rgba(173, 216, 230, 0.85)');
+//     gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.85)');
+//     gradient.addColorStop(1, 'rgba(240, 128, 128, 0.85)');
+
+//     ctx.strokeStyle = gradient;
+//     ctx.lineWidth = 3;
+//     ctx.beginPath();
+
+//     const amplitude = canvas.height / 4; // Adjust this to change the curve's height
+//     const frequency = 2 * Math.PI / canvas.width; // Adjust this to change the number of waves
+
+//     for (let x = 0; x <= progress; x++) {
+//         const normalizedX = x / canvas.width - 0.5; // Normalize x to be between -0.5 and 0.5
+//         const y = canvas.height / 2 + amplitude * Math.sin(frequency * x) * Math.exp(-Math.pow(normalizedX * 2, 2));
+
+//         if (x === 0) {
+//             ctx.moveTo(x, y);
+//         } else {
+//             ctx.lineTo(x, y);
+//         }
+//     }
+
+//     ctx.stroke();
+
+//     if (progress < canvas.width) {
+//         progress += 2; // Adjust this value to change the drawing speed
+//     } else {
+//         progress = 0;
+//     }
+
+//     requestAnimationFrame(draw);
+// }
+
+// function draw() {
+//     drawPoints();
+//     drawRegressionLine();
+// }
+
+// function resizeCanvas() {
+//     canvas.width = window.innerWidth;
+//     canvas.height = window.innerHeight;
+//     progress = 0; // Reset progress on resize
+    
+//     // Regenerate points for the new canvas size
+//     points.length = 0;
+//     for (let i = 0; i < 60; i++) {
+//         points.push({
+//             x: Math.random() * canvas.width,
+//             y: Math.random() * canvas.height,
+//             color: pointColors[Math.floor(Math.random() * pointColors.length)]
+//         });
+//     }
+// }
+
+// window.addEventListener('resize', resizeCanvas);
+
+// document.addEventListener('DOMContentLoaded', () => {
+//     resizeCanvas(); // Initial setup
+//     draw();
+// });
+
 const canvas = document.getElementById('backgroundCanvas');
 const ctx = canvas.getContext('2d');
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// Define an array of colors for the points
 const pointColors = [
     'rgb(173, 216, 230)', 'rgb(152, 251, 152)', 'rgb(240, 128, 128)',
     'rgb(255, 218, 185)', 'rgb(230, 230, 250)', 'rgb(250, 250, 210)',
@@ -205,27 +301,52 @@ const pointColors = [
     'rgb(175, 238, 238)'
 ];
 
-// Generate random data points with random colors
-const points = Array.from({ length: 60 }, () => ({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    color: pointColors[Math.floor(Math.random() * pointColors.length)]
-}));
-
+let points = [];
 let progress = 0;
+let isSnakeGame = false;
+let snake = [];
+let direction = { x: 1, y: 0 };
+const snakeSpeed = 3; // Increased speed
+let lastTime = 0;
+const regressionDuration = 5000; // 5 seconds
+let score = 0;
+let lastMoveTime = 0;
+const idleThreshold = 10000; // 10 seconds of no movement
+let angle = 0;
+const maxSnakeLength = 50; // Reduced max length
+// let allPointsEaten = false;
+const numPoints = 60
+
+function generatePoints() {
+    const margin = 20; // Margin from the edges of the canvas
+    points = Array.from({ length: numPoints }, () => ({
+        x: Math.random() * (canvas.width - 2 * margin) + margin,
+        y: Math.random() * (canvas.height - 2 * margin) + margin,
+        color: pointColors[Math.floor(Math.random() * pointColors.length)],
+        eaten: false
+    }));
+}
+
+// Add this function to count visible points
+function countVisiblePoints() {
+    return points.filter(point => !point.eaten).length;
+}
 
 function drawPoints() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
     points.forEach(point => {
-        ctx.fillStyle = point.color;
-        ctx.beginPath();
-        ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
-        ctx.fill();
+        if (!point.eaten) {
+            ctx.fillStyle = point.color;
+            ctx.beginPath();
+            ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+        }
     });
 }
 
-function drawRegressionLine() {
+function drawRegressionLine(timestamp) {
+    const elapsedTime = timestamp - lastTime;
+    progress = Math.min(canvas.width, (elapsedTime / regressionDuration) * canvas.width);
+
     const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
     gradient.addColorStop(0, 'rgba(173, 216, 230, 0.85)');
     gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.85)');
@@ -235,11 +356,11 @@ function drawRegressionLine() {
     ctx.lineWidth = 3;
     ctx.beginPath();
 
-    const amplitude = canvas.height / 4; // Adjust this to change the curve's height
-    const frequency = 2 * Math.PI / canvas.width; // Adjust this to change the number of waves
+    const amplitude = canvas.height / 4;
+    const frequency = 2 * Math.PI / canvas.width;
 
     for (let x = 0; x <= progress; x++) {
-        const normalizedX = x / canvas.width - 0.5; // Normalize x to be between -0.5 and 0.5
+        const normalizedX = x / canvas.width - 0.5;
         const y = canvas.height / 2 + amplitude * Math.sin(frequency * x) * Math.exp(-Math.pow(normalizedX * 2, 2));
 
         if (x === 0) {
@@ -251,43 +372,243 @@ function drawRegressionLine() {
 
     ctx.stroke();
 
-    if (progress < canvas.width) {
-        progress += 2; // Adjust this value to change the drawing speed
+    if (elapsedTime >= regressionDuration) {
+        isSnakeGame = true;
+        initSnake();
+    }
+}
+
+function initSnake() {
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    snake = [{ x: centerX, y: centerY }];
+    direction = { x: 1, y: 0 };
+    lastMoveTime = performance.now();
+    angle = 0; // Initialize angle for circular motion
+}
+
+let isTransitioningToIdle = false;
+let idleAngle = 0;
+
+function updateSnake(timestamp) {
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const isIdle = timestamp - lastMoveTime > idleThreshold;
+
+    if (isIdle && !isTransitioningToIdle) {
+        isTransitioningToIdle = true;
+        idleAngle = Math.atan2(snake[0].y - centerY, snake[0].x - centerX);
+    }
+
+    if (isTransitioningToIdle || isIdle) {
+        const radius = 80; // circle
+        idleAngle += 0.02; // Adjust for speed of rotation
+
+        const targetX = centerX + Math.cos(idleAngle) * radius;
+        const targetY = centerY + Math.sin(idleAngle) * radius;
+
+        const head = snake[0];
+        const dx = targetX - head.x;
+        const dy = targetY - head.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance > 1) {
+            const moveX = (dx / distance) * snakeSpeed;
+            const moveY = (dy / distance) * snakeSpeed;
+            snake.unshift({ x: head.x + moveX, y: head.y + moveY });
+        } else {
+            snake.unshift({ x: targetX, y: targetY });
+        }
     } else {
-        progress = 0;
+        // Normal movement
+        const head = { 
+            x: snake[0].x + direction.x * snakeSpeed, 
+            y: snake[0].y + direction.y * snakeSpeed 
+        };
+        
+        // Bounce off walls
+        if (head.x < 0 || head.x > canvas.width) {
+            direction.x *= -1;
+            head.x = Math.max(0, Math.min(head.x, canvas.width));
+        }
+        if (head.y < 0 || head.y > canvas.height) {
+            direction.y *= -1;
+            head.y = Math.max(0, Math.min(head.y, canvas.height));
+        }
+
+        snake.unshift(head);
+
+        // Check for point eating
+        points.forEach(point => {
+            if (!point.eaten && Math.hypot(head.x - point.x, head.y - point.y) < 10) {
+                point.eaten = true;
+                score += 10;
+            }
+        });
+
+        // allPointsEaten = points.every(point => point.eaten);
+    }
+
+    // Limit snake length
+    if (snake.length > maxSnakeLength) {
+        snake = snake.slice(0, maxSnakeLength);
+    }
+}
+
+function drawSnake() {
+    // Create gradient for snake body
+    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    gradient.addColorStop(0, 'rgba(255, 215, 0, 0.8)');    // Gold
+    gradient.addColorStop(0.5, 'rgba(50, 205, 50, 0.8)');  // Lime green
+    gradient.addColorStop(1, 'rgba(30, 144, 255, 0.8)');   // Dodger blue
+
+    ctx.strokeStyle = gradient;
+    ctx.lineWidth = 5;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    ctx.beginPath();
+    ctx.moveTo(snake[0].x, snake[0].y);
+    for (let i = 1; i < snake.length; i++) {
+        const prev = snake[i - 1];
+        const current = snake[i];
+        const next = snake[i + 1] || current;
+
+        const controlPoint1 = {
+            x: current.x - (next.x - prev.x) / 4,
+            y: current.y - (next.y - prev.y) / 4
+        };
+        const controlPoint2 = {
+            x: current.x + (next.x - prev.x) / 4,
+            y: current.y + (next.y - prev.y) / 4
+        };
+
+        ctx.bezierCurveTo(controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, current.x, current.y);
+    }
+    ctx.stroke();
+
+    // Draw snake head
+    const headGradient = ctx.createRadialGradient(
+        snake[0].x, snake[0].y, 0,
+        snake[0].x, snake[0].y, 8
+    );
+    headGradient.addColorStop(0, 'rgba(255, 255, 0, 1)');     // Bright yellow center
+    headGradient.addColorStop(1, 'rgba(255, 140, 0, 0.8)');   // Dark orange edge
+
+    ctx.fillStyle = headGradient;
+    ctx.beginPath();
+    ctx.arc(snake[0].x, snake[0].y, 8, 0, Math.PI * 2);
+    ctx.fill();
+}
+
+function drawControls() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+    ctx.fillRect(10, 20, 220, 120);
+    ctx.strokeStyle = 'rgb(255, 255, 255)';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(10, 20, 220, 120);
+
+    ctx.fillStyle = 'rgb(255, 255, 255)';
+    ctx.font = 'bold 18px Arial';
+    ctx.fillText('Controls:', 20, 35);
+    ctx.font = '16px Arial';
+    
+    const controls = [
+        { key: '↑', action: 'Move Up' },
+        { key: '↓', action: 'Move Down' },
+        { key: '←', action: 'Move Left' },
+        { key: '→', action: 'Move Right' }
+    ];
+
+    controls.forEach((control, index) => {
+        ctx.fillStyle = 'rgb(255, 255, 0)';
+        ctx.fillText(control.key, 20, 60 + index * 25);
+        ctx.fillStyle = 'rgb(255, 255, 255)';
+        ctx.fillText(control.action, 50, 60 + index * 25);
+    });
+}
+
+function countVisiblePoints() {
+    return points.filter(point => !point.eaten).length;
+}
+
+// Modify the drawScore function to include the win message and point count
+function drawScore() {
+    const visiblePoints = countVisiblePoints();
+    
+    ctx.fillStyle = 'rgb(255, 0, 0)';
+    ctx.font = 'bold 24px Arial';
+    ctx.textAlign = 'right';
+    ctx.fillText(`Score: ${score}`, canvas.width - 20, 40);
+
+    if (visiblePoints === 0) {
+        ctx.fillStyle = 'rgb(0, 255, 0)'; // Green color for the win message
+        ctx.font = 'bold 28px Arial';
+        ctx.textAlign = 'right';
+        ctx.fillText('Congrats! You Won!', canvas.width - 20, 75);
+        ctx.fillText('Now Hire Me!', canvas.width - 20, 110);
+    }
+
+    ctx.textAlign = 'left';
+}
+
+function draw(timestamp) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawPoints();
+
+    if (!isSnakeGame) {
+        drawRegressionLine(timestamp);
+    } else {
+        updateSnake(timestamp);
+        drawSnake();
+        drawControls();
+        drawScore();
     }
 
     requestAnimationFrame(draw);
 }
 
-function draw() {
-    drawPoints();
-    drawRegressionLine();
-}
-
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    progress = 0; // Reset progress on resize
-    
-    // Regenerate points for the new canvas size
-    points.length = 0;
-    for (let i = 0; i < 60; i++) {
-        points.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            color: pointColors[Math.floor(Math.random() * pointColors.length)]
-        });
+    generatePoints();
+    if (isSnakeGame) {
+        initSnake();
+    } else {
+        progress = 0;
+        lastTime = performance.now();
     }
 }
 
 window.addEventListener('resize', resizeCanvas);
 
-document.addEventListener('DOMContentLoaded', () => {
-    resizeCanvas(); // Initial setup
-    draw();
+document.addEventListener('keydown', (event) => {
+    if (isSnakeGame) {
+        isTransitioningToIdle = false;
+        lastMoveTime = performance.now();
+        switch(event.key) {
+            case 'ArrowUp':
+                if (direction.y === 0) direction = { x: 0, y: -1 };
+                break;
+            case 'ArrowDown':
+                if (direction.y === 0) direction = { x: 0, y: 1 };
+                break;
+            case 'ArrowLeft':
+                if (direction.x === 0) direction = { x: -1, y: 0 };
+                break;
+            case 'ArrowRight':
+                if (direction.x === 0) direction = { x: 1, y: 0 };
+                break;
+        }
+    }
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    resizeCanvas();
+    generatePoints();
+    lastTime = performance.now();
+    requestAnimationFrame(draw);
+});
 
 (function() {
     const canvas = document.getElementById('meteorCanvas');
