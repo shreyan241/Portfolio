@@ -199,15 +199,9 @@ canvas.height = window.innerHeight;
 
 // Define an array of colors for the points
 const pointColors = [
-    'rgb(173, 216, 230)',
-    'rgb(152, 251, 152)',
-    'rgb(240, 128, 128)',
-    'rgb(255, 218, 185)',
-    'rgb(230, 230, 250)',
-    'rgb(250, 250, 210)',
-    'rgb(176, 224, 230)',
-    'rgb(255, 228, 225)',
-    'rgb(255, 182, 193)',
+    'rgb(173, 216, 230)', 'rgb(152, 251, 152)', 'rgb(240, 128, 128)',
+    'rgb(255, 218, 185)', 'rgb(230, 230, 250)', 'rgb(250, 250, 210)',
+    'rgb(176, 224, 230)', 'rgb(255, 228, 225)', 'rgb(255, 182, 193)',
     'rgb(175, 238, 238)'
 ];
 
@@ -218,53 +212,48 @@ const points = Array.from({ length: 60 }, () => ({
     color: pointColors[Math.floor(Math.random() * pointColors.length)]
 }));
 
-// Polynomial coefficients for a nonlinear regression line
-const coefficients = [0.000001, -0.002, 1.3, 50]; // Example coefficients for a cubic regression line
-
 let progress = 0;
 
 function drawPoints() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     points.forEach(point => {
-        ctx.fillStyle = point.color; // Set the color for each point
+        ctx.fillStyle = point.color;
         ctx.beginPath();
-        ctx.arc(point.x, point.y, 5, 0, 2 * Math.PI);
+        ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
         ctx.fill();
     });
 }
 
 function drawRegressionLine() {
-    // Create a linear gradient for the regression line
     const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-    gradient.addColorStop(0, 'rgba(173, 216, 230, 0.85)'); // Light blue
-    gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.85)'); // White
-    gradient.addColorStop(1, 'rgba(240, 128, 128, 0.85)'); // Light coral
+    gradient.addColorStop(0, 'rgba(173, 216, 230, 0.85)');
+    gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.85)');
+    gradient.addColorStop(1, 'rgba(240, 128, 128, 0.85)');
 
-    ctx.strokeStyle = gradient; // Apply the gradient to the line
+    ctx.strokeStyle = gradient;
     ctx.lineWidth = 3;
     ctx.beginPath();
 
-    for (let x = 0; x < canvas.width; x++) {
-        let y = 0;
-        for (let i = 0; i < coefficients.length; i++) {
-            y += coefficients[i] * Math.pow(x, coefficients.length - 1 - i);
-        }
+    const amplitude = canvas.height / 4; // Adjust this to change the curve's height
+    const frequency = 2 * Math.PI / canvas.width; // Adjust this to change the number of waves
 
-        y = canvas.height - (y / canvas.height * canvas.height / 2) - canvas.height / 4;
+    for (let x = 0; x <= progress; x++) {
+        const normalizedX = x / canvas.width - 0.5; // Normalize x to be between -0.5 and 0.5
+        const y = canvas.height / 2 + amplitude * Math.sin(frequency * x) * Math.exp(-Math.pow(normalizedX * 2, 2));
 
         if (x === 0) {
             ctx.moveTo(x, y);
-        } else if (x <= progress) {
+        } else {
             ctx.lineTo(x, y);
         }
     }
+
     ctx.stroke();
 
     if (progress < canvas.width) {
-        progress += 1.5; // Adjust this value to speed up or slow down the drawing
+        progress += 2; // Adjust this value to change the drawing speed
     } else {
-        // Reset the progress to 0 to replay the animation
         progress = 0;
     }
 
@@ -276,9 +265,29 @@ function draw() {
     drawRegressionLine();
 }
 
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    progress = 0; // Reset progress on resize
+    
+    // Regenerate points for the new canvas size
+    points.length = 0;
+    for (let i = 0; i < 60; i++) {
+        points.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            color: pointColors[Math.floor(Math.random() * pointColors.length)]
+        });
+    }
+}
+
+window.addEventListener('resize', resizeCanvas);
+
 document.addEventListener('DOMContentLoaded', () => {
+    resizeCanvas(); // Initial setup
     draw();
 });
+
 
 (function() {
     const canvas = document.getElementById('meteorCanvas');
