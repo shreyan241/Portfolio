@@ -546,7 +546,7 @@ function drawScore() {
         ctx.font = 'bold 28px Arial';
         ctx.textAlign = 'right';
         ctx.fillText('Congrats! You Won!', canvas.width - 20, 75);
-        ctx.fillText('Now Hire Me!', canvas.width - 20, 110);
+        // ctx.fillText('Now Hire Me!', canvas.width - 20, 110);
     }
 
     ctx.textAlign = 'left';
