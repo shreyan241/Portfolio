@@ -200,103 +200,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(type, 500);
 });
 
-// const canvas = document.getElementById('backgroundCanvas');
-// const ctx = canvas.getContext('2d');
-
-// canvas.width = window.innerWidth;
-// canvas.height = window.innerHeight;
-
-// // Define an array of colors for the points
-// const pointColors = [
-//     'rgb(173, 216, 230)', 'rgb(152, 251, 152)', 'rgb(240, 128, 128)',
-//     'rgb(255, 218, 185)', 'rgb(230, 230, 250)', 'rgb(250, 250, 210)',
-//     'rgb(176, 224, 230)', 'rgb(255, 228, 225)', 'rgb(255, 182, 193)',
-//     'rgb(175, 238, 238)'
-// ];
-
-// // Generate random data points with random colors
-// const points = Array.from({ length: 60 }, () => ({
-//     x: Math.random() * canvas.width,
-//     y: Math.random() * canvas.height,
-//     color: pointColors[Math.floor(Math.random() * pointColors.length)]
-// }));
-
-// let progress = 0;
-
-// function drawPoints() {
-//     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-//     points.forEach(point => {
-//         ctx.fillStyle = point.color;
-//         ctx.beginPath();
-//         ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
-//         ctx.fill();
-//     });
-// }
-
-// function drawRegressionLine() {
-//     const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-//     gradient.addColorStop(0, 'rgba(173, 216, 230, 0.85)');
-//     gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.85)');
-//     gradient.addColorStop(1, 'rgba(240, 128, 128, 0.85)');
-
-//     ctx.strokeStyle = gradient;
-//     ctx.lineWidth = 3;
-//     ctx.beginPath();
-
-//     const amplitude = canvas.height / 4; // Adjust this to change the curve's height
-//     const frequency = 2 * Math.PI / canvas.width; // Adjust this to change the number of waves
-
-//     for (let x = 0; x <= progress; x++) {
-//         const normalizedX = x / canvas.width - 0.5; // Normalize x to be between -0.5 and 0.5
-//         const y = canvas.height / 2 + amplitude * Math.sin(frequency * x) * Math.exp(-Math.pow(normalizedX * 2, 2));
-
-//         if (x === 0) {
-//             ctx.moveTo(x, y);
-//         } else {
-//             ctx.lineTo(x, y);
-//         }
-//     }
-
-//     ctx.stroke();
-
-//     if (progress < canvas.width) {
-//         progress += 2; // Adjust this value to change the drawing speed
-//     } else {
-//         progress = 0;
-//     }
-
-//     requestAnimationFrame(draw);
-// }
-
-// function draw() {
-//     drawPoints();
-//     drawRegressionLine();
-// }
-
-// function resizeCanvas() {
-//     canvas.width = window.innerWidth;
-//     canvas.height = window.innerHeight;
-//     progress = 0; // Reset progress on resize
-    
-//     // Regenerate points for the new canvas size
-//     points.length = 0;
-//     for (let i = 0; i < 60; i++) {
-//         points.push({
-//             x: Math.random() * canvas.width,
-//             y: Math.random() * canvas.height,
-//             color: pointColors[Math.floor(Math.random() * pointColors.length)]
-//         });
-//     }
-// }
-
-// window.addEventListener('resize', resizeCanvas);
-
-// document.addEventListener('DOMContentLoaded', () => {
-//     resizeCanvas(); // Initial setup
-//     draw();
-// });
-
 const canvas = document.getElementById('backgroundCanvas');
 const ctx = canvas.getContext('2d');
 
@@ -642,6 +545,11 @@ window.addEventListener('resize', resizeCanvas);
 
 document.addEventListener('keydown', (event) => {
     if (isSnakeGame) {
+        // Prevent arrow keys from scrolling the page
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+            event.preventDefault();
+        }
+
         isTransitioningToIdle = false;
         lastMoveTime = performance.now();
         switch(event.key) {
