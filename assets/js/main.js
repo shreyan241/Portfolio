@@ -378,6 +378,52 @@ function drawRegressionLine(timestamp) {
     }
 }
 
+let particles = [];
+
+class Particle {
+    constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.size = Math.random() * 3 + 2;
+        this.speedX = Math.random() * 3 - 1.5;
+        this.speedY = Math.random() * 3 - 1.5;
+        this.life = 30;
+    }
+
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.life--;
+    }
+
+    draw(ctx) {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
+function createParticles(x, y, color, amount) {
+    for (let i = 0; i < amount; i++) {
+        particles.push(new Particle(x, y, color));
+    }
+}
+
+function updateParticles() {
+    for (let i = particles.length - 1; i >= 0; i--) {
+        particles[i].update();
+        if (particles[i].life <= 0) {
+            particles.splice(i, 1);
+        }
+    }
+}
+
+function drawParticles() {
+    particles.forEach(particle => particle.draw(ctx));
+}
+
 function initSnake() {
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
@@ -443,6 +489,7 @@ function updateSnake(timestamp) {
             if (!point.eaten && Math.hypot(head.x - point.x, head.y - point.y) < 10) {
                 point.eaten = true;
                 score += 10;
+                createParticles(point.x, point.y, point.color, 20);
             }
         });
 
@@ -535,7 +582,7 @@ function countVisiblePoints() {
 // Modify the drawScore function to include the win message and point count
 function drawScore() {
     const visiblePoints = countVisiblePoints();
-    
+
     ctx.fillStyle = 'rgb(255, 0, 0)';
     ctx.font = 'bold 24px Arial';
     ctx.textAlign = 'right';
@@ -560,7 +607,9 @@ function draw(timestamp) {
         drawRegressionLine(timestamp);
     } else {
         updateSnake(timestamp);
+        updateParticles();
         drawSnake();
+        drawParticles();
         drawControls();
         drawScore();
     }
