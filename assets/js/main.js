@@ -159,6 +159,15 @@ document.addEventListener('DOMContentLoaded', function () {
             btn.textContent = card.classList.contains('expanded') ? 'Show Less' : 'More Info';
         });
     });
+
+    projectCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px) scale(1.02)';
+        });
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = '';
+        });
+    });
 });
 
 const typewriter = document.querySelector('.typewriter');

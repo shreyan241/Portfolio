@@ -2643,17 +2643,16 @@ input, select, textarea {
 	}
 
 /* Timeline Card Styling */
-
 .timeline-card {
-    flex: 0 0 420px; /* Increased the width of the cards */
-    height: 320px; /* Increased the height of the cards */
+    flex: 0 0 420px; /* Width of the cards */
+    height: 320px; /* Height of the cards */
     margin: 15px;
     background-color: #fff;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     position: relative;
-    perspective: 1000px; /* Enables 3D flipping */
+    perspective: 1000px; /* 3D effect for card flipping */
 }
 
 .timeline-card:hover {
@@ -2662,14 +2661,16 @@ input, select, textarea {
 }
 
 /* Card Flip Styling */
-.timeline-card .card-content, .timeline-card .card-back {
+.timeline-card .card-content,
+.timeline-card .card-back {
     position: absolute;
     width: 100%;
     height: 100%;
-    backface-visibility: hidden; /* Hides the back when not flipped */
+    backface-visibility: hidden; /* Hide back when not flipped */
     border-radius: 15px;
     padding: 20px;
     box-sizing: border-box;
+    transition: transform 0.6s ease-in-out; /* Smooth flip effect */
 }
 
 .timeline-card .card-content {
@@ -2677,37 +2678,81 @@ input, select, textarea {
     transform: rotateY(0deg);
 }
 
+/* Back of the card styling */
 .timeline-card .card-back {
-    background-color: #333;
-    color: white;
+    background-color: #f4f4f4; /* Light grey for a cleaner, softer look */
+    color: #333; /* Dark text for readability */
+    border: 2px solid #e0e0e0; /* Light border for definition */
     transform: rotateY(180deg);
     z-index: 1;
     padding: 20px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif; /* Modern, clean font */
+    line-height: 1.6;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Styling for text on the back */
+.timeline-card .card-back h3 {
+    font-size: 18px; /* Slightly smaller font for back */
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.timeline-card .card-back p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.timeline-card .card-back ul {
+    padding-left: 20px; /* Indent for bullet points */
+    list-style-type: disc; /* Bullet points */
+    margin: 0;
+}
+
+.timeline-card .card-back ul li {
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #666; /* Muted text for a cleaner look */
+}
+
+/* Add subtle background pattern */
+.timeline-card .card-back::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 75%, transparent 75%, transparent);
+    background-size: 20px 20px;
+    z-index: -1; /* Pattern stays behind content */
+    border-radius: 15px;
 }
 
 .timeline-card.flipped .card-content {
     transform: rotateY(180deg);
-    z-index: 1;
 }
 
 .timeline-card.flipped .card-back {
     transform: rotateY(0deg);
-    z-index: 2;
 }
 
-/* Updated Year Label Styling */
+/* Year Label Styling */
 .year-label {
     position: absolute;
     bottom: -20px;
     left: 50%;
     transform: translateX(-50%);
     font-family: 'Montserrat', sans-serif;
-    font-size: 14px; /* Slightly smaller font size */
+    font-size: 14px;
     color: #fff;
-    background-color: #c0392b; /* Red background color */
+    background-color: #c0392b; /* Red background */
     padding: 8px 20px;
     border-radius: 20px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
@@ -2718,44 +2763,47 @@ input, select, textarea {
     display: flex;
     overflow-x: scroll;
     scrollbar-color: #c0392b #ffffff; /* Red scrollbar */
-    scrollbar-width: thin; /* Makes scrollbar thinner */
+    scrollbar-width: thin;
     scroll-behavior: smooth;
     position: relative;
 }
 
 .timeline-horizontal::-webkit-scrollbar {
-    height: 12px; /* Visible scrollbar */
+    height: 12px;
 }
 
 .timeline-horizontal::-webkit-scrollbar-thumb {
-    background-color: #c0392b; /* Red scrollbar color */
+    background-color: #c0392b;
     border-radius: 6px;
 }
 
+/* Card Content */
 .card-content {
     padding: 20px;
     text-align: center;
 }
 
 .company-logo {
-    width: 140px; /* Slightly larger logos */
+    width: 140px;
     height: 140px;
     margin-bottom: 15px;
-    border-radius: 50%; /* Circular logos */
+    border-radius: 50%;
     object-fit: cover;
 }
 
-h3 {
+/* Header and Paragraph Styling */
+h3, h4 {
     font-family: 'Poppins', sans-serif;
-    font-size: 20px;
     color: #333;
+}
+
+h3 {
+    font-size: 20px;
     margin-bottom: 10px;
 }
 
 h4 {
-    font-family: 'Poppins', sans-serif;
     font-size: 18px;
-    color: #333;
     margin-bottom: 5px;
 }
 
@@ -2773,6 +2821,7 @@ ul {
     text-align: left;
 }
 
+/* Flip Icon Styling */
 .flip-icon, .unflip-icon {
     position: absolute;
     bottom: 20px;
@@ -2784,41 +2833,31 @@ ul {
 
 .flip-icon:hover, .unflip-icon:hover {
     color: #ff6347;
-}
-
-/* Custom Colors for Each Card */
-.timeline-card:nth-child(1) {
-    background-color: #5DADE2;
-}
-
-.timeline-card:nth-child(2) {
-    background-color: #4CAF50;
-}
-
-.timeline-card:nth-child(3) {
-    background-color: #FFC107;
-}
-
-.timeline-card:nth-child(4) {
-    background-color: #bf78d8;
-}
-
-.timeline-card:nth-child(5) {
-    background-color: #009688;
-}
-
-.flip-icon {
-    font-size: 24px;
-    cursor: pointer;
-    color: #333;
+    transform: scale(1.2); /* Subtle scale effect on hover */
     transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.flip-icon:hover {
-    transform: scale(1.2);
-    color: #e74c3c; /* Change color on hover */
+/* Tooltip on Flip Icon Hover */
+.flip-icon:hover::after {
+    content: '\25BE'; /* Unicode character for a small down arrow */
+    font-size: 20px; /* Slightly larger font size */
+    color: #e3240f; /* Prominent red color */
+    position: absolute;
+    top: -20px; /* Adjusted position */
+    left: 50%;
+    transform: translateX(-50%);
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3); /* Subtle shadow for emphasis */
 }
 
+
+/* Custom Colors for Each Card */
+.timeline-card:nth-child(1) { background-color: #5DADE2; } /* Blue */
+.timeline-card:nth-child(2) { background-color: #4CAF50; } /* Green */
+.timeline-card:nth-child(3) { background-color: #FFC107; } /* Yellow */
+.timeline-card:nth-child(4) { background-color: #bf78d8; } /* Purple */
+.timeline-card:nth-child(5) { background-color: #009688; } /* Teal */
+
+/* Pulsating Effect for Icons */
 .pulsate {
     animation: pulsate 1.5s infinite;
 }
@@ -2827,23 +2866,6 @@ ul {
     0% { transform: scale(1); }
     50% { transform: scale(1.1); }
     100% { transform: scale(1); }
-}
-
-/* Add a tooltip */
-.flip-icon:hover::after {
-    content: 'Click for details';
-    display: block;
-    font-size: 12px;
-    color: #000;
-    position: absolute;
-    top: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    background-color: #fff;
-    padding: 2px 5px;
-    border-radius: 3px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
 .project-card {
@@ -2889,14 +2911,15 @@ ul {
 .project-card .more-info {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease;
+    transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
     font-size: 14px;
     color: #555;
     padding-top: 10px;
 }
 
 .project-card.expanded .more-info {
-    max-height: 200px;
+    max-height: 1000px;
+    transition: max-height 1s ease-in-out;
 }
 
 .project-card .toggle-btn {
@@ -2904,10 +2927,32 @@ ul {
     color: #007BFF;
     font-size: 14px;
     font-family: 'Montserrat', sans-serif;
+    transition: all 0.3s ease;
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #007BFF;
+    border-radius: 20px;
 }
 
 .project-card .toggle-btn:hover {
-    text-decoration: underline;
+    background-color: #007BFF;
+    color: white;
+}
+
+.project-card .tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.project-card .tag {
+    font-size: 12px;
+    color: #007BFF;
+    background-color: rgba(0, 123, 255, 0.1);
+    padding: 3px 8px;
+    border-radius: 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
 }
 
 .shreyan_photo {
@@ -3115,42 +3160,77 @@ ul {
     border-radius: 10px;
 }
 
-.filter-buttons {
-    margin-bottom: 20px;
-    text-align: center;
-}
 
 .filter-btn {
-    padding: 10px 20px;
-    margin: 5px;
-    border: none;
-    border-radius: 5px;
+    padding: 8px 16px;
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.7);
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
-    color: white;
-    font-weight: bold;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: all 0.3s ease;
+    outline: none;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Different colors for each button */
-.filter-btn[data-filter="Reinforcement Learning"] { background-color: #ff5722; } /* Orange */
-.filter-btn[data-filter="Deep Learning"] { background-color: #2196f3; } /* Blue */
-.filter-btn[data-filter="NLP"] { background-color: #4caf50; } /* Green */
-.filter-btn[data-filter="Generative AI"] { background-color: #e91e63; } /* Pink */
-.filter-btn[data-filter="Interpretable AI"] { background-color: #9c27b0; } /* Purple */
-.filter-btn[data-filter="Machine Learning"] { background-color: #ff9800; } /* Amber */
-.filter-btn[data-filter="Financial Modelling"] { background-color: #795548; } /* Brown */
-.filter-btn[data-filter="Sports Analytics"] { background-color: #00bcd4; } /* Cyan */
-.filter-btn[data-filter="Time Series Analysis"] { background-color: #673ab7; } /* Deep Purple */
-.filter-btn[data-filter="Causal Inference"] { background-color: #f44336; } /* Red */
-.filter-btn[data-filter="Computer Vision"] { background-color: #009688; } /* Teal */
-.filter-btn[data-filter="Image Processing"] { background-color: #3f51b5; } /* Indigo */
+.filter-btn[data-filter="Reinforcement Learning"] { background-color: #FF5722; } /* Vibrant Coral */
+.filter-btn[data-filter="Deep Learning"] { background-color: #03A9F4; } /* Bright Sky Blue */
+.filter-btn[data-filter="NLP"] { background-color: #4CAF50; } /* Vivid Green */
+.filter-btn[data-filter="Generative AI"] { background-color: #FFC107; } /* Vibrant Amber */
+.filter-btn[data-filter="Interpretable AI"] { background-color: #673AB7; } /* Vivid Deep Purple */
+.filter-btn[data-filter="Machine Learning"] { background-color: #FF9800; } /* Bright Orange */
+.filter-btn[data-filter="Financial Modelling"] { background-color: #FF5252; } /* Vibrant Red */
+.filter-btn[data-filter="Sports Analytics"] { background-color: #009688; } /* Teal */
+.filter-btn[data-filter="Time Series Analysis"] { background-color: #2196F3; } /* Vibrant Blue */
+.filter-btn[data-filter="Causal Inference"] { background-color: #E91E63; } /* Hot Pink */
+.filter-btn[data-filter="Computer Vision"] { background-color: #00BCD4; } /* Bright Cyan */
+.filter-btn[data-filter="Image Processing"] { background-color: #8BC34A; } /* Bright Lime Green */
+
 
 .filter-btn:hover {
-    transform: scale(1.05); /* Slight zoom on hover */
-    filter: brightness(1.2);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .filter-btn.active {
-    background-color: #333; /* Dark color for active buttons */
+    background-color: #ff3e3e; /* Vibrant red */
+    border-color: #ff3e3e;
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 0 0 15px rgba(255, 62, 62, 0.5);
 }
+
+.filter-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #ff3e3e; /* Matching underline color */
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.filter-btn:hover::after,
+.filter-btn.active::after {
+    transform: scaleX(1);
+}
+
+/* Pulsating effect for active buttons */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.filter-btn.active {
+    animation: pulse 2s infinite;
+}
+
 
