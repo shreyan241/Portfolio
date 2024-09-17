@@ -765,3 +765,30 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const visualizations = document.querySelectorAll('.visualization');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const vizId = button.getAttribute('data-visualization');
+
+            // Remove active class from all buttons
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+
+            // Hide all visualizations
+            visualizations.forEach(viz => viz.classList.remove('active'));
+
+            // Add active class to the clicked button
+            button.classList.add('active');
+
+            // Show the targeted visualization
+            const vizElement = document.getElementById(vizId);
+            if (vizElement) {
+                vizElement.classList.add('active');
+            }
+
+            // Additional logic for initializing or stopping visualizations can be added here
+        });
+    });
+});

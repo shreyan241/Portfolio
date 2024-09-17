@@ -43,6 +43,7 @@
 								<li><a href="#top" id="top-link"><span class="icon solid fa-school">Intro</span></a></li>
 								<li><a href="#projects" id="projects-link"><span class="icon solid fa-th">Projects</span></a></li>
 								<li><a href="#experience" id="experience-link"><span i class="icon solid fa-briefcase">Experience</span></a></li>
+                                <li><a href="#playground" id="playground-link"><span class="icon solid fa-brain">AI Playground</span></a></li>
 								<li><a href="#contact" id="contact-link"><span class="icon solid fa-comments">Contact</span></a></li>
 							</ul>
 						</nav>
@@ -415,8 +416,44 @@
                         </div>
                     </div>
                 </section>
+
+                <!-- Playground Section -->
+                <section id="playground" class="five dark">
+                    <div class="container">
+                        <header>
+                            <h2>AI Playground</h2>
+                            <p>Explore the world of <strong style="color: #00ffea;">AI</strong> through <strong style="color: #ff00ff;">interactive visualizations</strong>.</p>
+
+                        </header>
+
+                        <!-- Visualization Tabs -->
+                        <div class="visualization-tabs">
+                            <button class="tab-btn active" data-visualization="neural-network">Neural Network</button>
+                            <!-- Future buttons for additional visualizations -->
+                        </div>
+
+                        <!-- Visualization Containers -->
+                        <div class="visualization-container">
+                            <!-- Neural Network Visualization -->
+                            <div id="neural-network" class="visualization active">
+                                <canvas id="nnCanvas"></canvas>
+                                <canvas id="graphCanvas"></canvas>
+                                <div class="controls">
+                                    <button id="trainBtn">Train</button>
+                                    <button id="predictBtn">Predict</button>
+                                </div>
+                                <div class="stats">
+                                    <p>Epoch: <span id="epoch">0</span>/1000</p>
+                                    <p>MSE: <span id="loss">1.0</span></p>
+                                </div>
+                            </div>
+
+                            <!-- Placeholder for Future Visualizations -->
+                        </div>
+                    </div>
+                </section>
+
                 
-                        
 				<!-- Contact -->
 					<section id="contact" class="four">
 						<div class="container">
@@ -462,6 +499,8 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script src="assets/js/playground_nn.js"></script>
+
     
             <!-- Modal Structure -->
             <div id="demoModal" class="modal">
