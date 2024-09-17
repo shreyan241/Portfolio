@@ -3395,7 +3395,6 @@ ul {
     width: 100%; /* Always take full width */
     max-width: 97%; /* Limit max width for larger screens */
     height: 45%;
-    max-height: 400px; 
     margin: 15px 0;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 255, 234, 0.5);
