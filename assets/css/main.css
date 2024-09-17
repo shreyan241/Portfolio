@@ -3245,6 +3245,16 @@ ul {
 
 }
 
+/* Playground Section */
+#playground {
+    padding: 80px 0;
+    background-color: #000814;
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+    background: url('images/cosmos.jpg');
+}
+
 /* Cosmic Background Animation */
 #playground::before {
     content: '';
@@ -3265,7 +3275,7 @@ ul {
     width: 100%;
     height: 100%;
     background: url('images/cosmos.jpg');
-    opacity: 0.07; /* Increased opacity */
+    opacity: 0.07;
     z-index: -1;
 }
 
@@ -3274,17 +3284,17 @@ ul {
     text-align: center;
     margin-bottom: 20px;
     font-family: 'Poppins', sans-serif;
-    font-size: 3em; /* Increased font size */
-    color: #00ffea; /* Neon cyan */
-    background: linear-gradient(90deg, #ff00ff, #00ffea, #00ff00); /* Neon cosmic gradient */
-    background-clip: text; /* Standard property */
-    -webkit-background-clip: text; /* Vendor prefix for WebKit (Safari, Chrome) */
-    -moz-background-clip: text; /* Vendor prefix for Firefox */
-    -ms-background-clip: text; /* Vendor prefix for Microsoft browsers */
-    -o-background-clip: text; /* Vendor prefix for Opera */
-    -webkit-text-fill-color: transparent; /* Ensures gradient applies only to text */
-    text-shadow: 0px 0px 20px rgba(0, 255, 234, 0.7); /* Neon glow effect */
-    letter-spacing: 2px; /* Add some spacing for a cleaner look */
+    font-size: 3em;
+    color: #00ffea;
+    background: linear-gradient(90deg, #ff00ff, #00ffea, #00ff00);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -ms-background-clip: text;
+    -o-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0px 0px 20px rgba(0, 255, 234, 0.7);
+    letter-spacing: 2px;
 }
 
 #playground p {
@@ -3293,96 +3303,50 @@ ul {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.2em;
     color: #a1a1a1;
-    padding: 10px 20px; /* Add padding to make the paragraph stand out */
-    border-radius: 10px; /* Rounded edges for a cosmic UI feel */
-    box-shadow: 0px 0px 15px rgba(0, 255, 234, 0.3); /* Subtle glowing effect */
-}
-/* Visualization Tabs */
-.visualization-tabs {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px; /* Increased margin */
-}
-
-/* Tabs Styling - Cosmic Feel */
-.visualization-tabs .tab-btn {
-    background-color: rgba(30, 30, 50, 0.8); /* Deep cosmic background */
-    color: #ffffff;
-    border: none;
     padding: 10px 20px;
-    margin: 0 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-    font-family: 'Montserrat', sans-serif;
-    border-radius: 5px;
-    font-size: 1em;
-    box-shadow: 0px 0px 10px rgba(0, 255, 234, 0.2); /* Subtle glow around buttons */
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 255, 234, 0.3);
 }
 
-.visualization-tabs .tab-btn:hover,
-.visualization-tabs .tab-btn.active {
-    background-color: rgba(40, 40, 60, 0.9); /* Darker space-like background */
-    transform: scale(1.1); /* Slight hover scaling for interaction feel */
-    box-shadow: 0px 0px 20px rgba(0, 255, 234, 0.5); /* Neon glow on hover/active */
-    color: #00ffea; /* Highlight neon cyan on hover */
-}
-
-/* Optional: add a cosmic animation effect on hover for a subtle glow change */
-.visualization-tabs .tab-btn:hover {
-    animation: cosmicPulse 1.5s infinite ease-in-out;
-}
-
-/* Keyframe for cosmic pulse animation */
-@keyframes cosmicPulse {
-    0% {
-        box-shadow: 0 0 10px rgba(0, 255, 234, 0.3);
-    }
-    50% {
-        box-shadow: 0 0 20px rgba(0, 255, 234, 0.7);
-    }
-    100% {
-        box-shadow: 0 0 10px rgba(0, 255, 234, 0.3);
-    }
-}
 /* Visualization Containers */
 .visualization-container {
-    position: relative;
-    width: 100%;
-    height: 900px; /* Increased height */
-    background-color: rgba(0, 8, 20, 0.85);
-    border-radius: 20px; /* Increased border radius */
-    overflow: hidden;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.7); /* Enhanced box shadow */
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    background-color: rgba(0, 8, 20, 0.85);
+    border-radius: 20px;
+    overflow: hidden;
     background: url('images/cosmos.jpg');
     background-size: cover;
     background-position: center;
-    position: relative;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.7);
 }
 
 /* Canvases Styling */
 #nnCanvas, #graphCanvas {
-    width: 97%; /* Slightly increased width */
-    height: 45%; /* Slightly increased height */
-    margin: 15px 0; /* Same margin */
-    border-radius: 10px; /* Same border radius */
-    box-shadow: 0 0 20px rgba(0, 255, 234, 0.5); /* Glowing effect */
+    width: 100%; /* Always take full width */
+    max-width: 97%; /* Limit max width for larger screens */
+    height: 45%;
+    max-height: 400px; 
+    margin: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 255, 234, 0.5);
 }
 
-/* Specific styles for #nnCanvas */
 #nnCanvas {
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    border: 2px solid #ba51ee; /* Thinner neon pink border (use any preferred color) */
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 2px solid #ba51ee;
 }
 
-/* Specific styles for #graphCanvas */
 #graphCanvas {
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    border: 2px solid #00ffea; /* Thinner neon cyan border */
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 2px solid #00ffea;
 }
-
 
 /* Controls Styling */
 .controls {
@@ -3390,7 +3354,7 @@ ul {
     top: 20px;
     right: 20px;
     display: flex;
-    gap: 10px; /* Reduced gap for compactness */
+    gap: 10px;
     z-index: 1;
 }
 
@@ -3398,13 +3362,13 @@ ul {
     background-color: rgba(255, 255, 255, 0.1);
     color: #ffffff;
     border: 1px solid #ffffff;
-    padding: 8px 16px; /* Adjusted padding for compactness */
+    padding: 8px 16px;
     cursor: pointer;
-    border-radius: 5px; /* Increased border radius */
+    border-radius: 5px;
     transition: background-color 0.3s, transform 0.3s;
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.9em; /* Adjusted font size */
-    backdrop-filter: blur(5px); /* Adds a frosted glass effect */
+    font-size: 0.9em;
+    backdrop-filter: blur(5px);
 }
 
 .controls button:hover {
@@ -3412,7 +3376,6 @@ ul {
     transform: scale(1.05);
 }
 
-/* Stats Styling */
 /* Stats Styling */
 .stats {
     position: absolute;
@@ -3449,10 +3412,11 @@ ul {
 @media (max-width: 1024px) {
     .visualization-container {
         height: 700px;
+        flex-direction: column;
     }
 
     #nnCanvas, #graphCanvas {
-        width: 90%;
+        width: 95%;
         height: 40%;
     }
 
@@ -3471,6 +3435,54 @@ ul {
         font-size: 0.75em;
     }
 }
+
+/* Visualization Tabs */
+.visualization-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+/* Button Styling for Neural Network - Cosmic Feel */
+.visualization-tabs .tab-btn {
+    background-color: rgba(30, 30, 50, 0.8); /* Deep cosmic background */
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 5px;
+    font-size: 1em;
+    box-shadow: 0px 0px 10px rgba(0, 255, 234, 0.5); /* Cosmic glow */
+}
+
+.visualization-tabs .tab-btn:hover,
+.visualization-tabs .tab-btn.active {
+    background-color: rgba(40, 40, 60, 0.9); /* Darker space-like background */
+    transform: scale(1.1); /* Slight hover scaling */
+    box-shadow: 0px 0px 20px rgba(0, 255, 234, 0.8); /* Bright neon glow on hover */
+    color: #00ffea; /* Neon cyan text on hover */
+}
+
+/* Cosmic Pulse Effect */
+.visualization-tabs .tab-btn:hover {
+    animation: cosmicPulse 1.5s infinite ease-in-out;
+}
+
+@keyframes cosmicPulse {
+    0% {
+        box-shadow: 0 0 10px rgba(0, 255, 234, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 255, 234, 0.7);
+    }
+    100% {
+        box-shadow: 0 0 10px rgba(0, 255, 234, 0.3);
+    }
+}
+
 
 @media (max-width: 768px) {
     #playground h2 {
@@ -3501,3 +3513,22 @@ ul {
         font-size: 0.75em;
     }
 }
+
+@media (max-width: 480px) {
+    #nnCanvas, #graphCanvas {
+        width: 100%;
+        height: 30%; /* Reduced height for smaller screens */
+    }
+
+    .controls {
+        top: 10px;
+        right: 10px;
+    }
+
+    .stats {
+        top: 10px;
+        left: 10px;
+    }
+}
+
+

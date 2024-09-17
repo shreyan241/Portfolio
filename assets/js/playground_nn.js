@@ -448,3 +448,4 @@ document.addEventListener('DOMContentLoaded', () => {
     if (trainBtn) trainBtn.addEventListener('click', handleTrain);
     if (predictBtn) predictBtn.addEventListener('click', handlePredict);
 });
+
