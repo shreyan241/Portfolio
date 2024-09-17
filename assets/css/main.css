@@ -2110,6 +2110,7 @@ input, select, textarea {
 			font-weight: 600;
 			font-size: 1em;
 			line-height: 1em;
+            margin: 0;
 		}
 
 		#logo p {
@@ -2174,6 +2175,68 @@ input, select, textarea {
 					#nav ul li a.active span:before {
 						color: #e27689;
 					}
+                    @media (max-width: 768px) {
+                        /* Further adjustments for mobile */
+                        #logo {
+                            margin-bottom: 20px; /* Add more space below the logo */
+                            flex-direction: column; /* Stack logo vertically */
+                            align-items: center;
+                        }
+                    
+                        #logo .image {
+                            width: 40px;
+                            height: 40px; /* Further reduce image size */
+                            margin-bottom: 10px;
+                        }
+                    
+                        #logo h1 {
+                            font-size: 1.1em; /* Reduce font size for mobile */
+                        }
+                    
+                        #logo p {
+                            font-size: 0.75em; /* Reduce font size */
+                        }
+                    
+                        /* Stack the navigation items vertically */
+                        #nav ul {
+                            flex-direction: column;
+                            align-items: center;
+                        }
+                    
+                        #nav ul li {
+                            margin-bottom: 10px; /* Space between links */
+                        }
+                    
+                        #nav ul li a {
+                            padding: 0.7em 1em;
+                            font-size: 1em; /* Keep font size readable */
+                        }
+                    }
+                    
+                    @media (max-width: 480px) {
+                        /* Adjustments for very small screens */
+                        #logo {
+                            margin: 1em 0; /* Reduce margin */
+                        }
+                    
+                        #logo .image {
+                            width: 35px;
+                            height: 35px;
+                        }
+                    
+                        #logo h1 {
+                            font-size: 1em;
+                        }
+                    
+                        #logo p {
+                            font-size: 0.7em;
+                        }
+                    
+                        #nav ul li a {
+                            padding: 0.5em 0.9em;
+                            font-size: 0.9em;
+                        }
+                    }
 
 /* Footer */
 
