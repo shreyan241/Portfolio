@@ -300,11 +300,11 @@ class NeuralNetwork {
         if (type === 'training') {
             color = '#ffae00'; // Amber for training curve
             lineStyle = 'dashed';
-            labelPositionY = 60;
+            labelPositionY = 120;
         } else if (type === 'final') {
             color = '#00ff00'; // Space green for final prediction
             lineStyle = 'dotted';
-            labelPositionY = 90;
+            labelPositionY = 120;
         }
 
         // Clear previous training curve or prepare for final prediction
@@ -349,7 +349,7 @@ class NeuralNetwork {
         if (type === 'training') {
             this.graphCtx.fillStyle = color;
             this.graphCtx.font = '14px Montserrat'; // Reduced font size
-            this.graphCtx.fillText('Training Curve', 10, labelPositionY);
+            this.graphCtx.fillText('Learned Function', 10, labelPositionY);
         } else if (type === 'final') {
             this.graphCtx.fillStyle = color;
             this.graphCtx.font = '14px Montserrat'; // Reduced font size
