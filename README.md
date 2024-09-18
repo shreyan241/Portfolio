@@ -1,5 +1,7 @@
 # Shreyan Sood - Portfolio
 
+Link: (https://shreyan241.github.io/Portfolio/)[https://shreyan241.github.io/Portfolio/]
+
 This website highlights my skills, experience, and projects in **AI** and **Data Science**. It also features interactive AI visualizations and a showcase of my professional and personal work.
 
 ## Sections
