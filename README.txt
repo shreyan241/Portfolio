@@ -1,9 +1,10 @@
-#Shreyan Sood - Portfolio
-This portfolio website showcases my skills, experience, and projects in AI and Data Science. It includes interactive AI visualizations and a collection of professional and personal work.
+# Shreyan Sood - Portfolio
 
-##Sections
-Intro: Quick introduction about me.
-Projects: Highlights of key projects in AI, Data Science, and Machine Learning.
-Experience: Summary of my professional background and internships.
-AI Playground: Interactive visualizations.
-Contact: Send me a message.
+This website highlights my skills, experience, and projects in **AI** and **Data Science**. It also features interactive AI visualizations and a showcase of my professional and personal work.
+
+## Sections
+- **Intro**: Brief introduction about me.
+- **Projects**: Key projects in **AI**, **Data Science**, and **Machine Learning**.
+- **Experience**: Overview of my professional background and internships.
+- **AI Playground**: Interactive AI visualizations.
+- **Contact**: Reach out via the contact form.
