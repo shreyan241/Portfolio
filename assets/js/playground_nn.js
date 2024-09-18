@@ -2,12 +2,13 @@ class Neuron {
     constructor(x, y, layerIndex, neuronIndex) {
         this.x = x;
         this.y = y;
-        this.radius = 15;
+        this.radius = 11;
         this.activation = 0;
         this.layerIndex = layerIndex;
         this.neuronIndex = neuronIndex;
         this.delta = 0; // For backpropagation
-        this.hue = 210; // Start with blue hue
+        this.hue = 200; // Start with blue hue
+        this.pulsating = false; // New property to control pulsation
     }
 
     draw(ctx) {
@@ -16,9 +17,12 @@ class Neuron {
         const alpha = 0.5 + this.activation * 0.5;
         const hueShift = this.hue + this.activation * 60; // Shifts hue with activation
 
+        // Only add pulsating effect if training has started (pulsating is true)
+        const pulsate = this.pulsating ? Math.sin(Date.now() / 500) * 2 : 0;
+
         // Draw neuron with pulsating glow
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius + Math.sin(Date.now() / 500) * 2, 0, Math.PI * 2); // Slight pulsating effect
+        ctx.arc(this.x, this.y, this.radius + pulsate, 0, Math.PI * 2); // Pulsating starts only when enabled
         ctx.fillStyle = `hsla(${hueShift}, 100%, ${brightness}%, ${alpha})`;
         ctx.shadowBlur = 30 * this.activation; // Enhanced glow
         ctx.shadowColor = `hsla(${hueShift}, 100%, ${brightness}%, ${alpha})`;
@@ -26,6 +30,7 @@ class Neuron {
         ctx.shadowBlur = 0;
     }
 }
+
 
 
 class Connection {
@@ -423,9 +428,16 @@ function handleTrain() {
     if (neuralNetwork) {
         document.getElementById('trainBtn').disabled = true;
         document.getElementById('predictBtn').disabled = true;
+        
+        // Activate pulsation for all neurons
+        neuralNetwork.neurons.forEach(neuron => {
+            neuron.pulsating = true; // Enable pulsation when training starts
+        });
+
         neuralNetwork.train();
     }
 }
+
 
 // Handle Predict Button Click
 function handlePredict() {
