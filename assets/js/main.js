@@ -227,7 +227,7 @@ const idleThreshold = 10000; // 10 seconds of no movement
 let angle = 0;
 const maxSnakeLength = 50; // Reduced max length
 // let allPointsEaten = false;
-const numPoints = 60
+const numPoints = 50
 
 function generatePoints() {
     const margin = 20; // Margin from the edges of the canvas
@@ -654,25 +654,79 @@ function countVisiblePoints() {
     return points.filter(point => !point.eaten).length;
 }
 
-// Modify the drawScore function to include the win message and point count
 function drawScore() {
     const visiblePoints = countVisiblePoints();
 
-    ctx.fillStyle = 'rgb(255, 0, 0)';
-    ctx.font = 'bold 24px Arial';
+    // **Draw the Score**
+    // Create a gradient for the score text
+    const scoreGradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+    scoreGradient.addColorStop(0, 'rgb(255, 140, 0)'); // Dark Orange
+    scoreGradient.addColorStop(1, 'rgb(255, 215, 0)'); // Gold
+
+    ctx.fillStyle = scoreGradient;
+    ctx.font = 'bold 28px Arial'; // Increased font size for prominence
     ctx.textAlign = 'right';
-    ctx.fillText(`Score: ${score}`, canvas.width - 20, 40);
+    ctx.textBaseline = 'top';
+    
+    // Add subtle shadow to the score text
+    ctx.shadowBlur = 4;
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+    
+    ctx.fillText(`Score: ${score}`, canvas.width - 20, 20);
+    
+    // Reset shadow settings
+    ctx.shadowBlur = 0;
 
+    // **Draw the Win Message**
+    // **Draw the Win Message**
     if (visiblePoints === 0) {
-        ctx.fillStyle = 'rgb(0, 255, 0)'; // Green color for the win message
-        ctx.font = 'bold 28px Arial';
-        ctx.textAlign = 'right';
-        ctx.fillText('Congrats! You Won!', canvas.width - 20, 75);
-        // ctx.fillText('Now Hire Me!', canvas.width - 20, 110);
-    }
+        // Create a pulsating effect for the win message
+        const time = Date.now() * 0.005; // Adjust the multiplier for speed of pulsation
+        const pulse = Math.sin(time) * 5 + 30; // Pulse size between 10 and 20 for subtlety
 
-    ctx.textAlign = 'left';
+        // Create a vibrant radial gradient for the win message
+        const winGradient = ctx.createRadialGradient(
+            canvas.width - 20, 60, pulse - 5, // Inner circle
+            canvas.width - 20, 60, pulse      // Outer circle
+        );
+        winGradient.addColorStop(0, 'rgba(0, 255, 0, 1)');    // Bright Green at center
+        winGradient.addColorStop(0.5, 'rgba(0, 255, 0, 0.8)'); // Slightly transparent
+        winGradient.addColorStop(1, 'rgba(0, 128, 0, 0.6)');    // Dark Green at edges
+
+        ctx.fillStyle = winGradient;
+        ctx.font = 'bold 36px Arial'; // Increased font size for emphasis
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'top';
+
+        // Add enhanced glow effect to the win message
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = 'rgba(0, 255, 0, 0.8)'; // Stronger green glow
+
+        // Draw the main win message
+        ctx.fillText('You Won!', canvas.width - 20, 60);
+        
+        // **Add a Shining Effect**
+        // Create a linear gradient to simulate a shine
+        const shineGradient = ctx.createLinearGradient(
+            canvas.width - 60, 60, 
+            canvas.width - 40, 80
+        );
+        shineGradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)'); // White shine
+        shineGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');   // Transparent
+
+        ctx.fillStyle = shineGradient;
+        ctx.font = 'bold 36px Arial';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'top';
+        
+        // Draw the shine overlay
+        ctx.fillText('You Won!', canvas.width - 20, 60);
+
+        // Reset shadow settings to avoid affecting other drawings
+        ctx.shadowBlur = 0;
+    }
 }
+
 
 function draw(timestamp) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
