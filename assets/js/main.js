@@ -260,9 +260,9 @@ function drawRegressionLine(timestamp) {
     progress = Math.min(canvas.width, (elapsedTime / regressionDuration) * canvas.width);
 
     const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-    gradient.addColorStop(0, 'rgba(173, 216, 230, 0.85)');
-    gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.85)');
-    gradient.addColorStop(1, 'rgba(240, 128, 128, 0.85)');
+    gradient.addColorStop(0, 'rgba(173, 216, 230, 0.85)'); // Light Blue
+    gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.85)'); // White
+    gradient.addColorStop(1, 'rgba(240, 128, 128, 0.85)'); // Light Coral
 
     ctx.strokeStyle = gradient;
     ctx.lineWidth = 3;
@@ -273,7 +273,7 @@ function drawRegressionLine(timestamp) {
 
     for (let x = 0; x <= progress; x++) {
         const normalizedX = x / canvas.width - 0.5;
-        const y = canvas.height / 2 + amplitude * Math.sin(frequency * x) * Math.exp(-Math.pow(normalizedX * 2, 2));
+        const y = canvas.height / 2 + amplitude * Math.sin(frequency * x * 3) * Math.exp(-Math.pow(normalizedX * 2, 2));
 
         if (x === 0) {
             ctx.moveTo(x, y);
@@ -290,6 +290,7 @@ function drawRegressionLine(timestamp) {
     }
 }
 
+
 let particles = [];
 
 class Particle {
@@ -298,24 +299,29 @@ class Particle {
         this.y = y;
         this.color = color;
         this.size = Math.random() * 3 + 2;
-        this.speedX = Math.random() * 3 - 1.5;
-        this.speedY = Math.random() * 3 - 1.5;
-        this.life = 30;
+        this.speedX = Math.random() * 4 - 2;
+        this.speedY = Math.random() * 4 - 2;
+        this.gravity = 0.05;
+        this.life = 60; // Increased life for longer particles
+        this.opacity = 1;
     }
 
     update() {
         this.x += this.speedX;
         this.y += this.speedY;
+        this.speedY += this.gravity;
         this.life--;
+        this.opacity = this.life / 60; // Fade out
     }
 
     draw(ctx) {
-        ctx.fillStyle = this.color;
+        ctx.fillStyle = `rgba(${this.color.match(/\d+/g).slice(0, 3).join(',')}, ${this.opacity})`;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
     }
 }
+
 
 function createParticles(x, y, color, amount) {
     for (let i = 0; i < amount; i++) {
@@ -415,16 +421,26 @@ function updateSnake(timestamp) {
 }
 
 function drawSnake() {
-    // Create gradient for snake body
-    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-    gradient.addColorStop(0, 'rgba(255, 215, 0, 0.8)');    // Gold
-    gradient.addColorStop(0.5, 'rgba(50, 205, 50, 0.8)');  // Lime green
-    gradient.addColorStop(1, 'rgba(30, 144, 255, 0.8)');   // Dodger blue
+    // Dynamic Gradient Animation based on Time
+    const time = Date.now() * 0.05; // Adjust the multiplier for speed of color shift
+    const hue = (time % 360); // Hue value cycles between 0 and 360
+
+    // Create a linear gradient along the snake's body
+    const gradient = ctx.createLinearGradient(
+        snake[snake.length - 1].x, snake[snake.length - 1].y, 
+        snake[0].x, snake[0].y
+    );
+    gradient.addColorStop(0, `hsl(${hue}, 100%, 50%)`); // Dynamic color at tail
+    gradient.addColorStop(1, `hsl(${(hue + 60) % 360}, 100%, 50%)`); // Dynamic color at head
 
     ctx.strokeStyle = gradient;
-    ctx.lineWidth = 5;
+    ctx.lineWidth = 6; // Adjusted for better visibility
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
+
+    // Subtle Glow Effect
+    ctx.shadowBlur = 8; // Reduced from 10 to make it less harsh
+    ctx.shadowColor = `hsla(${hue}, 100%, 50%, 0.3)`; // Matching hue with lower opacity
 
     ctx.beginPath();
     ctx.moveTo(snake[0].x, snake[0].y);
@@ -442,50 +458,224 @@ function drawSnake() {
             y: current.y + (next.y - prev.y) / 4
         };
 
-        ctx.bezierCurveTo(controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, current.x, current.y);
+        ctx.bezierCurveTo(
+            controlPoint1.x, controlPoint1.y,
+            controlPoint2.x, controlPoint2.y,
+            current.x, current.y
+        );
     }
     ctx.stroke();
 
-    // Draw snake head
+    // Reset shadow settings to prevent affecting other drawings
+    ctx.shadowBlur = 0;
+
+    // Tail Fading Effect
+    drawSnakeTail();
+
+    // Draw Snake Head with Consistent Color Scheme
+    drawSnakeHead(hue);
+}
+
+function drawSnakeHead(hue) {
+    // Create a radial gradient for the snake head
     const headGradient = ctx.createRadialGradient(
         snake[0].x, snake[0].y, 0,
-        snake[0].x, snake[0].y, 8
+        snake[0].x, snake[0].y, 12
     );
-    headGradient.addColorStop(0, 'rgba(255, 255, 0, 1)');     // Bright yellow center
-    headGradient.addColorStop(1, 'rgba(255, 140, 0, 0.8)');   // Dark orange edge
+    headGradient.addColorStop(0, `hsl(${(hue + 30) % 360}, 100%, 70%)`);   // Slightly shifted hue
+    headGradient.addColorStop(1, `hsla(${(hue + 30) % 360}, 100%, 50%, 0.6)`); // Faded hue
 
     ctx.fillStyle = headGradient;
+    ctx.shadowBlur = 5; // Reduced shadow blur for subtlety
+    ctx.shadowColor = `hsla(${hue}, 100%, 50%, 0.2)`; // Matching hue with lower opacity
+
     ctx.beginPath();
-    ctx.arc(snake[0].x, snake[0].y, 8, 0, Math.PI * 2);
+    ctx.arc(snake[0].x, snake[0].y, 12, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Reset shadow settings
+    ctx.shadowBlur = 0;
+
+    // Optional: Add a simple eye for character
+    drawSnakeHeadFeatures();
+}
+
+function drawSnakeHeadFeatures() {
+    // Draw a simple eye
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)'; // White eye
+    ctx.beginPath();
+    ctx.arc(snake[0].x + 4, snake[0].y - 4, 3, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.8)'; // Black pupil
+    ctx.beginPath();
+    ctx.arc(snake[0].x + 4, snake[0].y - 4, 1.5, 0, Math.PI * 2);
     ctx.fill();
 }
 
-function drawControls() {
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-    ctx.fillRect(10, 20, 220, 120);
-    ctx.strokeStyle = 'rgb(255, 255, 255)';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(10, 20, 220, 120);
+function drawSnakeTail() {
+    // Create a fading effect for the tail
+    for (let i = snake.length - 1; i > snake.length - 10 && i >= 0; i--) {
+        const segment = snake[i];
+        const alpha = (snake.length - i) / 10; // Fading alpha
+        ctx.fillStyle = `hsla(180, 100%, 70%, ${alpha * 0.6})`; // Light Turquoise with fading
+        ctx.beginPath();
+        ctx.arc(segment.x, segment.y, 4, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
 
-    ctx.fillStyle = 'rgb(255, 255, 255)';
-    ctx.font = 'bold 18px Arial';
-    ctx.fillText('Controls:', 20, 35);
-    ctx.font = '16px Arial';
+// function drawControls() {
+//     ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+//     ctx.fillRect(10, 20, 220, 120);
+//     ctx.strokeStyle = 'rgb(255, 255, 255)';
+//     ctx.lineWidth = 2;
+//     ctx.strokeRect(10, 20, 220, 120);
+
+//     ctx.fillStyle = 'rgb(255, 255, 255)';
+//     ctx.font = 'bold 18px Arial';
+//     ctx.fillText('Controls:', 20, 35);
+//     ctx.font = '16px Arial';
     
+//     const controls = [
+//         { key: '↑', action: 'Move Up' },
+//         { key: '↓', action: 'Move Down' },
+//         { key: '←', action: 'Move Left' },
+//         { key: '→', action: 'Move Right' }
+//     ];
+
+//     controls.forEach((control, index) => {
+//         ctx.fillStyle = 'rgb(255, 255, 0)';
+//         ctx.fillText(control.key, 20, 60 + index * 25);
+//         ctx.fillStyle = 'rgb(255, 255, 255)';
+//         ctx.fillText(control.action, 50, 60 + index * 25);
+//     });
+// }
+
+function drawControls() {
+    // Define control panel dimensions
+    const panelWidth = 250;
+    const panelHeight = 155;
+    const panelX = 10;
+    const panelY = 10;
+    const borderRadius = 15;
+
+    // Create a linear gradient for the control panel background
+    const panelGradient = ctx.createLinearGradient(panelX, panelY, panelX + panelWidth, panelY + panelHeight);
+    panelGradient.addColorStop(0, 'rgba(34, 34, 34, 0.9)'); // Dark gray
+    panelGradient.addColorStop(1, 'rgba(51, 51, 51, 0.9)'); // Slightly lighter gray
+
+    // Draw rounded rectangle for the control panel
+    ctx.fillStyle = panelGradient;
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)'; // White border with opacity
+    ctx.lineWidth = 2;
+    drawRoundedRectangle(ctx, panelX, panelY, panelWidth, panelHeight, borderRadius);
+    ctx.fill();
+    ctx.stroke();
+
+    // Optional: Add subtle shadow for depth
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+    drawRoundedRectangle(ctx, panelX, panelY, panelWidth, panelHeight, borderRadius);
+    ctx.strokeStyle = 'transparent'; // No additional stroke
+    ctx.stroke();
+    ctx.shadowBlur = 0; // Reset shadow
+
+    // Set font styles
+    ctx.font = 'bold 20px Arial';
+    ctx.fillStyle = '#FFFFFF'; // White color for text
+    ctx.textBaseline = 'top';
+    ctx.textAlign = 'left';
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+    ctx.shadowBlur = 2;
+
+    // Title
+    ctx.fillText('Controls:', panelX + 25, panelY + 15);
+
+    // Reset shadow settings for subsequent text
+    ctx.shadowBlur = 0;
+
+    // Define controls with stylized arrows
     const controls = [
-        { key: '↑', action: 'Move Up' },
-        { key: '↓', action: 'Move Down' },
-        { key: '←', action: 'Move Left' },
-        { key: '→', action: 'Move Right' }
+        { direction: 'up', key: '↑', action: 'Move Up' },
+        { direction: 'down', key: '↓', action: 'Move Down' },
+        { direction: 'left', key: '←', action: 'Move Left' },
+        { direction: 'right', key: '→', action: 'Move Right' }
     ];
 
+    // Draw each control
     controls.forEach((control, index) => {
-        ctx.fillStyle = 'rgb(255, 255, 0)';
-        ctx.fillText(control.key, 20, 60 + index * 25);
-        ctx.fillStyle = 'rgb(255, 255, 255)';
-        ctx.fillText(control.action, 50, 60 + index * 25);
+        const spacingY = 30;
+        const startY = panelY + 50;
+        const currentY = startY + index * spacingY;
+
+        // Draw stylized arrow
+        drawStylizedArrow(ctx, panelX + 30, currentY , control.direction);
+
+        // Draw action text
+        ctx.font = '16px Arial';
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillText(control.action, panelX + 60, currentY - 6);
     });
 }
+
+// Helper function to draw rounded rectangles
+function drawRoundedRectangle(ctx, x, y, width, height, radius) {
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
+}
+
+// Helper function to draw stylized arrows
+function drawStylizedArrow(ctx, x, y, direction) {
+    ctx.save();
+    ctx.translate(x, y);
+
+    // Define arrow size
+    const arrowSize = 15;
+
+    // Set arrow color
+    ctx.fillStyle = '#FFD700'; // Gold color
+
+    ctx.beginPath();
+    switch(direction) {
+        case 'up':
+            ctx.moveTo(0, -arrowSize / 2);
+            ctx.lineTo(-arrowSize / 2, arrowSize / 2);
+            ctx.lineTo(arrowSize / 2, arrowSize / 2);
+            ctx.closePath();
+            break;
+        case 'down':
+            ctx.moveTo(0, arrowSize / 2);
+            ctx.lineTo(-arrowSize / 2, -arrowSize / 2);
+            ctx.lineTo(arrowSize / 2, -arrowSize / 2);
+            ctx.closePath();
+            break;
+        case 'left':
+            ctx.moveTo(-arrowSize / 2, 0);
+            ctx.lineTo(arrowSize / 2, -arrowSize / 2);
+            ctx.lineTo(arrowSize / 2, arrowSize / 2);
+            ctx.closePath();
+            break;
+        case 'right':
+            ctx.moveTo(arrowSize / 2, 0);
+            ctx.lineTo(-arrowSize / 2, -arrowSize / 2);
+            ctx.lineTo(-arrowSize / 2, arrowSize / 2);
+            ctx.closePath();
+            break;
+    }
+    ctx.fill();
+    ctx.restore();
+}
+
 
 function countVisiblePoints() {
     return points.filter(point => !point.eaten).length;
@@ -581,8 +771,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const context = canvas.getContext('2d');
 
     // Set canvas size to match the window
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    resizeCanvas();
 
     // Meteor object definition
     class Meteor {
@@ -594,15 +788,27 @@ document.addEventListener('DOMContentLoaded', () => {
             // Random starting position across the sky
             this.x = Math.random() * canvas.width;
             this.y = Math.random() * canvas.height * 0.5; // Keep meteors in the upper half of the canvas
-            this.length = Math.random() * 60 + 30; // Shorter meteors
-            this.speed = Math.random() * 0.15 + 0.05; // Slower speed
-            this.angle = Math.random() * (Math.PI / 3) + (Math.PI / 6); // Random angle
+            this.length = Math.random() * 80 + 20; // Varied trail lengths
+            this.speed = Math.random() * 0.3 + 0.1; // Varied speed
+            this.angle = Math.random() * (Math.PI / 4) + (Math.PI / 6); // Random angle
             this.opacity = 1; // Start fully visible
-            this.fadeRate = 0.005; // Slow fade rate for demure effect
+            this.fadeRate = 0.005; // Slow fade rate
             this.width = Math.random() * 2 + 1; // Thin meteor trails
-            this.color = 'rgba(255, 165, 0, 1)'; // Darker golden color
+            this.color = this.getRandomColor(); // Vibrant color
             this.direction = Math.random() < 0.5 ? 1 : -1; // Random left-to-right or right-to-left
             this.hasFaded = false; // Track fading status
+        }
+
+        getRandomColor() {
+            // Generate a random vibrant color
+            const colors = [
+                'rgba(255, 69, 0, 1)',    // Orange Red
+                'rgba(255, 140, 0, 1)',   // Dark Orange
+                'rgba(255, 215, 0, 1)',   // Gold
+                'rgba(173, 216, 230, 1)', // Light Blue
+                'rgba(138, 43, 226, 1)'   // Blue Violet
+            ];
+            return colors[Math.floor(Math.random() * colors.length)];
         }
 
         update() {
@@ -611,13 +817,8 @@ document.addEventListener('DOMContentLoaded', () => {
             this.y += Math.sin(this.angle) * this.speed;
             this.opacity -= this.fadeRate; // Gradually fade out
 
-            // Mark the meteor as having faded when the opacity is very low
-            if (this.opacity <= 0.1 && !this.hasFaded) {
-                this.hasFaded = true;
-            }
-
             // Reset the meteor if it fades out completely or moves off-screen
-            if (this.opacity <= 0 || this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+            if (this.opacity <= 0 || this.x < -this.length || this.x > canvas.width + this.length || this.y < 0 || this.y > canvas.height) {
                 this.reset();
             }
         }
@@ -630,13 +831,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.y
             );
 
-            // Start with a darker, richer golden color and fade toward the tail
-            gradient.addColorStop(0, 'rgba(218, 165, 32, 0)'); // End of the tail (fading away)
-            gradient.addColorStop(0.7, `rgba(218, 165, 32, ${this.opacity})`); // Mid section (faded)
-            gradient.addColorStop(1, `rgba(255, 140, 0, ${this.opacity * 1.5})`); // Brighter head
+            // Smooth gradient from transparent to vibrant color
+            gradient.addColorStop(0, `rgba(255, 255, 255, 0)`); // Transparent tail
+            gradient.addColorStop(0.5, `rgba(255, 255, 255, ${this.opacity * 0.7})`); // Mid trail
+            gradient.addColorStop(1, `${this.color.replace('1)', `${this.opacity})`)}`); // Vibrant head
 
             context.strokeStyle = gradient;
             context.lineWidth = this.width;
+            context.shadowBlur = 10; // Subtle glow
+            context.shadowColor = this.color;
             context.beginPath();
             context.moveTo(this.x, this.y);
             context.lineTo(
@@ -644,21 +847,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.y - Math.sin(this.angle) * this.length
             );
             context.stroke();
+            context.shadowBlur = 0;
         }
     }
 
     // Create an array for meteors
     let meteors = [];
 
-    // Function to spawn meteors less frequently (every 6-8 seconds)
+    // Function to spawn meteors less frequently (every 4-6 seconds)
     setInterval(() => {
-        if (meteors.length < 3) { // Limit the number of meteors on screen
+        if (meteors.length < 4) { // Limit the number of meteors on screen to 4
             meteors.push(new Meteor());
         }
     }, Math.random() * 2000 + 4000); // Spawn every 4-6 seconds
 
     function animate() {
-        // Clear the canvas
+        // Clear the canvas completely to prevent darkening the background
         context.clearRect(0, 0, canvas.width, canvas.height);
 
         // Draw and update meteors
@@ -681,10 +885,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Adjust the canvas size when the window is resized
     window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        resizeCanvas();
     });
 })();
+
 
 document.addEventListener('DOMContentLoaded', function () {
     // Get modal elements
