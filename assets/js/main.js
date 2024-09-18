@@ -525,33 +525,6 @@ function drawSnakeTail() {
     }
 }
 
-// function drawControls() {
-//     ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-//     ctx.fillRect(10, 20, 220, 120);
-//     ctx.strokeStyle = 'rgb(255, 255, 255)';
-//     ctx.lineWidth = 2;
-//     ctx.strokeRect(10, 20, 220, 120);
-
-//     ctx.fillStyle = 'rgb(255, 255, 255)';
-//     ctx.font = 'bold 18px Arial';
-//     ctx.fillText('Controls:', 20, 35);
-//     ctx.font = '16px Arial';
-    
-//     const controls = [
-//         { key: '↑', action: 'Move Up' },
-//         { key: '↓', action: 'Move Down' },
-//         { key: '←', action: 'Move Left' },
-//         { key: '→', action: 'Move Right' }
-//     ];
-
-//     controls.forEach((control, index) => {
-//         ctx.fillStyle = 'rgb(255, 255, 0)';
-//         ctx.fillText(control.key, 20, 60 + index * 25);
-//         ctx.fillStyle = 'rgb(255, 255, 255)';
-//         ctx.fillText(control.action, 50, 60 + index * 25);
-//     });
-// }
-
 function drawControls() {
     // Define control panel dimensions
     const panelWidth = 250;
