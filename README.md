@@ -7,4 +7,4 @@ This website highlights my skills, experience, and projects in **AI** and **Data
 - **Projects**: Key projects in **AI**, **Data Science**, and **Machine Learning**.
 - **Experience**: Overview of my professional background and internships.
 - **AI Playground**: Interactive AI visualizations.
-- **Contact**: Reach out via the contact form.
+- **Contact**: Reach out to me via the contact form.
