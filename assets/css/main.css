@@ -3044,8 +3044,8 @@ ul {
     border-radius: 50%;
 }
 
-/* Hide the gif initially */
-.rubiks-gif {
+/* Hide the gifs initially */
+.rubiks-gif, .grammar-gif {
     display: none;
     max-width: 100%;
     height: auto;
@@ -3059,6 +3059,21 @@ ul {
     color: #007BFF;
     font-size: 14px;
     margin-top: 10px;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .toggle-btn:hover {

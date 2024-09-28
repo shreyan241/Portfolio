@@ -920,19 +920,26 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', function () {
     // Get modal elements
     const modal = document.getElementById('demoModal');
+    const modalImg = document.getElementById('demoGifInModal');
+    const demoButtons = document.querySelectorAll('.demo-btn');
     const closeBtn = document.querySelector('.close-btn');
 
-    // Open modal on demo button click
-    document.querySelectorAll('.demo-btn').forEach(demoBtn => {
-        demoBtn.addEventListener('click', function () {
-            modal.style.display = 'flex'; // Show the modal (flex for centering)
-        });
+    demoButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const demoType = this.getAttribute('data-demo');
+            let gifSrc;
+            
+            if (demoType === 'rubiks') {
+                gifSrc = 'demos/rubiks.gif';
+            } else if (demoType === 'grammar') {
+                gifSrc = 'demos/grammar.gif';
+            }
+        // Add more conditions for other demos as needed
+        
+        modalImg.src = gifSrc;
+        modal.style.display = 'block';
     });
-
-    // Close the modal when the close button is clicked
-    closeBtn.addEventListener('click', function () {
-        modal.style.display = 'none';
-    });
+});
 
     // Close the modal when the user clicks outside the modal content
     window.addEventListener('click', function (event) {

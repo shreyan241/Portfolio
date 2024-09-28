@@ -125,10 +125,10 @@
                                         <img src="images/rubiks.png" alt="" />
                                     </a>
                                     <header>
-                                        <h3>Rubik’s Cube 3D visualizer and Deep Reinforcement Learning Solver</h3>
-                                        <button class="demo-btn">Demo</button>
+                                        <h3>Rubik's Cube 3D visualizer and Deep Reinforcement Learning Solver</h3>
+                                        <button class="demo-btn" data-demo="rubiks">Demo</button>
                                         <div class="gif-container">
-                                            <img id="rubiksCubeGif" src="demos/rubiks.gif" alt="Rubik's Cube Solver Demo" class="rubiks-gif">
+                                            <img id="rubiksGif" src="demos/rubiks.gif" alt="Rubik's Cube Solver Demo" class="rubiks-gif">
                                         </div>
                                         <span class="toggle-btn">More Info</span>
                                         <div class="more-info">
@@ -140,8 +140,32 @@
                                     </header>
                                 </article>
                             </div>
-                            
+
                             <!-- Project Item 2 -->
+                            <div class="col-4 col-12-mobile">
+                                <article class="item project-card" data-tags="NLP, Generative AI">
+                                    <a target="_blank" href="https://github.com/shreyan241/gpt-grammar-corrector" class="image fit">
+                                        <img src="images/grammar-gui.png" alt="" />
+                                    </a>
+                                    <header>
+                                        <h3>GPT based Grammar Corrector GUI App</h3>
+                                        <button class="demo-btn" data-demo="grammar">Demo</button>
+                                        <div class="gif-container">
+                                            <img id="grammarGif" src="demos/grammar.gif" alt="GPT Grammar Corrector Demo" class="grammar-gif">
+                                        </div>
+                                        <span class="toggle-btn">More Info</span>
+                                        <div class="more-info">
+                                            <ul>
+                                                <li>Developed a GUI application for grammar correction using GPT with customizable prompts and English language variant support.</li>
+                                                <li>Implemented real-time async text processing, correction features, and document-specific prompts.</li>
+                                                <li>Integrated context window management for improved performance and rate limiting for API usage optimization.</li>
+                                            </ul>
+                                        </div>
+                                    </header>
+                                </article>
+                            </div>
+
+                            <!-- Project Item 3 -->
                             <div class="col-4 col-12-mobile">
                                 <article class="item project-card" data-tags="NLP, Deep Learning, Generative AI">
                                     <a target="_blank" href="https://huggingface.co/Medilora/Medilora-Mistral-7B/tree/main" class="image fit">
@@ -160,7 +184,7 @@
                                 </article>
                             </div>
 
-                            <!-- Project Item 3 -->
+                            <!-- Project Item 4 -->
                             <div class="col-4 col-12-mobile">
                                 <article class="item project-card" data-tags="Computer Vision, Deep Learning, Generative AI">
                                     <a target="_blank" href="https://github.com/shreyan241/image-outpainting-sagan" class="image fit">
@@ -179,7 +203,7 @@
                                 </article>
                             </div>
                             
-                            <!-- Project Item 4 -->
+                            <!-- Project Item 5 -->
                             <div class="col-4 col-12-mobile">
                                 <article class="item project-card" data-tags="Interpretable AI, Machine Learning">
                                     <a target="_blank" href="https://github.com/shreyan241/DSC-261-FINAL" class="image fit">
@@ -198,7 +222,7 @@
                                 </article>
                             </div>
                             
-                            <!-- Project Item 5 -->
+                            <!-- Project Item 6 -->
                             <div class="col-4 col-12-mobile">
                                 <article class="item project-card" data-tags="Machine Learning, Financial Modelling, Time Series Analysis">
                                     <a target="_blank" href="https://link.springer.com/chapter/10.1007/978-981-19-6631-6_34" class="image fit">
@@ -217,7 +241,7 @@
                                 </article>
                             </div>
                             
-                            <!-- Project Item 6 -->
+                            <!-- Project Item 7 -->
                             <div class="col-4 col-12-mobile">
                                 <article class="item project-card" data-tags="Machine Learning, Sports Analytics">
                                     <a target="_blank" href="https://github.com/shreyan241/DSC-241-Soccer-TDA" class="image fit">
@@ -236,7 +260,7 @@
                                 </article>
                             </div>
                             
-                            <!-- Project Item 7 -->
+                            <!-- Project Item 8 -->
                             <div class="col-4 col-12-mobile">
                                 <article class="item project-card" data-tags="Time Series Analysis, Causal Inference">
                                     <a target="_blank" href="https://drive.google.com/file/d/1rcIzcATkgwsguCx66nUQF98aj6xKxwmk/view?usp=sharing" class="image fit">
@@ -255,7 +279,7 @@
                                 </article>
                             </div>
                             
-                            <!-- Project Item 8 -->
+                            <!-- Project Item 9 -->
                             <div class="col-4 col-12-mobile">
                                 <article class="item project-card" data-tags="Computer Vision, Image Processing, Deep Learning">
                                     <a target="_blank" href="https://ieeexplore.ieee.org/document/9591673" class="image fit" style="display: flex; justify-content: center;">
@@ -506,9 +530,33 @@
             <div id="demoModal" class="modal">
                 <div class="modal-content">
                     <span class="close-btn">&times;</span>
-                    <img id="rubiksCubeGifInModal" src="demos/rubiks.gif" alt="Rubik's Cube Solver Demo" class="modal-gif">
+                    <img id="demoGifInModal" src="" alt="Demo GIF" class="modal-gif">
                 </div>
             </div>
+
+            <script>
+                // Get the modal
+                var modal = document.getElementById("demoModal");
+
+                // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close-btn")[0];
+
+                // When the user clicks on <span> (x), close the modal
+                span.onclick = function() {
+                    modal.style.display = "none";
+                    var gif = document.getElementById("demoGifInModal");
+                    gif.src = ""; // Reset the gif src when closing
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                        var gif = document.getElementById("demoGifInModal");
+                        gif.src = ""; // Reset the gif src when closing
+                    }
+                }
+            </script>
 
 	</body>
 </html>
