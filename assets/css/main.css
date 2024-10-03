@@ -2815,7 +2815,7 @@ ul {
 }
 
 .flip-icon:hover, .unflip-icon:hover {
-    color: #ff6347;
+    color: #831603;
     transform: scale(1.2); /* Subtle scale effect on hover */
     transition: transform 0.2s ease, color 0.2s ease;
 }
@@ -2834,11 +2834,12 @@ ul {
 
 
 /* Custom Colors for Each Card */
-.timeline-card:nth-child(1) { background-color: #5DADE2; } /* Blue */
-.timeline-card:nth-child(2) { background-color: #4CAF50; } /* Green */
-.timeline-card:nth-child(3) { background-color: #FFC107; } /* Yellow */
-.timeline-card:nth-child(4) { background-color: #bf78d8; } /* Purple */
-.timeline-card:nth-child(5) { background-color: #009688; } /* Teal */
+.timeline-card:nth-child(1) { background-color: #fb9191 ; } 
+.timeline-card:nth-child(2) { background-color: #5DADE2; } 
+.timeline-card:nth-child(3) { background-color: #FFC107; }
+.timeline-card:nth-child(4) { background-color: #55b959; } 
+.timeline-card:nth-child(5) { background-color: #bf78d8; } 
+.timeline-card:nth-child(6) { background-color: #009688; } 
 
 /* Pulsating Effect for Icons */
 .pulsate {
