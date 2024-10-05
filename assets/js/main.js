@@ -833,7 +833,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 'rgba(255, 140, 0, 1)',   // Dark Orange
                 'rgba(255, 215, 0, 1)',   // Gold
                 'rgba(173, 216, 230, 1)', // Light Blue
-                'rgba(138, 43, 226, 1)'   // Blue Violet
+                'rgba(138, 43, 226, 1)',  // Blue Violet
+                'rgba(0, 200, 0, 1)',     // Darker, brighter green
+                'rgba(255, 20, 147, 1)'   // Hot Pink
             ];
             return colors[Math.floor(Math.random() * colors.length)];
         }
