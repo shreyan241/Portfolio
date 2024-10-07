@@ -93,20 +93,6 @@
     overflow-y: auto;
 }
 
-/* Add this new rule for Firefox */
-@-moz-document url-prefix() {
-    .carousel__face {
-        transform-style: preserve-3d;
-    }
-    .card-inner {
-        transform-style: preserve-3d;
-    }
-    .card-front,
-    .card-back {
-        backface-visibility: hidden;
-    }
-}
-
 /* Project Card Styles */
 .carousel-project-card {
     width: 100%;
