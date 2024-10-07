@@ -10,8 +10,10 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/project-carousel.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-p9U4SF9fHx8Buq1zyl2e4kS62TjGlW0DwhtY1TejH9lV1xB5b1iZDQZ5X4j+v+hyfCZoW8ErkC0g1WE3YzG3AQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-	</head>
+    </head>
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SKC784YJPS"></script>
@@ -93,212 +95,296 @@
                     }
                 </style>
                 
-                
                 <!-- Projects Section -->
-                <section id="projects" class="two">
-                    <div class="container">
-                        <header>
-                            <h2>Projects</h2>
-                            <p>A showcase of my research, academic, and personal projects across various fields:</p>
-                        </header>
-                        <div class="filter-buttons">
-                    <button class="filter-btn" data-filter="Reinforcement Learning">Reinforcement Learning</button>
-                    <button class="filter-btn" data-filter="Deep Learning">Deep Learning</button>
-                    <button class="filter-btn" data-filter="NLP">NLP</button>
-                    <button class="filter-btn" data-filter="Generative AI">Generative AI</button>
-                    <button class="filter-btn" data-filter="Interpretable AI">Interpretable AI</button>
-                    <button class="filter-btn" data-filter="Machine Learning">Machine Learning</button>
-                    <button class="filter-btn" data-filter="Financial Modelling">Financial Modelling</button>
-                    <button class="filter-btn" data-filter="Sports Analytics">Sports Analytics</button>
-                    <button class="filter-btn" data-filter="Time Series Analysis">Time Series Analysis</button>
-                    <button class="filter-btn" data-filter="Causal Inference">Causal Inference</button>
-                    <button class="filter-btn" data-filter="Computer Vision">Computer Vision</button>
-                    <button class="filter-btn" data-filter="Image Processing">Image Processing</button>
-                </div>
-                <br>
-                        <div class="row">
-                            <!-- Project Item 1 -->
-                            <div class="col-4 col-12-mobile">
-                                <article class="item project-card" data-tags="Reinforcement Learning, Deep Learning">
-                                    <a target="_blank" href="https://github.com/shreyan241/RL_rubiks_visualizer" class="image fit">
-                                        <img src="images/rubiks.png" alt="" />
-                                    </a>
-                                    <header>
-                                        <h3>Rubik's Cube 3D visualizer and Deep Reinforcement Learning Solver</h3>
-                                        <button class="demo-btn" data-demo="rubiks">Demo</button>
-                                        <div class="gif-container">
-                                            <img id="rubiksGif" src="demos/rubiks.gif" alt="Rubik's Cube Solver Demo" class="rubiks-gif">
-                                        </div>
-                                        <span class="toggle-btn">More Info</span>
-                                        <div class="more-info">
-                                            <ul>
-                                                <li>Developed a 3D visualizer for the Rubik's Cube using Quaternions.</li>
-                                                <li>Implemented MCTS algorithm augmented with DRL network for solving the cube without human input.</li>
-                                            </ul>
-                                        </div>
-                                    </header>
-                                </article>
+<section id="projects" class="two">
+    <div class="container">
+        <header>
+            <h2>Projects</h2>
+            <p>A showcase of my research, academic, and personal projects across various fields:</p>
+        </header>
+        <div class="filter-buttons">
+            <button class="filter-btn" data-filter="Reinforcement Learning">Reinforcement Learning</button>
+            <button class="filter-btn" data-filter="Deep Learning">Deep Learning</button>
+            <button class="filter-btn" data-filter="NLP">NLP</button>
+            <button class="filter-btn" data-filter="Generative AI">Generative AI</button>
+            <button class="filter-btn" data-filter="Interpretable AI">Interpretable AI</button>
+            <button class="filter-btn" data-filter="Machine Learning">Machine Learning</button>
+            <button class="filter-btn" data-filter="Financial Modelling">Financial Modelling</button>
+            <button class="filter-btn" data-filter="Sports Analytics">Sports Analytics</button>
+            <button class="filter-btn" data-filter="Time Series Analysis">Time Series Analysis</button>
+            <button class="filter-btn" data-filter="Causal Inference">Causal Inference</button>
+            <button class="filter-btn" data-filter="Computer Vision">Computer Vision</button>
+            <button class="filter-btn" data-filter="Image Processing">Image Processing</button>
+        </div>
+        <br>
+        <div class="carousel-container">
+            <div class="carousel">
+                <!-- Project Item 1 -->
+                <div class="carousel__face" data-tags="Reinforcement Learning, Deep Learning">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <article class="item carousel-project-card">
+                                <a target="_blank" href="https://github.com/shreyan241/RL_rubiks_visualizer" class="image fit">
+                                    <img src="images/rubiks.png" alt="Rubik's Cube Project" />
+                                </a>
+                                <header>
+                                    <h3>Rubik's Cube 3D Visualizer and Deep RL Solver</h3>
+                                    <button class="demo-btn" data-demo="rubiks">Demo</button>
+                                    <button class="flip-btn">More Info</button>
+                                </header>
+                            </article>
+                        </div>
+                        <div class="card-back">
+                            <!-- Icon for Reinforcement Learning -->
+                            <div class="icon-container">
+                                <i class="fas fa-cubes"></i>
                             </div>
-
-                            <!-- Project Item 2 -->
-                            <div class="col-4 col-12-mobile">
-                                <article class="item project-card" data-tags="NLP, Generative AI">
-                                    <a target="_blank" href="https://github.com/shreyan241/gpt-grammar-corrector" class="image fit">
-                                        <img src="images/grammar-gui.png" alt="" />
-                                    </a>
-                                    <header>
-                                        <h3>GPT Document Proofreader App</h3>
-                                        <button class="demo-btn" data-demo="grammar">Demo</button>
-                                        <div class="gif-container">
-                                            <img id="grammarGif" src="./demos/grammar.gif" alt="GPT Grammar Corrector Demo" class="grammar-gif">
-                                        </div>
-                                        <span class="toggle-btn">More Info</span>
-                                        <div class="more-info">
-                                            <ul>
-                                                <li>Customizable prompts and language variant support in English.</li>
-                                                <li>Implemented real-time async text processing and context window management for improved performance.</li>
-                                        </div>
-                                    </header>
-                                </article>
-                            </div>
-
-                            <!-- Project Item 3 -->
-                            <div class="col-4 col-12-mobile">
-                                <article class="item project-card" data-tags="NLP, Deep Learning, Generative AI">
-                                    <a target="_blank" href="https://huggingface.co/Medilora/Medilora-Mistral-7B/tree/main" class="image fit">
-                                        <img src="images/fine-tune-loss.png" alt="" />
-                                    </a>
-                                    <header>
-                                        <h3>MediLoRA: Mistral-7B fine-tuned for medical Q&A with QLoRA</h3>
-                                        <span class="toggle-btn">More Info</span>
-                                        <div class="more-info">
-                                            <ul>
-                                                <li>Improved PubMedQA and MedQA accuracy by over 20%.</li>
-                                                <li>Matched SOTA performance on MMLU-Medical with 0.05% of the data.</li>
-                                            </ul>
-                                        </div>
-                                    </header>
-                                </article>
-                            </div>
-
-                            <!-- Project Item 4 -->
-                            <div class="col-4 col-12-mobile">
-                                <article class="item project-card" data-tags="Computer Vision, Deep Learning, Generative AI">
-                                    <a target="_blank" href="https://github.com/shreyan241/image-outpainting-sagan" class="image fit">
-                                        <img src="images/SAGAN_final.png" alt="" />
-                                    </a>
-                                    <header>
-                                        <h3>Image Outpainting with Self-Attention GAN</h3>
-                                        <span class="toggle-btn">More Info</span>
-                                        <div class="more-info">
-                                            <ul>
-                                                <li>Implemented Self-Attention Layers for a GAN from scratch.</li>
-                                                <li>Improved Reconstruction Loss by 3% and Discriminator Loss by 2%.</li>
-                                            </ul>
-                                        </div>
-                                    </header>
-                                </article>
-                            </div>
-                            
-                            <!-- Project Item 5 -->
-                            <div class="col-4 col-12-mobile">
-                                <article class="item project-card" data-tags="Interpretable AI, Machine Learning">
-                                    <a target="_blank" href="https://github.com/shreyan241/DSC-261-FINAL" class="image fit">
-                                        <img src="images/foolinglimeshap.png" alt="" />
-                                    </a>
-                                    <header>
-                                        <h3>Unfooling LIME and SHAP using superior focused sampling techniques</h3>
-                                        <span class="toggle-btn">More Info</span>
-                                        <div class="more-info">
-                                            <ul>
-                                                <li>Counteracted adversarial attacks on post-hoc explainability models.</li>
-                                                <li>Utilized CT-GANs, Tree Ensembles, RBF Generators and Variational Auto Encoders for sampling.</li>
-                                            </ul>
-                                        </div>
-                                    </header>
-                                </article>
-                            </div>
-                            
-                            <!-- Project Item 6 -->
-                            <div class="col-4 col-12-mobile">
-                                <article class="item project-card" data-tags="Machine Learning, Financial Modelling, Time Series Analysis">
-                                    <a target="_blank" href="https://link.springer.com/chapter/10.1007/978-981-19-6631-6_34" class="image fit">
-                                        <img src="images/lstm.png" alt="" />
-                                    </a>
-                                    <header>
-                                        <h3>Black–Scholes Option Pricing Using Machine Learning</h3>
-                                        <span class="toggle-btn">More Info</span>
-                                        <div class="more-info">
-                                            <ul>
-                                                <li>Outperformed the Black–Scholes Model using MLP and LSTM.</li>
-                                                <li>Published in the Proceedings of ICDSA 2022.</li>
-                                            </ul>
-                                        </div>
-                                    </header>
-                                </article>
-                            </div>
-                            
-                            <!-- Project Item 7 -->
-                            <div class="col-4 col-12-mobile">
-                                <article class="item project-card" data-tags="Machine Learning, Sports Analytics">
-                                    <a target="_blank" href="https://github.com/shreyan241/DSC-241-Soccer-TDA" class="image fit">
-                                        <img src="images/sample passing network.png" alt="" />
-                                    </a>
-                                    <header>
-                                        <h3>Predicting Match Outcome using Passing Networks in Soccer</h3>
-                                        <span class="toggle-btn">More Info</span>
-                                        <div class="more-info">
-                                            <ul>
-                                                <li>Constructed passing networks of soccer teams for topological data analysis.</li>
-                                                <li>Developed a predictive model based on topological features.</li>
-                                            </ul>
-                                        </div>
-                                    </header>
-                                </article>
-                            </div>
-                            
-                            <!-- Project Item 8 -->
-                            <div class="col-4 col-12-mobile">
-                                <article class="item project-card" data-tags="Time Series Analysis, Causal Inference">
-                                    <a target="_blank" href="https://drive.google.com/file/d/1rcIzcATkgwsguCx66nUQF98aj6xKxwmk/view?usp=sharing" class="image fit">
-                                        <img src="images/PCMCI_1.png" alt="" />
-                                    </a>
-                                    <header>
-                                        <h3>Causal Discovery in Lagged Time Series</h3>
-                                        <span class="toggle-btn">More Info</span>
-                                        <div class="more-info">
-                                            <ul>
-                                                <li>Evaluated the effectiveness of PCMCI and FullCI algorithms in detection of causal links.</li>
-                                                <li>Demonstrated PCMCI's resilience against high dimensions and extraneous variables.</li>
-                                            </ul>
-                                        </div>
-                                    </header>
-                                </article>
-                            </div>
-                            
-                            <!-- Project Item 9 -->
-                            <div class="col-4 col-12-mobile">
-                                <article class="item project-card" data-tags="Computer Vision, Image Processing, Deep Learning">
-                                    <a target="_blank" href="https://ieeexplore.ieee.org/document/9591673" class="image fit" style="display: flex; justify-content: center;">
-                                        <img src="images/stsiva.png" alt="" style="width: 70%;" />
-                                    </a>
-                                    <header>
-                                        <h3>Selective Lossy Image Compression for Autonomous Systems</h3>
-                                        <span class="toggle-btn">More Info</span>
-                                        <div class="more-info">
-                                            <ul>
-                                                <li>Self-devised algorithms for K-Means, Genetic Algorithm and DCT.</li>
-                                                <li>Integrated SOTA CNN based models - CenterNet and Faster R-CNN.</li>
-                                                <li>Presented in STSIVA 2021.</li>
-                                            </ul>
-                                        </div>
-                                    </header>
-                                </article>
-                            </div>
+                            <ul>
+                                <li>Developed 3D Rubik's Cube visualizer using Quaternions.</li>
+                                <li>Implemented MCTS algorithm with a Deep RL network.</li>
+                                <li>Solved 71% of 9-scramble cubes, averaging less than 1 second per cube.</li>
+                            </ul>
+                            <button class="unflip-btn">Back</button>
                         </div>
                     </div>
-                </section>
+                </div>
 
+                <!-- Project Item 2 -->
+                <div class="carousel__face" data-tags="NLP, Generative AI">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <article class="item carousel-project-card">
+                                <a target="_blank" href="https://github.com/shreyan241/gpt-grammar-corrector" class="image fit">
+                                    <img src="images/grammar-gui.png" alt="GPT Grammar Corrector" />
+                                </a>
+                                <header>
+                                    <h3>GPT Document Proofreader App</h3>
+                                    <button class="demo-btn" data-demo="grammar">Demo</button>
+                                    <button class="flip-btn">More Info</button>
+                                </header>
+                            </article>
+                        </div>
+                        <div class="card-back">
+                            <!-- Icon for NLP -->
+                            <div class="icon-container">
+                                <i class="fas fa-spell-check"></i>
+                            </div>
+                            <ul>
+                                <li>Customizable prompts with English language variant support.</li>
+                                <li>Real-time async text processing for enhanced performance.</li>
+                                <li>Efficient context window management for handling large documents.</li>
+                            </ul>
+                            <button class="unflip-btn">Back</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Item 3 -->
+                <div class="carousel__face" data-tags="NLP, Deep Learning, Generative AI">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <article class="item carousel-project-card">
+                                <a target="_blank" href="https://huggingface.co/Medilora/Medilora-Mistral-7B/tree/main" class="image fit">
+                                    <img src="images/fine-tune-loss.png" alt="MediLoRA Project" />
+                                </a>
+                                <header>
+                                    <h3>MediLoRA: Mistral-7B Fine-Tuned for Medical Q&A with QLoRA</h3>
+                                    <button class="flip-btn">More Info</button>
+                                </header>
+                            </article>
+                        </div>
+                        <div class="card-back">
+                            <!-- Icon for Medical AI -->
+                            <div class="icon-container">
+                                <i class="fas fa-stethoscope"></i>
+                            </div>
+                            <ul>
+                                <li>Boosted PubMedQA and MedQA accuracy by 20%+.</li>
+                                <li>Matched SOTA on MMLU-Medical using minimal data.</li>
+                                <li>Demonstrated efficient fine-tuning with QLoRA technique.</li>
+                            </ul>
+                            <button class="unflip-btn">Back</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Item 4 -->
+                <div class="carousel__face" data-tags="Computer Vision, Deep Learning, Generative AI">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <article class="item carousel-project-card">
+                                <a target="_blank" href="https://github.com/shreyan241/image-outpainting-sagan" class="image fit">
+                                    <img src="images/SAGAN_final.png" alt="Image Outpainting Project" />
+                                </a>
+                                <header>
+                                    <h3>Image Outpainting with Self-Attention GAN</h3>
+                                    <button class="flip-btn">More Info</button>
+                                </header>
+                            </article>
+                        </div>
+                        <div class="card-back">
+                            <!-- Icon for Generative Adversarial Networks -->
+                            <div class="icon-container">
+                                <i class="fas fa-paint-brush"></i>
+                            </div>
+                            <ul>
+                                <li>Implemented Self-Attention GAN from scratch.</li>
+                                <li>Reduced Reconstruction Loss by 3%.</li>
+                                <li>Improved Discriminator Loss by 2%.</li>
+                            </ul>
+                            <button class="unflip-btn">Back</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Item 5 -->
+                <div class="carousel__face" data-tags="Interpretable AI, Machine Learning">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <article class="item carousel-project-card">
+                                <a target="_blank" href="https://github.com/shreyan241/DSC-261-FINAL" class="image fit">
+                                    <img src="images/foolinglimeshap.png" alt="Unfooling LIME and SHAP" />
+                                </a>
+                                <header>
+                                    <h3>Unfooling LIME and SHAP</h3>
+                                    <button class="flip-btn">More Info</button>
+                                </header>
+                            </article>
+                        </div>
+                        <div class="card-back">
+                            <!-- Icon for Interpretable AI -->
+                            <div class="icon-container">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <ul>
+                                <li>Defended against adversarial attacks on explainability models.</li>
+                                <li>Explored superior sampling using Tree Ensembles and RBF Generators.</li>
+                                <li>Implemented Variational Auto Encoders and CT-GANs for robust sampling.</li>
+                            </ul>
+                            <button class="unflip-btn">Back</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Item 6 -->
+                <div class="carousel__face" data-tags="Machine Learning, Financial Modelling, Time Series Analysis">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <article class="item carousel-project-card">
+                                <a target="_blank" href="https://link.springer.com/chapter/10.1007/978-981-19-6631-6_34" class="image fit">
+                                    <img src="images/lstm.png" alt="Black–Scholes Option Pricing" />
+                                </a>
+                                <header>
+                                    <h3>Black–Scholes Option Pricing Using Machine Learning</h3>
+                                    <button class="flip-btn">More Info</button>
+                                </header>
+                            </article>
+                        </div>
+                        <div class="card-back">
+                            <!-- Icon for Financial Modelling -->
+                            <div class="icon-container">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <ul>
+                                <li>Outperformed the Black–Scholes Model using MLP and LSTM.</li>
+                                <li>Also implemented XGBoost and SVM for comparison.</li>
+                                <li>Published in the Proceedings of ICDSA 2022.</li>
+                            </ul>
+                            <button class="unflip-btn">Back</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Item 7 -->
+                <div class="carousel__face" data-tags="Machine Learning, Sports Analytics">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <article class="item carousel-project-card">
+                                <a target="_blank" href="https://github.com/shreyan241/DSC-241-Soccer-TDA" class="image fit">
+                                    <img src="images/sample passing network.png" alt="Soccer Passing Networks" />
+                                </a>
+                                <header>
+                                    <h3>Predicting Match Outcome Using Passing Networks in Soccer</h3>
+                                    <button class="flip-btn">More Info</button>
+                                </header>
+                            </article>
+                        </div>
+                        <div class="card-back">
+                            <!-- Icon for Sports Analytics -->
+                            <div class="icon-container">
+                                <i class="fas fa-futbol"></i>
+                            </div>
+                            <ul>
+                                <li>Built soccer team passing networks for topological analysis.</li>
+                                <li>Extracted topological features from these networks.</li>
+                                <li>Created a predictive model using the extracted features.</li>
+                            </ul>
+                            <button class="unflip-btn">Back</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Item 8 -->
+                <div class="carousel__face" data-tags="Time Series Analysis, Causal Inference">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <article class="item carousel-project-card">
+                                <a target="_blank" href="https://drive.google.com/file/d/1rcIzcATkgwsguCx66nUQF98aj6xKxwmk/view?usp=sharing" class="image fit">
+                                    <img src="images/PCMCI_1.png" alt="Causal Discovery" />
+                                </a>
+                                <header>
+                                    <h3>Causal Discovery in Lagged Time Series</h3>
+                                    <button class="flip-btn">More Info</button>
+                                </header>
+                            </article>
+                        </div>
+                        <div class="card-back">
+                            <!-- Icon for Causal Inference -->
+                            <div class="icon-container">
+                                <i class="fas fa-sitemap"></i>
+                            </div>
+                            <ul>
+                                <li>Evaluated PCMCI and FullCI algorithms for causal link detection.</li>
+                                <li>Demonstrated PCMCI's effectiveness in high-dimensional data.</li>
+                                <li>Showed PCMCI's robustness against extraneous variables.</li>
+                            </ul>
+                            <button class="unflip-btn">Back</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Item 9 -->
+                <div class="carousel__face" data-tags="Computer Vision, Image Processing, Deep Learning">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <article class="item carousel-project-card">
+                                <a target="_blank" href="https://ieeexplore.ieee.org/document/9591673" class="image fit" style="display: flex; justify-content: center;">
+                                    <img src="images/stsiva.png" alt="Selective Lossy Compression" style="width: 70%;" />
+                                </a>
+                                <header>
+                                    <h3>Selective Lossy Image Compression for Autonomous Systems</h3>
+                                    <button class="flip-btn">More Info</button>
+                                </header>
+                            </article>
+                        </div>
+                        <div class="card-back">
+                            <!-- Icon for Image Processing -->
+                            <div class="icon-container">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <ul>
+                                <li>Self-devised algorithms for K-Means, Genetic Algorithm, and DCT.</li>
+                                <li>Integrated SOTA CNN-based models - CenterNet and Faster R-CNN.</li>
+                                <li>Presented in STSIVA 2021.</li>
+                            </ul>
+                            <button class="unflip-btn">Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                <!-- ----------------------------------------------------------- -->
                 <section id="experience" class="three">
                     <div class="container">
                         <header>
@@ -323,7 +409,6 @@
                                 </div>
                                 <div class="year-label">2024</div>
                                 <div class="card-back">
-                                    <ul>
                                         <li>Developing LLM-powered API for intelligent task automation.</li>
                                         <li>Optimizing codebase for scalability and efficiency.</li>
                                     </ul>
@@ -346,7 +431,6 @@
                                 </div>
                                 <div class="year-label">2023</div>
                                 <div class="card-back">
-                                    <ul>
                                         <li>Fraud Detection Neural Networks.</li>
                                         <li>Adaptive Time Series Algorithm.</li>
                                         <li>Real Time Monitoring System.</li>
@@ -372,7 +456,6 @@
                                 </div>
                                 <div class="year-label">2022</div>
                                 <div class="card-back">
-                                    <ul>
                                         <li>AI station for automating drop tests.</li>
                                         <li>Contract to deploy in 50 factories.</li>
                                         <li>Computer Vision System for defect detection.</li>
@@ -397,7 +480,6 @@
                                 </div>
                                 <div class="year-label">2021</div>
                                 <div class="card-back">
-                                    <ul>
                                         <li>Vehicle Damage Detection Model.</li>
                                         <li>Severity and Cost Estimation pipeline.</li>
                                         <li>OCR and Document Analysis.</li>
@@ -422,7 +504,6 @@
                                 </div>
                                 <div class="year-label">2021</div>
                                 <div class="card-back">
-                                    <ul>
                                         <li>Option pricing using LSTM.</li>
                                         <li>Outperformed the Black–Scholes Model.</li>
                                         <li>Published research in the Proceedings of ICDSA 2022.</li>
@@ -446,7 +527,6 @@
                                 </div>
                                 <div class="year-label">2021</div>
                                 <div class="card-back">
-                                    <ul>
                                         <li>Selective Lossy Image Compression.</li>
                                         <li>CNN-based Object Detection.</li>
                                         <li>Published research at STSIVA 2021.</li>
