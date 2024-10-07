@@ -577,32 +577,44 @@
                 </section>
 
                 
-				<!-- Contact -->
-					<section id="contact" class="four">
-						<div class="container">
+                <section id="contact" class="four">
+                    <div class="container">
+                        <header>
+                            <h2>Contact</h2>
+                            <p>For any inquiries, drop me a message using the form below, and I'll get back to you shortly!</p>
+                        </header>
 
-							<header>
-								<h2>Contact</h2>
-							</header>
-
-							<p>For any inquiries, drop me a message using the form below, and I'll get back to you shortly!</p>
-
-							<form method="post" action="https://formspree.io/f/mwpewzod">
-								<div class="row">
-									<div class="col-6 col-12-mobile"><input type="text" name="name" placeholder="Name" required/></div>
-									<div class="col-6 col-12-mobile"><input type="text" name="email" placeholder="Email" required/></div>
-									<div class="col-12">
-										<textarea name="message" placeholder="Message" required></textarea>
-									</div>
-									<div class="col-12">
-										<input type="submit" value="Send Message" />
-									</div>
-								</div>
-							</form>
-
-						</div>
-					</section>
-
+                        <form method="post" action="https://formspree.io/f/mwpewzod">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name">
+                                        <i class="fas fa-user"></i>
+                                        <span>Name</span>
+                                    </label>
+                                    <input type="text" id="name" name="name" placeholder="Your Name" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">
+                                        <i class="fas fa-envelope"></i>
+                                        <span>Email</span>
+                                    </label>
+                                    <input type="email" id="email" name="email" placeholder="Your Email" required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">
+                                    <i class="fas fa-comment-dots"></i>
+                                    <span>Message</span>
+                                </label>
+                                <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit">
+                                <i class="fas fa-paper-plane"></i>
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </section>
 			</div>
         
 		<!-- Footer -->
@@ -632,30 +644,7 @@
                     <img id="demoGifInModal" src="" alt="Demo GIF" class="modal-gif">
                 </div>
             </div>
-
-            <script>
-                // Get the modal
-                var modal = document.getElementById("demoModal");
-
-                // Get the <span> element that closes the modal
-                var span = document.getElementsByClassName("close-btn")[0];
-
-                // When the user clicks on <span> (x), close the modal
-                span.onclick = function() {
-                    modal.style.display = "none";
-                    var gif = document.getElementById("demoGifInModal");
-                    gif.src = ""; // Reset the gif src when closing
-                }
-
-                // When the user clicks anywhere outside of the modal, close it
-                window.onclick = function(event) {
-                    if (event.target == modal) {
-                        modal.style.display = "none";
-                        var gif = document.getElementById("demoGifInModal");
-                        gif.src = ""; // Reset the gif src when closing
-                    }
-                }
-            </script>
+>
 
 	</body>
 </html>
