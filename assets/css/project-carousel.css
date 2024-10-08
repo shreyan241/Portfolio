@@ -276,3 +276,90 @@
     font-size: 36px; /* Adjust size as needed */
     color: #2e8b57; /* Sea Green - a balanced, natural green */
 }
+
+/* Image Hover Effect */
+.carousel-project-card .image.fit {
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel-project-card .image.fit img {
+    transition: transform 0.3s ease;
+}
+
+.carousel-project-card .image.fit:hover img {
+    transform: scale(1.05);
+}
+
+.carousel-project-card .image.fit .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(30, 136, 229, 0.6); /* Semi-transparent blue overlay */
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+}
+
+.carousel-project-card .image.fit:hover .overlay {
+    opacity: 1;
+}
+
+.carousel-project-card .image.fit .overlay i {
+    color: #fff;
+    font-size: 36px;
+}
+
+@media (max-width: 768px) {
+    .carousel-project-card .image.fit:hover img {
+        transform: none; /* Disable zoom on small screens */
+    }
+    
+    .carousel-project-card .image.fit:hover .overlay {
+        opacity: 0.8; /* Slightly visible overlay on touch devices */
+    }
+}
+
+/* Border Highlight Effect on Image Hover */
+.carousel-project-card .image.fit {
+    position: relative;
+    overflow: hidden;
+    border: 2px solid transparent; /* Initial border */
+    transition: border-color 0.3s ease;
+}
+
+.carousel-project-card .image.fit:hover {
+    border-color: #1e88e5; /* Highlight color on hover */
+}
+
+.carousel-project-card .image.fit img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.carousel-project-card .image.fit:hover img {
+    transform: scale(1.02); /* Slight zoom on hover (optional) */
+}
+
+/* Box Shadow Effect on Hover */
+.carousel-project-card .image.fit {
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+}
+
+.carousel-project-card .image.fit:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-project-card .image.fit img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
