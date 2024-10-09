@@ -181,6 +181,20 @@ function updateSnake(timestamp) {
         } else {
             snake.unshift({ x: targetX, y: targetY });
         }
+    } else if (isTouching) {
+        // Follow touch
+        const head = snake[0];
+        const dx = touchX - head.x;
+        const dy = touchY - head.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance > snakeSpeed) {
+            const moveX = (dx / distance) * snakeSpeed;
+            const moveY = (dy / distance) * snakeSpeed;
+            snake.unshift({ x: head.x + moveX, y: head.y + moveY });
+        } else {
+            snake.unshift({ x: touchX, y: touchY });
+        }
     } else {
         // Normal movement
         const head = { 
@@ -366,28 +380,35 @@ function drawControls() {
     // Reset shadow settings for subsequent text
     ctx.shadowBlur = 0;
 
-    // Define controls with stylized arrows
-    const controls = [
-        { direction: 'up', key: '↑', action: 'Move Up' },
-        { direction: 'down', key: '↓', action: 'Move Down' },
-        { direction: 'left', key: '←', action: 'Move Left' },
-        { direction: 'right', key: '→', action: 'Move Right' }
-    ];
-
-    // Draw each control
-    controls.forEach((control, index) => {
-        const spacingY = 30;
-        const startY = panelY + 50;
-        const currentY = startY + index * spacingY;
-
-        // Draw stylized arrow
-        drawStylizedArrow(ctx, panelX + 30, currentY , control.direction);
-
-        // Draw action text
+    if (isMobileDevice()) {
+        // Mobile controls
         ctx.font = '16px Arial';
         ctx.fillStyle = '#FFFFFF';
-        ctx.fillText(control.action, panelX + 60, currentY - 6);
-    });
+        ctx.fillText('Touch and drag to move the snake', panelX + 25, panelY + 50);
+    } else {
+        // Desktop controls
+        const controls = [
+            { direction: 'up', key: '↑', action: 'Move Up' },
+            { direction: 'down', key: '↓', action: 'Move Down' },
+            { direction: 'left', key: '←', action: 'Move Left' },
+            { direction: 'right', key: '→', action: 'Move Right' }
+        ];
+
+        // Draw each control
+        controls.forEach((control, index) => {
+            const spacingY = 30;
+            const startY = panelY + 50;
+            const currentY = startY + index * spacingY;
+
+            // Draw stylized arrow
+            drawStylizedArrow(ctx, panelX + 30, currentY, control.direction);
+
+            // Draw action text
+            ctx.font = '16px Arial';
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillText(control.action, panelX + 60, currentY - 6);
+        });
+    }
 }
 
 // Helper function to draw rounded rectangles
@@ -590,3 +611,40 @@ document.addEventListener('DOMContentLoaded', () => {
     lastTime = performance.now();
     requestAnimationFrame(draw);
 });
+
+
+canvas.addEventListener('touchstart', handleTouchStart, false);
+canvas.addEventListener('touchmove', handleTouchMove, false);
+canvas.addEventListener('touchend', handleTouchEnd, false);
+
+let touchX, touchY;
+let isTouching = false;
+
+function handleTouchStart(event) {
+    event.preventDefault();
+    isTouching = true;
+    const touch = event.touches[0];
+    touchX = touch.clientX;
+    touchY = touch.clientY;
+    lastMoveTime = performance.now();
+    isTransitioningToIdle = false;
+}
+
+function handleTouchMove(event) {
+    event.preventDefault();
+    if (isTouching) {
+        const touch = event.touches[0];
+        touchX = touch.clientX;
+        touchY = touch.clientY;
+        lastMoveTime = performance.now();
+    }
+}
+
+function handleTouchEnd(event) {
+    isTouching = false;
+}
+
+function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+        || (navigator.maxTouchPoints && navigator.maxTouchPoints > 2);
+}
