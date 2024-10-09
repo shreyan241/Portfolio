@@ -338,9 +338,8 @@ function drawSnakeTail() {
 function drawControls() {
     if (isMobileDevice()) {
         // Mobile controls
-        const iconSize = 50;
         const panelWidth = 200;
-        const panelHeight = 100;
+        const panelHeight = 80;
         const panelX = 10;
         const panelY = 10;
         const borderRadius = 15;
@@ -350,31 +349,14 @@ function drawControls() {
         drawRoundedRectangle(ctx, panelX, panelY, panelWidth, panelHeight, borderRadius);
         ctx.fill();
 
-        // Draw touch icon
-        ctx.fillStyle = '#FFFFFF';
-        ctx.beginPath();
-        ctx.arc(panelX + 40, panelY + panelHeight / 2, iconSize / 2, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.fillStyle = '#000000';
-        ctx.beginPath();
-        ctx.arc(panelX + 40, panelY + panelHeight / 2, iconSize / 2 - 5, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Draw finger
-        ctx.fillStyle = '#FFFFFF';
-        ctx.beginPath();
-        ctx.ellipse(panelX + 40, panelY + panelHeight / 2, 10, 15, 0, 0, Math.PI * 2);
-        ctx.fill();
-
         // Draw instruction text
-        ctx.font = 'bold 16px Arial';
+        ctx.font = 'bold 18px Arial';
         ctx.fillStyle = '#FFFFFF';
-        ctx.textAlign = 'left';
+        ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText('Touch & Drag', panelX + 80, panelY + panelHeight / 2 - 10);
-        ctx.font = '14px Arial';
-        ctx.fillText('to move snake', panelX + 80, panelY + panelHeight / 2 + 15);
+        ctx.fillText('Touch & Drag', panelX + panelWidth / 2, panelY + panelHeight / 2 - 15);
+        ctx.font = '16px Arial';
+        ctx.fillText('to move snake', panelX + panelWidth / 2, panelY + panelHeight / 2 + 15);
 
     } else {
         // Desktop controls (keep your existing code for desktop)
