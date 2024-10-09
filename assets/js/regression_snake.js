@@ -161,70 +161,68 @@ function updateSnake(timestamp) {
         isTransitioningToIdle = true;
         idleAngle = Math.atan2(snake[0].y - centerY, snake[0].x - centerX);
     }
+    
+
+    let newHead;
 
     if (isTransitioningToIdle || isIdle) {
-        const radius = 80; // circle
-        idleAngle += 0.02; // Adjust for speed of rotation
-
+        // Idle behavior (circular motion)
+        const radius = 80;
+        idleAngle += 0.02;
         const targetX = centerX + Math.cos(idleAngle) * radius;
         const targetY = centerY + Math.sin(idleAngle) * radius;
-
         const head = snake[0];
         const dx = targetX - head.x;
         const dy = targetY - head.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
-
         if (distance > 1) {
             const moveX = (dx / distance) * snakeSpeed;
             const moveY = (dy / distance) * snakeSpeed;
-            snake.unshift({ x: head.x + moveX, y: head.y + moveY });
+            newHead = { x: head.x + moveX, y: head.y + moveY };
         } else {
-            snake.unshift({ x: targetX, y: targetY });
+            newHead = { x: targetX, y: targetY };
         }
     } else if (isTouching) {
-        // Follow touch
+        // Touch control
         const head = snake[0];
         const dx = touchX - head.x;
         const dy = touchY - head.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
-
         if (distance > snakeSpeed) {
             const moveX = (dx / distance) * snakeSpeed;
             const moveY = (dy / distance) * snakeSpeed;
-            snake.unshift({ x: head.x + moveX, y: head.y + moveY });
+            newHead = { x: head.x + moveX, y: head.y + moveY };
         } else {
-            snake.unshift({ x: touchX, y: touchY });
+            newHead = { x: touchX, y: touchY };
         }
     } else {
-        // Normal movement
-        const head = { 
+        // Keyboard control
+        newHead = { 
             x: snake[0].x + direction.x * snakeSpeed, 
             y: snake[0].y + direction.y * snakeSpeed 
         };
         
         // Bounce off walls
-        if (head.x < 0 || head.x > canvas.width) {
+        if (newHead.x < 0 || newHead.x > canvas.width) {
             direction.x *= -1;
-            head.x = Math.max(0, Math.min(head.x, canvas.width));
+            newHead.x = Math.max(0, Math.min(newHead.x, canvas.width));
         }
-        if (head.y < 0 || head.y > canvas.height) {
+        if (newHead.y < 0 || newHead.y > canvas.height) {
             direction.y *= -1;
-            head.y = Math.max(0, Math.min(head.y, canvas.height));
+            newHead.y = Math.max(0, Math.min(newHead.y, canvas.height));
         }
-
-        snake.unshift(head);
-
-        // Check for point eating
-        points.forEach(point => {
-            if (!point.eaten && Math.hypot(head.x - point.x, head.y - point.y) < 10) {
-                point.eaten = true;
-                score += 10;
-                createParticles(point.x, point.y, point.color, 20);
-            }
-        });
-
-        // allPointsEaten = points.every(point => point.eaten);
     }
+
+    snake.unshift(newHead);
+
+    // Check for point eating
+    points.forEach(point => {
+        if (!point.eaten && Math.hypot(newHead.x - point.x, newHead.y - point.y) < 10) {
+            point.eaten = true;
+            score += 10;
+            createParticles(point.x, point.y, point.color, 20);
+        }
+    });
 
     // Limit snake length
     if (snake.length > maxSnakeLength) {
@@ -338,54 +336,89 @@ function drawSnakeTail() {
 }
 
 function drawControls() {
-    // Define control panel dimensions
-    const panelWidth = 250;
-    const panelHeight = 155;
-    const panelX = 10;
-    const panelY = 10;
-    const borderRadius = 15;
-
-    // Create a linear gradient for the control panel background
-    const panelGradient = ctx.createLinearGradient(panelX, panelY, panelX + panelWidth, panelY + panelHeight);
-    panelGradient.addColorStop(0, 'rgba(34, 34, 34, 0.9)'); // Dark gray
-    panelGradient.addColorStop(1, 'rgba(51, 51, 51, 0.9)'); // Slightly lighter gray
-
-    // Draw rounded rectangle for the control panel
-    ctx.fillStyle = panelGradient;
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)'; // White border with opacity
-    ctx.lineWidth = 2;
-    drawRoundedRectangle(ctx, panelX, panelY, panelWidth, panelHeight, borderRadius);
-    ctx.fill();
-    ctx.stroke();
-
-    // Optional: Add subtle shadow for depth
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-    drawRoundedRectangle(ctx, panelX, panelY, panelWidth, panelHeight, borderRadius);
-    ctx.strokeStyle = 'transparent'; // No additional stroke
-    ctx.stroke();
-    ctx.shadowBlur = 0; // Reset shadow
-
-    // Set font styles
-    ctx.font = 'bold 20px Arial';
-    ctx.fillStyle = '#FFFFFF'; // White color for text
-    ctx.textBaseline = 'top';
-    ctx.textAlign = 'left';
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
-    ctx.shadowBlur = 2;
-
-    // Title
-    ctx.fillText('Controls:', panelX + 25, panelY + 15);
-
-    // Reset shadow settings for subsequent text
-    ctx.shadowBlur = 0;
-
     if (isMobileDevice()) {
         // Mobile controls
-        ctx.font = '16px Arial';
+        const iconSize = 50;
+        const panelWidth = 200;
+        const panelHeight = 100;
+        const panelX = 10;
+        const panelY = 10;
+        const borderRadius = 15;
+
+        // Create a semi-transparent background
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+        drawRoundedRectangle(ctx, panelX, panelY, panelWidth, panelHeight, borderRadius);
+        ctx.fill();
+
+        // Draw touch icon
         ctx.fillStyle = '#FFFFFF';
-        ctx.fillText('Touch and drag to move the snake', panelX + 25, panelY + 50);
+        ctx.beginPath();
+        ctx.arc(panelX + 40, panelY + panelHeight / 2, iconSize / 2, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#000000';
+        ctx.beginPath();
+        ctx.arc(panelX + 40, panelY + panelHeight / 2, iconSize / 2 - 5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Draw finger
+        ctx.fillStyle = '#FFFFFF';
+        ctx.beginPath();
+        ctx.ellipse(panelX + 40, panelY + panelHeight / 2, 10, 15, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Draw instruction text
+        ctx.font = 'bold 16px Arial';
+        ctx.fillStyle = '#FFFFFF';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('Touch & Drag', panelX + 80, panelY + panelHeight / 2 - 10);
+        ctx.font = '14px Arial';
+        ctx.fillText('to move snake', panelX + 80, panelY + panelHeight / 2 + 15);
+
     } else {
+        // Desktop controls (keep your existing code for desktop)
+        const panelWidth = 250;
+        const panelHeight = 155;
+        const panelX = 10;
+        const panelY = 10;
+        const borderRadius = 15;
+
+        // Create a linear gradient for the control panel background
+        const panelGradient = ctx.createLinearGradient(panelX, panelY, panelX + panelWidth, panelY + panelHeight);
+        panelGradient.addColorStop(0, 'rgba(34, 34, 34, 0.9)'); // Dark gray
+        panelGradient.addColorStop(1, 'rgba(51, 51, 51, 0.9)'); // Slightly lighter gray
+
+        // Draw rounded rectangle for the control panel
+        ctx.fillStyle = panelGradient;
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)'; // White border with opacity
+        ctx.lineWidth = 2;
+        drawRoundedRectangle(ctx, panelX, panelY, panelWidth, panelHeight, borderRadius);
+        ctx.fill();
+        ctx.stroke();
+
+        // Optional: Add subtle shadow for depth
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+        drawRoundedRectangle(ctx, panelX, panelY, panelWidth, panelHeight, borderRadius);
+        ctx.strokeStyle = 'transparent'; // No additional stroke
+        ctx.stroke();
+        ctx.shadowBlur = 0; // Reset shadow
+
+        // Set font styles
+        ctx.font = 'bold 20px Arial';
+        ctx.fillStyle = '#FFFFFF'; // White color for text
+        ctx.textBaseline = 'top';
+        ctx.textAlign = 'left';
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+        ctx.shadowBlur = 2;
+
+        // Title
+        ctx.fillText('Controls:', panelX + 25, panelY + 15);
+
+        // Reset shadow settings for subsequent text
+        ctx.shadowBlur = 0;
+
         // Desktop controls
         const controls = [
             { direction: 'up', key: '↑', action: 'Move Up' },
