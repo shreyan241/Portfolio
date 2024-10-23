@@ -2835,12 +2835,12 @@ ul {
 
 
 /* Custom Colors for Each Card */
-.timeline-card:nth-child(1) { background-color: #fb9191 ; } 
-.timeline-card:nth-child(2) { background-color: #5DADE2; } 
-.timeline-card:nth-child(3) { background-color: #FFC107; }
-.timeline-card:nth-child(4) { background-color: #55b959; } 
-.timeline-card:nth-child(5) { background-color: #bf78d8; } 
-.timeline-card:nth-child(6) { background-color: #009688; } 
+.timeline-card:nth-child(1) { background-color: #B5EAD7; } /* Soft mint green */
+.timeline-card:nth-child(2) { background-color: #66B2FF; } /* Lighter blue */
+.timeline-card:nth-child(3) { background-color: #FFB6C1; } /* Light pink */
+.timeline-card:nth-child(4) { background-color: #FFD54F; } /* Lighter shade of gold */
+.timeline-card:nth-child(5) { background-color: #26a69a; } /* Teal */
+.timeline-card:nth-child(6) { background-color: #FF6666; } /* Even redder light coral */
 
 /* Pulsating Effect for Icons */
 .pulsate {
