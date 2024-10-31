@@ -2680,29 +2680,62 @@ input, select, textarea {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
+
+/* Header Styling for Timeline Cards */
+/* Header Styling for Timeline Cards */
+.timeline-card h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.timeline-card h4 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: #222;
+    margin-bottom: 5px;
+}
+
+/* Timeline Card Paragraph Styling */
+.timeline-card p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    color: #333; /* Changed from #555 to #333 for darker text */
+    margin-bottom: 10px;
+    font-weight: 500; /* Added slightly bolder font weight for better readability */
+}
+
 /* Styling for text on the back */
 .timeline-card .card-back h3 {
-    font-size: 18px; /* Slightly smaller font for back */
-    color: #333;
+    font-size: 18px;
+    color: #222;
     margin-bottom: 15px;
+    font-weight: 600;
 }
 
 .timeline-card .card-back p {
     font-size: 14px;
-    color: #555;
+    color: #333;
     margin-bottom: 10px;
+    font-weight: 500;
 }
 
 .timeline-card .card-back ul {
-    padding-left: 20px; /* Indent for bullet points */
-    list-style-type: disc; /* Bullet points */
+    padding-left: 20px;
+    list-style-type: disc;
     margin: 0;
 }
 
 .timeline-card .card-back ul li {
-    margin-bottom: 8px;
-    font-size: 14px;
-    color: #666; /* Muted text for a cleaner look */
+    margin-bottom: 10px;  /* Increased spacing between items */
+    font-size: 15px;     /* Slightly larger font */
+    color: #222;         /* Darker text color */
+    font-weight: 500;    /* Medium weight */
+    line-height: 1.4;    /* Better line height for readability */
+    text-align: left;    /* Ensure left alignment */
 }
 
 /* Add subtle background pattern */
@@ -2734,31 +2767,96 @@ input, select, textarea {
     left: 50%;
     transform: translateX(-50%);
     font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 500;
     color: #fff;
-    background-color: #c0392b; /* Red background */
-    padding: 8px 20px;
+    background: linear-gradient(to right, 
+        #c0392b,    /* Deep red */
+        #e74c3c     /* Slightly brighter red */
+    );
+    padding: 7px 20px;
     border-radius: 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.5px;
+    
+    /* Subtle border and shadow */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 /* Custom Scrollbar */
 .timeline-horizontal {
     display: flex;
     overflow-x: scroll;
-    scrollbar-color: #c0392b #ffffff; /* Red scrollbar */
-    scrollbar-width: thin;
     scroll-behavior: smooth;
     position: relative;
+    
+    /* Firefox scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: #c0392b transparent;
+    padding-bottom: 20px; /* Space for the scrollbar */
 }
 
+/* Webkit scrollbar styling */
 .timeline-horizontal::-webkit-scrollbar {
     height: 12px;
+    background: transparent;
+}
+
+.timeline-horizontal::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    margin: 0 100px; /* Centered track */
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
 }
 
 .timeline-horizontal::-webkit-scrollbar-thumb {
-    background-color: #c0392b;
-    border-radius: 6px;
+    background: linear-gradient(90deg, 
+        #ff4d4d,  /* Bright red */
+        #ff6b6b,  /* Lighter red */
+        #ff4d4d   /* Back to bright red */
+    );
+    border-radius: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 
+        0 0 15px rgba(255, 77, 77, 0.3),
+        inset 0 0 6px rgba(255, 255, 255, 0.3);
+    position: relative;
+}
+
+/* Hover effect */
+.timeline-horizontal::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(90deg, 
+        #ff6b6b,  /* Start with lighter red */
+        #ff4d4d,  /* Bright red */
+        #ff6b6b   /* End with lighter red */
+    );
+    box-shadow: 
+        0 0 20px rgba(255, 77, 77, 0.5),
+        inset 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+/* Active state */
+.timeline-horizontal::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(90deg, 
+        #ff3333,  /* Darker red */
+        #ff4d4d,  /* Bright red */
+        #ff3333   /* Darker red */
+    );
+    border: 2px solid rgba(255, 255, 255, 0.7);
+}
+
+/* For touch devices */
+@media (hover: none) {
+    .timeline-horizontal::-webkit-scrollbar {
+        height: 10px;
+    }
+    
+    .timeline-horizontal::-webkit-scrollbar-track {
+        margin: 0 50px;
+    }
 }
 
 /* Card Content */
