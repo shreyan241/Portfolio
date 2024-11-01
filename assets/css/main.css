@@ -2662,11 +2662,12 @@ input, select, textarea {
     transform: rotateY(0deg);
 }
 
+
 /* Back of the card styling */
 .timeline-card .card-back {
-    background-color: #f4f4f4; /* Light grey for a cleaner, softer look */
-    color: #333; /* Dark text for readability */
-    border: 2px solid #e0e0e0; /* Light border for definition */
+    background: #f4f4f4;
+    color: #333;
+    border: 1px solid rgba(224, 224, 224, 0.8);
     transform: rotateY(180deg);
     z-index: 1;
     padding: 20px;
@@ -2675,13 +2676,60 @@ input, select, textarea {
     align-items: center;
     justify-content: center;
     text-align: center;
-    font-family: 'Montserrat', sans-serif; /* Modern, clean font */
+    font-family: 'Montserrat', sans-serif;
     line-height: 1.6;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.08),
+        inset 0 0 20px rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
 }
 
+/* Subtle glow effect */
+.timeline-card .card-back::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: transparent;
+    box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.2);
+    animation: glow 4s ease-in-out infinite;
+    z-index: -1;
+    border-radius: 15px;
+}
 
-/* Header Styling for Timeline Cards */
+@keyframes glow {
+    0% { box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.2); }
+    50% { box-shadow: inset 0 0 40px rgba(255, 255, 255, 0.3); }
+    100% { box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.2); }
+}
+
+/* Custom colors for each card */
+.timeline-card:nth-child(1) .card-back { background: #B5EAD7; }
+.timeline-card:nth-child(2) .card-back { background: #66B2FF; }
+.timeline-card:nth-child(3) .card-back { background: #FFB6C1; }
+.timeline-card:nth-child(4) .card-back { background: #FFD54F; }
+.timeline-card:nth-child(5) .card-back { background: #26a69a; }
+.timeline-card:nth-child(6) .card-back { background: #FF6666; }
+
+.timeline-card .card-back::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+        linear-gradient(45deg, 
+            rgba(255, 255, 255, 0.1) 25%, 
+            transparent 25%, 
+            transparent 50%, 
+            rgba(255, 255, 255, 0.1) 50%, 
+            rgba(255, 255, 255, 0.1) 75%, 
+            transparent 75%
+        );
+    background-size: 30px 30px;
+    opacity: 0.3;
+    z-index: -1;
+}
+
 /* Header Styling for Timeline Cards */
 .timeline-card h3 {
     font-family: 'Poppins', sans-serif;
@@ -2738,19 +2786,6 @@ input, select, textarea {
     text-align: left;    /* Ensure left alignment */
 }
 
-/* Add subtle background pattern */
-.timeline-card .card-back::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 75%, transparent 75%, transparent);
-    background-size: 20px 20px;
-    z-index: -1; /* Pattern stays behind content */
-    border-radius: 15px;
-}
 
 .timeline-card.flipped .card-content {
     transform: rotateY(180deg);
@@ -2904,12 +2939,21 @@ ul {
 }
 
 /* Flip Icon Styling */
-.flip-icon, .unflip-icon {
+.flip-icon {
     position: absolute;
     bottom: 20px;
     right: 20px;
     font-size: 24px;
     color: #fff;
+    cursor: pointer;
+}
+
+.unflip-icon {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: #e3240f;
     cursor: pointer;
 }
 
@@ -3188,7 +3232,7 @@ ul {
     transform-origin: center;
     width: 80%;
     height: 2px;
-    background-color: #ffffff;
+    background-color: #000000;
     transition: transform 0.3s ease;
 }
 
