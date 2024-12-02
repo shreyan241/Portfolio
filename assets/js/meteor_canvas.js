@@ -88,12 +88,17 @@
     // Create an array for meteors
     let meteors = [];
 
-    // Function to spawn meteors less frequently (every 4-6 seconds)
-    setInterval(() => {
-        if (meteors.length < 4) { // Limit the number of meteors on screen to 4
+    function spawnNewMeteor() {
+        if (meteors.length < 4) {
             meteors.push(new Meteor());
+            // Schedule the next meteor spawn after a random delay (2-5 seconds)
+            setTimeout(spawnNewMeteor, Math.random() * 3000 + 2000);
+        } else {
+            // If at max meteors, check again after 1 second
+            setTimeout(spawnNewMeteor, 1000);
         }
-    }, Math.random() * 2000 + 4000); // Spawn every 4-6 seconds
+    }
+    spawnNewMeteor();
 
     function animate() {
         // Clear the canvas completely to prevent darkening the background
