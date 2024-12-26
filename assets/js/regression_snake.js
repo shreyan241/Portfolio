@@ -27,6 +27,10 @@ const maxSnakeLength = 50; // Reduced max length
 // let allPointsEaten = false;
 const numPoints = 50
 
+let snakeGameStartTime = 0;
+let controlsOpacity = 1;
+const CONTROLS_FADE_DURATION = 10000; // 10 seconds in milliseconds
+
 function generatePoints() {
     const margin = 20; // Margin from the edges of the canvas
     points = Array.from({ length: numPoints }, () => ({
@@ -147,6 +151,7 @@ function initSnake() {
     direction = { x: 1, y: 0 };
     lastMoveTime = performance.now();
     angle = 0; // Initialize angle for circular motion
+    snakeGameStartTime = performance.now(); // Record when snake game starts
 }
 
 let isTransitioningToIdle = false;
@@ -336,6 +341,17 @@ function drawSnakeTail() {
 }
 
 function drawControls() {
+    // Calculate opacity based on time elapsed since snake game started
+    const timeElapsed = performance.now() - snakeGameStartTime;
+    if (timeElapsed < CONTROLS_FADE_DURATION) {
+        controlsOpacity = 1 - (timeElapsed / CONTROLS_FADE_DURATION);
+    } else {
+        controlsOpacity = 0;
+    }
+
+    // If controls are completely faded out, don't draw them
+    if (controlsOpacity <= 0) return;
+
     if (isMobileDevice()) {
         // Mobile controls
         const panelWidth = 200;
@@ -344,14 +360,14 @@ function drawControls() {
         const panelY = 10;
         const borderRadius = 15;
 
-        // Create a semi-transparent background
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+        // Create a semi-transparent background with fade
+        ctx.fillStyle = `rgba(0, 0, 0, ${0.6 * controlsOpacity})`;
         drawRoundedRectangle(ctx, panelX, panelY, panelWidth, panelHeight, borderRadius);
         ctx.fill();
 
-        // Draw instruction text
+        // Draw instruction text with fade
         ctx.font = 'bold 18px Arial';
-        ctx.fillStyle = '#FFFFFF';
+        ctx.fillStyle = `rgba(255, 255, 255, ${controlsOpacity})`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText('Touch & Drag', panelX + panelWidth / 2, panelY + panelHeight / 2 - 15);
@@ -359,21 +375,21 @@ function drawControls() {
         ctx.fillText('to move snake', panelX + panelWidth / 2, panelY + panelHeight / 2 + 15);
 
     } else {
-        // Desktop controls (keep your existing code for desktop)
+        // Desktop controls
         const panelWidth = 250;
         const panelHeight = 155;
         const panelX = 10;
         const panelY = 10;
         const borderRadius = 15;
 
-        // Create a linear gradient for the control panel background
+        // Create a linear gradient for the control panel background with fade
         const panelGradient = ctx.createLinearGradient(panelX, panelY, panelX + panelWidth, panelY + panelHeight);
-        panelGradient.addColorStop(0, 'rgba(34, 34, 34, 0.9)'); // Dark gray
-        panelGradient.addColorStop(1, 'rgba(51, 51, 51, 0.9)'); // Slightly lighter gray
+        panelGradient.addColorStop(0, `rgba(34, 34, 34, ${0.9 * controlsOpacity})`);
+        panelGradient.addColorStop(1, `rgba(51, 51, 51, ${0.9 * controlsOpacity})`);
 
         // Draw rounded rectangle for the control panel
         ctx.fillStyle = panelGradient;
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)'; // White border with opacity
+        ctx.strokeStyle = `rgba(255, 255, 255, ${0.8 * controlsOpacity})`;
         ctx.lineWidth = 2;
         drawRoundedRectangle(ctx, panelX, panelY, panelWidth, panelHeight, borderRadius);
         ctx.fill();
@@ -381,18 +397,18 @@ function drawControls() {
 
         // Optional: Add subtle shadow for depth
         ctx.shadowBlur = 10;
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+        ctx.shadowColor = `rgba(0, 0, 0, ${0.5 * controlsOpacity})`;
         drawRoundedRectangle(ctx, panelX, panelY, panelWidth, panelHeight, borderRadius);
-        ctx.strokeStyle = 'transparent'; // No additional stroke
+        ctx.strokeStyle = 'transparent';
         ctx.stroke();
-        ctx.shadowBlur = 0; // Reset shadow
+        ctx.shadowBlur = 0;
 
         // Set font styles
         ctx.font = 'bold 20px Arial';
-        ctx.fillStyle = '#FFFFFF'; // White color for text
+        ctx.fillStyle = `rgba(255, 255, 255, ${controlsOpacity})`;
         ctx.textBaseline = 'top';
         ctx.textAlign = 'left';
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+        ctx.shadowColor = `rgba(0, 0, 0, ${0.7 * controlsOpacity})`;
         ctx.shadowBlur = 2;
 
         // Title
@@ -409,18 +425,47 @@ function drawControls() {
             { direction: 'right', key: '→', action: 'Move Right' }
         ];
 
-        // Draw each control
+        // Draw each control with fade
         controls.forEach((control, index) => {
             const spacingY = 30;
             const startY = panelY + 50;
             const currentY = startY + index * spacingY;
 
-            // Draw stylized arrow
-            drawStylizedArrow(ctx, panelX + 30, currentY, control.direction);
+            // Draw stylized arrow with fade
+            ctx.save();
+            ctx.translate(panelX + 30, currentY);
+            const arrowSize = 15;
+            ctx.fillStyle = `rgba(255, 215, 0, ${controlsOpacity})`; // Gold color with fade
+            ctx.beginPath();
+            switch(control.direction) {
+                case 'up':
+                    ctx.moveTo(0, -arrowSize / 2);
+                    ctx.lineTo(-arrowSize / 2, arrowSize / 2);
+                    ctx.lineTo(arrowSize / 2, arrowSize / 2);
+                    break;
+                case 'down':
+                    ctx.moveTo(0, arrowSize / 2);
+                    ctx.lineTo(-arrowSize / 2, -arrowSize / 2);
+                    ctx.lineTo(arrowSize / 2, -arrowSize / 2);
+                    break;
+                case 'left':
+                    ctx.moveTo(-arrowSize / 2, 0);
+                    ctx.lineTo(arrowSize / 2, -arrowSize / 2);
+                    ctx.lineTo(arrowSize / 2, arrowSize / 2);
+                    break;
+                case 'right':
+                    ctx.moveTo(arrowSize / 2, 0);
+                    ctx.lineTo(-arrowSize / 2, -arrowSize / 2);
+                    ctx.lineTo(-arrowSize / 2, arrowSize / 2);
+                    break;
+            }
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
 
-            // Draw action text
+            // Draw action text with fade
             ctx.font = '16px Arial';
-            ctx.fillStyle = '#FFFFFF';
+            ctx.fillStyle = `rgba(255, 255, 255, ${controlsOpacity})`;
             ctx.fillText(control.action, panelX + 60, currentY - 6);
         });
     }

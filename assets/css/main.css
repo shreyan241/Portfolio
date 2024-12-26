@@ -3471,3 +3471,8 @@ ul {
     }
 }
 
+.mistake {
+    color: #f50c0c;
+    font-weight: bold;
+}
+
