@@ -103,45 +103,60 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Filter functionality
-    let activeFilter = null;
+    let activeFilters = new Set();
 
-    filterButtons.forEach((button, index) => {
+    filterButtons.forEach((button) => {
         button.addEventListener('click', function () {
             const filter = this.getAttribute('data-filter');
-            console.log(`Filter ${index + 1} clicked: ${filter}`);
-
-            if (activeFilter === filter) {
+            
+            if (activeFilters.has(filter)) {
+                // Remove filter if already active
+                activeFilters.delete(filter);
                 this.classList.remove('active');
-                activeFilter = null;
+            } else {
+                // Add new filter
+                activeFilters.add(filter);
+                this.classList.add('active');
+            }
+
+            // Show all projects if no filters are active
+            if (activeFilters.size === 0) {
                 showAllProjects();
             } else {
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                activeFilter = filter;
-                filterProjects(filter);
+                filterProjects(activeFilters);
             }
+
+            console.log('Active filters:', Array.from(activeFilters));
         });
     });
 
-    function filterProjects(filter) {
-        faces.forEach((face, index) => {
+    function filterProjects(activeFilters) {
+        faces.forEach((face) => {
             const tags = face.getAttribute('data-tags').split(',').map(tag => tag.trim());
-    
-            if (tags.includes(filter)) {
+            // Show face if it matches ANY of the active filters
+            const shouldShow = tags.some(tag => activeFilters.has(tag));
+            
+            if (shouldShow) {
                 face.style.display = 'block';
-                console.log(`Project ${index + 1} shown for filter: ${filter}`);
+                face.style.opacity = '1';
             } else {
-                face.style.display = 'none';
-                console.log(`Project ${index + 1} hidden for filter: ${filter}`);
+                face.style.opacity = '0';
+                setTimeout(() => {
+                    if (!tags.some(tag => activeFilters.has(tag))) {
+                        face.style.display = 'none';
+                    }
+                }, 300); // Match this with CSS transition duration
             }
         });
     }
-    
 
     function showAllProjects() {
-        faces.forEach((face, index) => {
+        faces.forEach((face) => {
             face.style.display = 'block';
-            console.log(`Project ${index + 1} shown (all projects)`);
+            // Small delay to allow display to take effect before opacity
+            setTimeout(() => {
+                face.style.opacity = '1';
+            }, 10);
         });
     }
 

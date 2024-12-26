@@ -3170,85 +3170,65 @@ ul {
 
 /* General Styles for Filter Buttons */
 .filter-btn {
-    padding: 8px 16px;
-    background-color: #f0f0f0; /* Light grey background */
+    padding: 6px 12px;
+    margin: 4px;
+    background-color: #f0f0f0;
     border: none;
-    color: #333; /* Dark grey text */
-    border-radius: 30px;
-    font-size: 14px;
+    color: #333;
+    border-radius: 15px;
+    font-size: 11px;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-    outline: none;
-    margin: 5px;
+    transition: all 0.2s ease;
+    font-family: 'Montserrat', sans-serif;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Individual Button Colors */
-.filter-btn[data-filter="Reinforcement Learning"] { background-color: #FF7043; } /* Deep Orange */
-.filter-btn[data-filter="Deep Learning"] { background-color: #29B6F6; } /* Light Blue */
-.filter-btn[data-filter="NLP"] { background-color: #66BB6A; } /* Medium Green */
-.filter-btn[data-filter="Generative AI"] { background-color: #FFA726; } /* Orange */
-.filter-btn[data-filter="Interpretable AI"] { background-color: #AB47BC; } /* Purple */
-.filter-btn[data-filter="Machine Learning"] { background-color: #FFCA28; } /* Amber */
-.filter-btn[data-filter="Financial Modelling"] { background-color: #EF5350; } /* Red */
-.filter-btn[data-filter="Sports Analytics"] { background-color: #26A69A; } /* Teal */
-.filter-btn[data-filter="Time Series Analysis"] { background-color: #42A5F5; } /* Blue */
-.filter-btn[data-filter="Causal Inference"] { background-color: #EC407A; } /* Pink */
-.filter-btn[data-filter="Computer Vision"] { background-color: #26C6DA; } /* Cyan */
-.filter-btn[data-filter="Image Processing"] { background-color: #9CCC65; } /* Light Green */
-
-/* Text Color for Better Contrast */
-.filter-btn {
-    color: #fff; /* White text for better contrast */
-}
-
-/* Hover Effects */
 .filter-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
-/* Active State */
 .filter-btn.active {
-    background-color: #37474F; /* Dark Blue Grey */
-    color: #ffffff;
-    font-weight: 600;
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-1px);
 }
 
-/* Remove Pulsating Effect */
-.filter-btn.active {
-    animation: none;
-}
+/* Individual Button Colors */
+.filter-btn[data-filter="Reinforcement Learning"] { background-color: #FF7043; color: white; }
+.filter-btn[data-filter="Deep Learning"] { background-color: #29B6F6; color: white; }
+.filter-btn[data-filter="NLP"] { background-color: #66BB6A; color: white; }
+.filter-btn[data-filter="Generative AI"] { background-color: #FFA726; color: white; }
+.filter-btn[data-filter="Interpretable AI"] { background-color: #AB47BC; color: white; }
+.filter-btn[data-filter="Machine Learning"] { background-color: #FFCA28; color: #333; }
+.filter-btn[data-filter="Financial Modelling"] { background-color: #EF5350; color: white; }
+.filter-btn[data-filter="Sports Analytics"] { background-color: #26A69A; color: white; }
+.filter-btn[data-filter="Time Series Analysis"] { background-color: #42A5F5; color: white; }
+.filter-btn[data-filter="Causal Inference"] { background-color: #EC407A; color: white; }
+.filter-btn[data-filter="Computer Vision"] { background-color: #26C6DA; color: white; }
+.filter-btn[data-filter="Image Processing"] { background-color: #9CCC65; color: white; }
 
-/* Optional: Underline Effect on Hover and Active */
-.filter-btn::after {
-    content: '';
-    position: absolute;
-    bottom: -5px; /* Adjusted position */
-    left: 50%;
-    transform: translateX(-50%) scaleX(0);
-    transform-origin: center;
-    width: 80%;
-    height: 2px;
-    background-color: #000000;
-    transition: transform 0.3s ease;
-}
+/* Active State Glows */
+.filter-btn[data-filter="Reinforcement Learning"].active { box-shadow: 0 0 12px #FF7043; color: #333; font-weight: 600; }
+.filter-btn[data-filter="Deep Learning"].active { box-shadow: 0 0 12px #29B6F6; color: #333; font-weight: 600; }
+.filter-btn[data-filter="NLP"].active { box-shadow: 0 0 12px #66BB6A; color: #333; font-weight: 600; }
+.filter-btn[data-filter="Generative AI"].active { box-shadow: 0 0 12px #FFA726; color: #333; font-weight: 600; }
+.filter-btn[data-filter="Interpretable AI"].active { box-shadow: 0 0 12px #AB47BC; color: #333; font-weight: 600; }
+.filter-btn[data-filter="Machine Learning"].active { box-shadow: 0 0 12px #FFCA28; color: #333; font-weight: 600; }
+.filter-btn[data-filter="Financial Modelling"].active { box-shadow: 0 0 12px #EF5350; color: #333; font-weight: 600; }
+.filter-btn[data-filter="Sports Analytics"].active { box-shadow: 0 0 12px #26A69A; color: #333; font-weight: 600; }
+.filter-btn[data-filter="Time Series Analysis"].active { box-shadow: 0 0 12px #42A5F5; color: #333; font-weight: 600; }
+.filter-btn[data-filter="Causal Inference"].active { box-shadow: 0 0 12px #EC407A; color: #333; font-weight: 600; }
+.filter-btn[data-filter="Computer Vision"].active { box-shadow: 0 0 12px #26C6DA; color: #333; font-weight: 600; }
+.filter-btn[data-filter="Image Processing"].active { box-shadow: 0 0 12px #9CCC65; color: #333; font-weight: 600; }
 
-.filter-btn:hover::after,
-.filter-btn.active::after {
-    transform: translateX(-50%) scaleX(1);
+/* Container for filter buttons */
+.filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    margin: 10px 0;  /* Reduced from 20px to 10px */
 }
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .filter-btn {
-        font-size: 12px;
-        padding: 6px 12px;
-    }
-}
-
 
 /* Playground Section */
 #playground {
