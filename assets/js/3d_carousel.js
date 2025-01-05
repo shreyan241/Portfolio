@@ -74,6 +74,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 gifSrc = 'demos/rubiks.gif';
             } else if (demoType === 'grammar') {
                 gifSrc = 'demos/grammar.gif';
+            } else if (demoType === 'quant') {
+                gifSrc = 'demos/quant.gif';
             }
 
             modalImg.src = gifSrc;
