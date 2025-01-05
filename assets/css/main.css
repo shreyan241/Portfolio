@@ -2666,7 +2666,7 @@ input, select, textarea {
 /* Back of the card styling */
 .timeline-card .card-back {
     background: #f4f4f4;
-    color: #333;
+    color: #000;         /* Changed to black */
     border: 1px solid rgba(224, 224, 224, 0.8);
     transform: rotateY(180deg);
     z-index: 1;
@@ -2780,8 +2780,8 @@ input, select, textarea {
 .timeline-card .card-back ul li {
     margin-bottom: 10px;  /* Increased spacing between items */
     font-size: 15px;     /* Slightly larger font */
-    color: #222;         /* Darker text color */
-    font-weight: 500;    /* Medium weight */
+    color: #000;         /* Black text color */
+    font-weight: 600;    /* Semi-bold weight */
     line-height: 1.4;    /* Better line height for readability */
     text-align: left;    /* Ensure left alignment */
 }
