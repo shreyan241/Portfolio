@@ -3571,25 +3571,13 @@ ul {
 }
 
 /* Social Icons Styling */
-.icons a.fa-linkedin {
-    background: linear-gradient(45deg, #0077B5, #00A0DC) !important;
-    box-shadow: 0 4px 15px rgba(0, 119, 181, 0.3) !important;
-    animation: linkedinPulse 2s infinite !important;
+.icons {
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
-.icons a.fa-github {
-    background: linear-gradient(45deg, #6e5494, #8a63c7) !important;
-    box-shadow: 0 4px 15px rgba(110, 84, 148, 0.3) !important;
-    animation: githubPulse 2s infinite !important;
-}
-
-.icons a.fa-envelope {
-    background: linear-gradient(45deg, #2ecc71, #27ae60) !important;
-    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3) !important;
-    animation: emailPulse 2s infinite !important;
-}
-
-.icons a {
+.icons a.icon {
     border-radius: 50% !important;
     display: inline-flex !important;
     align-items: center !important;
@@ -3599,22 +3587,140 @@ ul {
     height: 2em !important;
     font-size: 1.25em !important;
     margin: 0.5em 0 !important;
+    padding: 0 !important;
+    line-height: 2em !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    color: white !important;
+    text-decoration: none !important;
 }
 
-.icons a:hover {
+.icons a.icon:before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    ) !important;
+    transition: 0.5s !important;
+    z-index: 3 !important;
+    pointer-events: none !important;
+}
+
+.icons a.icon:after {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 1 !important;
+    border-radius: 50% !important;
+}
+
+.icons a.icon i {
+    position: relative !important;
+    z-index: 2 !important;
+    color: white !important;
+}
+
+.icons a.icon:hover:before {
+    left: 100% !important;
+}
+
+.icons a.icon:hover {
     transform: translateY(-2px) !important;
 }
 
-.icons a.fa-linkedin:hover {
+/* Individual icon styles */
+.icons a.icon .fa-file-download {
+    background: linear-gradient(45deg, #ff3366, #ff6b6b) !important;
+    box-shadow: 0 4px 15px rgba(255, 51, 102, 0.3) !important;
+    animation: resumePulse 2s infinite !important;
+}
+
+.icons a.icon .fa-linkedin-in {
+    background: linear-gradient(45deg, #0077B5, #00A0DC) !important;
+    box-shadow: 0 4px 15px rgba(0, 119, 181, 0.3) !important;
+    animation: linkedinPulse 2s infinite !important;
+}
+
+.icons a.icon .fa-github {
+    background: linear-gradient(45deg, #6e5494, #8a63c7) !important;
+    box-shadow: 0 4px 15px rgba(110, 84, 148, 0.3) !important;
+    animation: githubPulse 2s infinite !important;
+}
+
+.icons a.icon .fa-envelope {
+    background: linear-gradient(45deg, #2ecc71, #27ae60) !important;
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3) !important;
+    animation: emailPulse 2s infinite !important;
+}
+
+/* Background colors for the icon containers */
+.icons a.icon:has(.fa-file-download) {
+    background: linear-gradient(45deg, #ff3366, #ff6b6b) !important;
+}
+
+.icons a.icon:has(.fa-linkedin-in) {
+    background: linear-gradient(45deg, #0077B5, #00A0DC) !important;
+}
+
+.icons a.icon:has(.fa-github) {
+    background: linear-gradient(45deg, #6e5494, #8a63c7) !important;
+}
+
+.icons a.icon:has(.fa-envelope) {
+    background: linear-gradient(45deg, #2ecc71, #27ae60) !important;
+}
+
+.icons a.icon .label {
+    display: none !important;
+}
+
+/* Hover effects */
+.icons a.icon:hover {
+    transform: translateY(-2px) !important;
+}
+
+.icons a.icon:has(.fa-file-download):hover {
+    box-shadow: 0 6px 20px rgba(255, 51, 102, 0.4) !important;
+}
+
+.icons a.icon:has(.fa-linkedin-in):hover {
     box-shadow: 0 6px 20px rgba(0, 119, 181, 0.4) !important;
 }
 
-.icons a.fa-github:hover {
+.icons a.icon:has(.fa-github):hover {
     box-shadow: 0 6px 20px rgba(110, 84, 148, 0.4) !important;
 }
 
-.icons a.fa-envelope:hover {
+.icons a.icon:has(.fa-envelope):hover {
     box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4) !important;
+}
+
+/* Animations */
+.icons a.icon:has(.fa-file-download) {
+    animation: resumePulse 2s infinite !important;
+}
+
+.icons a.icon:has(.fa-linkedin-in) {
+    animation: linkedinPulse 2s infinite !important;
+}
+
+.icons a.icon:has(.fa-github) {
+    animation: githubPulse 2s infinite !important;
+}
+
+.icons a.icon:has(.fa-envelope) {
+    animation: emailPulse 2s infinite !important;
 }
 
 @keyframes linkedinPulse {
@@ -3633,5 +3739,11 @@ ul {
     0% { box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3); }
     50% { box-shadow: 0 4px 25px rgba(46, 204, 113, 0.5); }
     100% { box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3); }
+}
+
+@keyframes resumePulse {
+    0% { box-shadow: 0 4px 15px rgba(255, 51, 102, 0.3); }
+    50% { box-shadow: 0 4px 25px rgba(255, 51, 102, 0.5); }
+    100% { box-shadow: 0 4px 15px rgba(255, 51, 102, 0.3); }
 }
 
