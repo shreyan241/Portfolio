@@ -2705,12 +2705,13 @@ input, select, textarea {
 }
 
 /* Custom colors for each card */
-.timeline-card:nth-child(1) .card-back { background: #B5EAD7; }
-.timeline-card:nth-child(2) .card-back { background: #66B2FF; }
-.timeline-card:nth-child(3) .card-back { background: #FFB6C1; }
-.timeline-card:nth-child(4) .card-back { background: #FFD54F; }
-.timeline-card:nth-child(5) .card-back { background: #26a69a; }
-.timeline-card:nth-child(6) .card-back { background: #FF6666; }
+.timeline-card:nth-child(1) .card-back { background: #e08253; }
+.timeline-card:nth-child(2) .card-back { background: #B5EAD7; }
+.timeline-card:nth-child(3) .card-back { background: #66B2FF; }
+.timeline-card:nth-child(4) .card-back { background: #FFB6C1; }
+.timeline-card:nth-child(5) .card-back { background: #FFD54F; }
+.timeline-card:nth-child(6) .card-back { background: #26a69a; }
+.timeline-card:nth-child(7) .card-back { background: #FF6666; }
 
 .timeline-card .card-back::after {
     content: '';
@@ -2977,12 +2978,13 @@ ul {
 
 
 /* Custom Colors for Each Card */
-.timeline-card:nth-child(1) { background-color: #B5EAD7; } /* Soft mint green */
-.timeline-card:nth-child(2) { background-color: #66B2FF; } /* Lighter blue */
-.timeline-card:nth-child(3) { background-color: #FFB6C1; } /* Light pink */
-.timeline-card:nth-child(4) { background-color: #FFD54F; } /* Lighter shade of gold */
-.timeline-card:nth-child(5) { background-color: #26a69a; } /* Teal */
-.timeline-card:nth-child(6) { background-color: #FF6666; } /* Even redder light coral */
+.timeline-card:nth-child(1) { background-color: #FF9900; } /* Amazon Orange */
+.timeline-card:nth-child(2) { background-color: #B5EAD7; } /* Soft mint green */
+.timeline-card:nth-child(3) { background-color: #66B2FF; } /* Lighter blue */
+.timeline-card:nth-child(4) { background-color: #FFB6C1; } /* Light pink */
+.timeline-card:nth-child(5) { background-color: #FFD54F; } /* Lighter shade of gold */
+.timeline-card:nth-child(6) { background-color: #26a69a; } /* Teal */
+.timeline-card:nth-child(7) { background-color: #FF6666; } /* Even redder light coral */
 
 /* Pulsating Effect for Icons */
 .pulsate {
