@@ -1,0 +1,136 @@
+/* CSS Variables for Light/Dark Themes */
+:root {
+  /* Light Theme Colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #ecf1f1;
+  --bg-quaternary: #e8edec;
+  
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-tertiary: #888888;
+  --text-inverse: #ffffff;
+  
+  --accent-red: #c0392b;
+  --accent-red-hover: #a93226;
+  --accent-blue: #1e88e5;
+  --accent-green: #2ecc71;
+  
+  --border-color: rgba(0, 0, 0, 0.15);
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-medium: rgba(0, 0, 0, 0.2);
+  --shadow-heavy: rgba(0, 0, 0, 0.3);
+  
+  --overlay-bg: rgba(255, 255, 255, 0.75);
+  --header-bg: #222629;
+  --header-overlay: rgba(0, 0, 0, 0.1);
+  
+  /* Carousel theming */
+  --card-bg: #ffffff;
+  --card-text: #333333;
+  --card-border: rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Theme Colors */
+[data-theme="dark"] {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #2a2a2a;
+  --bg-quaternary: #1f1f1f;
+  
+  --text-primary: #f0f0f0;
+  --text-secondary: #d0d0d0;
+  --text-tertiary: #b0b0b0;
+  --text-inverse: #0a0a0a;
+  
+  --accent-red: #ff4757;
+  --accent-red-hover: #ff3838;
+  --accent-blue: #3742fa;
+  --accent-green: #2ed573;
+  
+  --border-color: rgba(255, 255, 255, 0.15);
+  --shadow-light: rgba(0, 0, 0, 0.3);
+  --shadow-medium: rgba(0, 0, 0, 0.5);
+  --shadow-heavy: rgba(0, 0, 0, 0.7);
+  
+  --overlay-bg: rgba(0, 0, 0, 0.75);
+  --header-bg: #0f0f0f;
+  --header-overlay: rgba(255, 255, 255, 0.05);
+  
+  /* Carousel theming */
+  --card-bg: #2a2a2a;
+  --card-text: #e0e0e0;
+  --card-border: rgba(255, 255, 255, 0.1);
+}
+
+/* Theme Transition Animation */
+.theme-transition * {
+  transition: background-color 0.3s ease, 
+              color 0.3s ease, 
+              border-color 0.3s ease, 
+              box-shadow 0.3s ease !important;
+}
+
+/* Theme Toggle Button Styles */
+.theme-toggle-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5em;
+}
+
+.theme-toggle {
+  background: linear-gradient(45deg, var(--accent-red), var(--accent-blue));
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px var(--shadow-medium);
+}
+
+.theme-toggle:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 20px var(--shadow-heavy);
+}
+
+.theme-toggle i {
+  color: white;
+  font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover i {
+  transform: rotate(180deg);
+}
+
+/* Ripple Effect */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(0);
+  animation: ripple-animation 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Dark mode specific adjustments */
+[data-theme="dark"] .theme-toggle {
+  box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+  box-shadow: 0 6px 20px rgba(255, 71, 87, 0.5);
+} 

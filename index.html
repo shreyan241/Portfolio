@@ -9,6 +9,7 @@
 		<title>Shreyan Sood Portfolio</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/themes.css" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="assets/css/project-carousel.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-p9U4SF9fHx8Buq1zyl2e4kS62TjGlW0DwhtY1TejH9lV1xB5b1iZDQZ5X4j+v+hyfCZoW8ErkC0g1WE3YzG3AQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -45,7 +46,6 @@
 								<li><a href="#top" id="top-link"><span class="icon solid fa-school">&nbsp;&nbsp;&nbsp;&nbsp;Intro</span></a></li>
                                 <li><a href="#projects" id="projects-link"><span class="icon solid fa-th">&nbsp;&nbsp;&nbsp;&nbsp;Projects</span></a></li>
                                 <li><a href="#experience" id="experience-link"><span class="icon solid fa-briefcase">&nbsp;&nbsp;&nbsp;&nbsp;Experience</span></a></li>
-                                <li><a href="#playground" id="playground-link"><span class="icon solid fa-brain">&nbsp;&nbsp;&nbsp;&nbsp;AI Playground</span></a></li>
                                 <li><a href="#contact" id="contact-link"><span class="icon solid fa-comments">&nbsp;&nbsp;&nbsp;&nbsp;Contact</span></a></li>
 							</ul>
 						</nav>
@@ -53,6 +53,13 @@
 				</div>
 
 				<div class="bottom">
+
+					<!-- Theme Toggle -->
+					<div class="theme-toggle-container">
+						<button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+							<i class="fas fa-moon"></i>
+						</button>
+					</div>
 
 					<!-- Social Icons -->
 						<ul class="icons">
@@ -452,7 +459,7 @@
                                     <img src="images/PI_logo.jpeg" alt="PI Logo" class="company-logo">
                                     <h3>Machine Learning Engineer</h3>
                                     <h4>Prompt Inversion, Dover, Delaware</h4>
-                                    <p>September 2024 – June 2025</p>
+                                    <p>September – December</p>
                                     <div class="flip-icon">
                                         <i class="fas fa-robot"></i> 
                                     </div>
@@ -597,42 +604,6 @@
                     </div>
                 </section>
 
-                <!-- Playground Section -->
-                <section id="playground" class="five dark">
-                    <div class="container">
-                        <header>
-                            <h2>AI Playground</h2>
-                            <p>More <strong style="color: #00ffea;">AI</strong> related <strong style="color: #ff00ff;">interactive visualizations</strong> coming soon!</p>
-
-                        </header>
-
-                        <!-- Visualization Tabs -->
-                        <div class="visualization-tabs">
-                            <button class="tab-btn active" data-visualization="neural-network">Neural Network</button>
-                            <!-- Future buttons for additional visualizations -->
-                        </div>
-
-                        <!-- Visualization Containers -->
-                        <div class="visualization-container">
-                            <!-- Neural Network Visualization -->
-                            <div id="neural-network" class="visualization active">
-                                <canvas id="nnCanvas"></canvas>
-                                <canvas id="graphCanvas"></canvas>
-                                <div class="controls">
-                                    <button id="trainBtn">Train</button>
-                                    <button id="predictBtn">Predict</button>
-                                </div>
-                                <div class="stats">
-                                    <p>Epoch: <span id="epoch">0</span>/1000</p>
-                                    <p>MSE: <span id="loss">&#8734</span></p>
-                                </div>
-                            </div>
-
-                            <!-- Placeholder for Future Visualizations -->
-                        </div>
-                    </div>
-                </section>
-
                 
                 <section id="contact" class="four">
                     <div class="container">
@@ -683,12 +654,12 @@
 			<script src="assets/js/browser.min.js"></script>
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-			<script src="assets/js/playground_nn.js"></script>
-			<script src="assets/js/regression_snake.js"></script>
-			<script src="assets/js/meteor_canvas.js"></script>
-			<script src="assets/js/3d_carousel.js"></script>
-			<script src="assets/js/typewriter_effect.js"></script>
+					<script src="assets/js/main.js"></script>
+		<script src="assets/js/theme-switcher.js"></script>
+		<script src="assets/js/regression_snake.js"></script>
+		<script src="assets/js/meteor_canvas.js"></script>
+		<script src="assets/js/3d_carousel.js"></script>
+		<script src="assets/js/typewriter_effect.js"></script>
 
         <!-- Modal Structure -->
         <div id="demoModal" class="modal">

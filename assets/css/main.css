@@ -83,12 +83,12 @@ input, select, textarea {
 	}
 
 	body {
-		background: #fff;
+		background: var(--bg-primary);
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 19pt;
 		font-weight: 300;
 		line-height: 1.75em;
-		color: #888;
+		color: var(--text-tertiary);
 	}
 
 		body.is-preload *, body.is-preload *:before, body.is-preload *:after {
@@ -107,12 +107,12 @@ input, select, textarea {
 		font-size: 19pt;
 		font-weight: 300;
 		line-height: 1.75em;
-		color: #888;
+		color: var(--text-tertiary);
 	}
 
 	h1, h2, h3, h4, h5, h6 {
 		font-weight: 300;
-		color: #666;
+		color: var(--text-secondary);
 		line-height: 1.5em;
 	}
 
@@ -156,7 +156,7 @@ input, select, textarea {
 
 	strong, b {
 		font-weight: 300;
-		color: #666;
+		color: var(--text-secondary);
 	}
 
 	em, i {
@@ -2046,9 +2046,9 @@ input, select, textarea {
 		-webkit-justify-content: space-between;
 		-ms-justify-content: space-between;
 		justify-content: space-between;
-		background: #222629 url("images/overlay.png");
-		box-shadow: inset -0.25em 0 0.25em 0 rgba(0, 0, 0, 0.1);
-		color: #fff;
+		background: var(--header-bg) url("images/overlay.png");
+		box-shadow: inset -0.25em 0 0.25em 0 var(--header-overlay);
+		color: var(--text-inverse);
 		height: 100%;
 		left: 0;
 		overflow-y: auto;
@@ -2245,16 +2245,16 @@ input, select, textarea {
 			}
 
 			#main > section.two {
-				background-color: #f5fafa;
+				background-color: var(--bg-secondary);
                 min-height: 1000px;
 			}
 
 			#main > section.three {
-				background-color: #ecf1f1;
+				background-color: var(--bg-tertiary);
 			}
 
 			#main > section.four {
-				background-color: #e8edec;
+				background-color: var(--bg-quaternary);
 			}
 
 /* Wide */
@@ -2752,9 +2752,9 @@ input, select, textarea {
 .timeline-card p {
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
-    color: #333; /* Changed from #555 to #333 for darker text */
-    margin-bottom: 10px;
-    font-weight: 500; /* Added slightly bolder font weight for better readability */
+    color: #000; /* Black text for better visibility */
+    margin-bottom: 3px; /* Reduced margin to move text up and prevent overlap */
+    font-weight: 600; /* Semi-bold for better readability */
 }
 
 /* Styling for text on the back */
@@ -3221,226 +3221,7 @@ ul {
     margin: 10px 0;  /* Reduced from 20px to 10px */
 }
 
-/* Playground Section */
-#playground {
-    padding: 80px 0; /* Increased padding */
-    background-color: #000814; /* Deep space background */
-    color: #ffffff;
-    position: relative;
-    overflow: hidden;
-    background: url('images/cosmos.jpg');
 
-}
-
-/* Playground Section */
-#playground {
-    padding: 80px 0;
-    background-color: #000814;
-    color: #ffffff;
-    position: relative;
-    overflow: hidden;
-    background: url('images/cosmos.jpg');
-}
-
-/* Cosmic Background Animation */
-#playground::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at center, #0a0a0a, #000814);
-    z-index: -2;
-}
-
-#playground::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('images/cosmos.jpg');
-    opacity: 0.07;
-    z-index: -1;
-}
-
-/* Header Styling */
-#playground h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 3em;
-    color: #00ffea;
-    background: linear-gradient(90deg, #ff00ff, #00ffea, #00ff00);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    -ms-background-clip: text;
-    -o-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0px 0px 20px rgba(0, 255, 234, 0.7);
-    letter-spacing: 2px;
-}
-
-#playground p {
-    text-align: center;
-    margin-bottom: 50px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.2em;
-    color: #a1a1a1;
-    padding: 10px 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 15px rgba(0, 255, 234, 0.3);
-}
-
-/* Visualization Containers */
-.visualization-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-    width: 100%;
-    height: auto;
-    max-width: 100%;
-    background-color: rgba(0, 8, 20, 0.85);
-    border-radius: 20px;
-    overflow: hidden;
-    background: url('images/cosmos.jpg');
-    background-size: cover;
-    background-position: center;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.7);
-}
-
-/* Canvases Styling */
-#nnCanvas, #graphCanvas {
-    width: 100%; /* Always take full width */
-    max-width: 97%; /* Limit max width for larger screens */
-    height: 45vh;
-    max-height: 400px; 
-    margin: 15px 0;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 255, 234, 0.5);
-}
-
-#nnCanvas {
-    background-color: rgba(0, 0, 0, 0.5);
-    border: 2px solid #ba51ee;
-}
-
-#graphCanvas {
-    background-color: rgba(0, 0, 0, 0.5);
-    border: 2px solid #00ffea;
-}
-
-/* Controls Styling */
-.controls {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    gap: 10px;
-    z-index: 1;
-}
-
-.controls button {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
-    border: 1px solid #ffffff;
-    padding: 8px 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s, transform 0.3s;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.9em;
-    backdrop-filter: blur(5px);
-}
-
-.controls button:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-    transform: scale(1.05);
-}
-
-/* Stats Styling */
-.stats {
-    position: absolute;
-    top: 30px;
-    left: 30px;
-    padding: 5px;
-    border-radius: 5px;
-    font-family: 'Montserrat', sans-serif;
-    color: #00ffea;
-    font-size: 0.7em;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.stats p {
-    margin: 0;
-    line-height: 0;
-}
-
-/* Graph Label Styling */
-.graph-label {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    color: #00ffea;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.9em;
-    z-index: 2;
-}
-
-/* Visualization Tabs */
-.visualization-tabs {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
-}
-
-/* Button Styling for Neural Network - Cosmic Feel */
-.visualization-tabs .tab-btn {
-    background-color: rgba(30, 30, 50, 0.8); /* Deep cosmic background */
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    margin: 0 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-    font-family: 'Montserrat', sans-serif;
-    border-radius: 5px;
-    font-size: 1em;
-    box-shadow: 0px 0px 10px rgba(0, 255, 234, 0.5); /* Cosmic glow */
-}
-
-.visualization-tabs .tab-btn:hover,
-.visualization-tabs .tab-btn.active {
-    background-color: rgba(40, 40, 60, 0.9); /* Darker space-like background */
-    transform: scale(1.1); /* Slight hover scaling */
-    box-shadow: 0px 0px 20px rgba(0, 255, 234, 0.8); /* Bright neon glow on hover */
-    color: #00ffea; /* Neon cyan text on hover */
-}
-
-/* Cosmic Pulse Effect */
-.visualization-tabs .tab-btn:hover {
-    animation: cosmicPulse 1.5s infinite ease-in-out;
-}
-
-@keyframes cosmicPulse {
-    0% {
-        box-shadow: 0 0 10px rgba(0, 255, 234, 0.3);
-    }
-    50% {
-        box-shadow: 0 0 20px rgba(0, 255, 234, 0.7);
-    }
-    100% {
-        box-shadow: 0 0 10px rgba(0, 255, 234, 0.3);
-    }
-}
 
 .mistake {
     color: #f50c0c;
@@ -3747,5 +3528,17 @@ ul {
     0% { box-shadow: 0 4px 15px rgba(255, 51, 102, 0.3); }
     50% { box-shadow: 0 4px 25px rgba(255, 51, 102, 0.5); }
     100% { box-shadow: 0 4px 15px rgba(255, 51, 102, 0.3); }
+}
+
+/* Fix text visibility in dark mode */
+.experience-intro,
+header p,
+section p {
+    color: var(--text-tertiary) !important;
+}
+
+/* Ensure paragraph text in sections has proper contrast */
+#main > section p {
+    color: var(--text-tertiary) !important;
 }
 
