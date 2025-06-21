@@ -5,6 +5,8 @@
     height: 400px;
     margin: 100px auto 0 auto;
     perspective: 1000px;
+    touch-action: pan-y; /* Allow vertical scrolling but handle horizontal touches */
+    user-select: none; /* Prevent text selection during drag */
 }
 
 /* Carousel */
@@ -14,10 +16,21 @@
     height: 100%;
     transform-style: preserve-3d; 
     animation: rotate360 40s infinite forwards linear;
+    cursor: grab;
+    transition: transform 0.1s ease-out;
 }
 
 .carousel.paused {
     animation-play-state: paused;
+}
+
+.carousel.dragging {
+    cursor: grabbing;
+    animation-play-state: paused;
+}
+
+.carousel.user-controlled {
+    animation: none;
 }
 
 /* Carousel Face */

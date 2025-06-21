@@ -1,11 +1,27 @@
 document.addEventListener('DOMContentLoaded', function () {
     const carousel = document.querySelector('.carousel');
+    const carouselContainer = document.querySelector('.carousel-container');
     const faces = document.querySelectorAll('.carousel__face');
     const modal = document.getElementById('demoModal');
     const modalImg = document.getElementById('demoGifInModal');
     const demoButtons = document.querySelectorAll('.demo-btn');
     const closeBtn = document.querySelector('.close-btn');
     const filterButtons = document.querySelectorAll('.filter-btn');
+
+    // Carousel interaction variables
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let currentRotation = 0;
+    let autoRotationSpeed = 9; // degrees per second (360deg / 40s = 9deg/s)
+    let lastTime = 0;
+    let autoRotationAnimation = null;
+    let velocity = 0;
+    let lastMoveTime = 0;
+    let lastMoveX = 0;
+    const maxSpeed = 720; // Maximum degrees per second
+    const minSpeed = 9; // Minimum auto-rotation speed
+    let isUserControlled = false;
 
     // Check Flip CSS (Optional Debugging Function)
     function checkFlipCSS() {
@@ -29,10 +45,172 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function resumeCarousel() {
-        carousel.classList.remove('paused');
-        isCarouselPaused = false;
-        console.log('Carousel resumed');
+        if (!isUserControlled) {
+            carousel.classList.remove('paused');
+            isCarouselPaused = false;
+            console.log('Carousel resumed');
+        }
     }
+
+    // Carousel control functions
+    function updateCarouselRotation(rotation) {
+        carousel.style.transform = `rotateY(${rotation}deg)`;
+        currentRotation = rotation;
+    }
+
+    function startAutoRotation() {
+        if (autoRotationAnimation) {
+            cancelAnimationFrame(autoRotationAnimation);
+        }
+
+        // Ensure we continue from current position, not reset to CSS animation
+        carousel.classList.add('user-controlled');
+        
+        function animate() {
+            if (!isDragging && !isCarouselPaused) {
+                const now = performance.now();
+                if (lastTime) {
+                    const deltaTime = (now - lastTime) / 1000; // Convert to seconds
+                    currentRotation -= autoRotationSpeed * deltaTime;
+                    updateCarouselRotation(currentRotation);
+                }
+                lastTime = now;
+                autoRotationAnimation = requestAnimationFrame(animate);
+            }
+        }
+        lastTime = performance.now();
+        autoRotationAnimation = requestAnimationFrame(animate);
+    }
+
+    function startUserRotation(speed) {
+        isUserControlled = true;
+        carousel.classList.add('user-controlled');
+        
+        if (autoRotationAnimation) {
+            cancelAnimationFrame(autoRotationAnimation);
+        }
+
+        function animate() {
+            if (isUserControlled && Math.abs(speed) > 0.5) {
+                const now = performance.now();
+                if (lastTime) {
+                    const deltaTime = (now - lastTime) / 1000;
+                    currentRotation -= speed * deltaTime;
+                    updateCarouselRotation(currentRotation);
+                    
+                    // Apply friction
+                    speed *= 0.95;
+                }
+                lastTime = now;
+                autoRotationAnimation = requestAnimationFrame(animate);
+            } else {
+                // Smoothly transition to auto rotation without position jump
+                lastTime = performance.now();
+                autoRotationAnimation = requestAnimationFrame(function animate() {
+                    if (!isDragging && !isCarouselPaused) {
+                        const now = performance.now();
+                        if (lastTime) {
+                            const deltaTime = (now - lastTime) / 1000;
+                            currentRotation -= autoRotationSpeed * deltaTime;
+                            updateCarouselRotation(currentRotation);
+                        }
+                        lastTime = now;
+                        autoRotationAnimation = requestAnimationFrame(animate);
+                    }
+                });
+            }
+        }
+        lastTime = performance.now();
+        autoRotationAnimation = requestAnimationFrame(animate);
+    }
+
+    // Mouse and touch event handlers
+    function getEventX(e) {
+        return e.touches ? e.touches[0].clientX : e.clientX;
+    }
+
+    function getEventY(e) {
+        return e.touches ? e.touches[0].clientY : e.clientY;
+    }
+
+    function startDrag(e) {
+        isDragging = true;
+        startX = getEventX(e);
+        startY = getEventY(e);
+        lastMoveX = startX;
+        lastMoveTime = performance.now();
+        velocity = 0;
+        
+        carousel.classList.add('dragging');
+        e.preventDefault();
+    }
+
+    function drag(e) {
+        if (!isDragging) return;
+        
+        e.preventDefault();
+        const currentX = getEventX(e);
+        const currentY = getEventY(e);
+        const currentTime = performance.now();
+        
+        // Calculate movement distance and time
+        const deltaX = currentX - lastMoveX;
+        const deltaTime = currentTime - lastMoveTime;
+        
+        // Update velocity (pixels per millisecond converted to degrees per second)
+        if (deltaTime > 0) {
+            velocity = (deltaX / deltaTime) * 1000 * 0.5; // Scale factor for sensitivity
+            velocity = Math.max(-maxSpeed, Math.min(maxSpeed, velocity)); // Clamp to max speed
+        }
+        
+        // Update rotation based on horizontal movement
+        const rotationDelta = deltaX * 0.5; // Scale factor for rotation sensitivity
+        currentRotation -= rotationDelta;
+        updateCarouselRotation(currentRotation);
+        
+        lastMoveX = currentX;
+        lastMoveTime = currentTime;
+    }
+
+    function endDrag(e) {
+        if (!isDragging) return;
+        
+        isDragging = false;
+        carousel.classList.remove('dragging');
+        
+        // Start momentum rotation based on final velocity
+        if (Math.abs(velocity) > 10) {
+            startUserRotation(velocity);
+        } else {
+            // Resume auto rotation if velocity is too low, continuing from current position
+            lastTime = performance.now();
+            autoRotationAnimation = requestAnimationFrame(function animate() {
+                if (!isDragging && !isCarouselPaused) {
+                    const now = performance.now();
+                    if (lastTime) {
+                        const deltaTime = (now - lastTime) / 1000;
+                        currentRotation -= autoRotationSpeed * deltaTime;
+                        updateCarouselRotation(currentRotation);
+                    }
+                    lastTime = now;
+                    autoRotationAnimation = requestAnimationFrame(animate);
+                }
+            });
+        }
+    }
+
+    // Mouse events
+    carouselContainer.addEventListener('mousedown', startDrag);
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('mouseup', endDrag);
+
+    // Touch events
+    carouselContainer.addEventListener('touchstart', startDrag, { passive: false });
+    document.addEventListener('touchmove', drag, { passive: false });
+    document.addEventListener('touchend', endDrag);
+
+    // Prevent context menu on long press
+    carouselContainer.addEventListener('contextmenu', (e) => e.preventDefault());
 
     // Card flipping
     faces.forEach((face, index) => {
@@ -44,7 +222,14 @@ document.addEventListener('DOMContentLoaded', function () {
             flipBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 cardInner.classList.add('flipped');
-                pauseCarousel();
+                
+                // Pause all carousel movement
+                if (autoRotationAnimation) {
+                    cancelAnimationFrame(autoRotationAnimation);
+                }
+                isUserControlled = true;
+                carousel.classList.add('user-controlled');
+                
                 console.log(`Card ${index + 1} flip attempted`);
                 console.log(`Card ${index + 1} classes:`, cardInner.className);
                 console.log(`Card ${index + 1} transform:`, window.getComputedStyle(cardInner).transform);
@@ -55,7 +240,22 @@ document.addEventListener('DOMContentLoaded', function () {
             unflipBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 cardInner.classList.remove('flipped');
-                resumeCarousel();
+                
+                // Resume auto rotation from current position
+                lastTime = performance.now();
+                autoRotationAnimation = requestAnimationFrame(function animate() {
+                    if (!isDragging && !isCarouselPaused) {
+                        const now = performance.now();
+                        if (lastTime) {
+                            const deltaTime = (now - lastTime) / 1000;
+                            currentRotation -= autoRotationSpeed * deltaTime;
+                            updateCarouselRotation(currentRotation);
+                        }
+                        lastTime = now;
+                        autoRotationAnimation = requestAnimationFrame(animate);
+                    }
+                });
+                
                 console.log(`Card ${index + 1} unflip attempted`);
                 console.log(`Card ${index + 1} classes:`, cardInner.className);
                 console.log(`Card ${index + 1} transform:`, window.getComputedStyle(cardInner).transform);
@@ -80,7 +280,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
             modalImg.src = gifSrc;
             modal.style.display = 'block';
-            pauseCarousel();
+            
+            // Pause all carousel movement
+            if (autoRotationAnimation) {
+                cancelAnimationFrame(autoRotationAnimation);
+            }
+            isUserControlled = true;
+            carousel.classList.add('user-controlled');
+            
             console.log(`Demo ${index + 1} shown: ${demoType}`);
         });
     });
@@ -88,7 +295,22 @@ document.addEventListener('DOMContentLoaded', function () {
     // Close modal functionality
     function closeModal() {
         modal.style.display = 'none';
-        resumeCarousel();
+        
+        // Resume auto rotation from current position
+        lastTime = performance.now();
+        autoRotationAnimation = requestAnimationFrame(function animate() {
+            if (!isDragging && !isCarouselPaused) {
+                const now = performance.now();
+                if (lastTime) {
+                    const deltaTime = (now - lastTime) / 1000;
+                    currentRotation -= autoRotationSpeed * deltaTime;
+                    updateCarouselRotation(currentRotation);
+                }
+                lastTime = now;
+                autoRotationAnimation = requestAnimationFrame(animate);
+            }
+        });
+        
         console.log('Modal closed');
     }
 
@@ -183,5 +405,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     checkFlipCSS();
 
-    console.log('Carousel setup complete');
+    // Initialize carousel position and start auto-rotation
+    carousel.classList.add('user-controlled'); // Always use manual transform control
+    updateCarouselRotation(0); // Start at 0 degrees
+    startAutoRotation();
+
+    console.log('Carousel setup complete with interactive controls');
 });
