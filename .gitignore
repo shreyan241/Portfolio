@@ -8,6 +8,9 @@ dist/
 .vite/
 *.tsbuildinfo
 
+# Local commit helper (workaround for git < 2.32 --trailer injection)
+do_commit.cmd
+
 # Logs
 *.log
 npm-debug.log*
