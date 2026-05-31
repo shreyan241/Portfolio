@@ -72,12 +72,12 @@ export function Hero() {
       {/* Warm, soft radial glows that wrap the beagle as the focal point. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-[-6%] top-[12%] -z-10 h-[420px] w-[620px] rounded-full opacity-25 blur-[150px]"
+        className="pointer-events-none absolute left-[-6%] top-[12%] -z-10 h-[300px] w-[360px] rounded-full opacity-20 blur-[92px] sm:h-[420px] sm:w-[620px] sm:opacity-25 sm:blur-[150px]"
         style={{ background: "var(--color-accent)" }}
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute right-[6%] top-1/3 -z-10 h-[440px] w-[440px] rounded-full opacity-[0.22] blur-[140px]"
+        className="pointer-events-none absolute right-[6%] top-1/3 -z-10 h-[300px] w-[300px] rounded-full opacity-[0.18] blur-[90px] sm:h-[440px] sm:w-[440px] sm:opacity-[0.22] sm:blur-[140px]"
         style={{ background: "var(--color-accent)" }}
       />
 
@@ -198,12 +198,12 @@ export function Hero() {
             </motion.div>
           </div>
 
-          {/* Beagle portrait — the warm focal visual, sized down on mobile */}
+          {/* Beagle portrait — the warm focal visual, kept roomy on mobile */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative mx-auto w-full max-w-[280px] sm:max-w-[360px] lg:max-w-none"
+            className="relative mx-auto w-full max-w-[340px] sm:max-w-[380px] lg:max-w-none"
           >
             <div
               aria-hidden="true"

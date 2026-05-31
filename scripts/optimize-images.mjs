@@ -15,9 +15,9 @@ const outDir = path.join(root, "public", "images");
 
 // [source, output, maxLongSide, quality]
 // Dimensions are tuned to the largest on-screen display size (x2 for retina);
-// the beagle is only used as a particle-sampling source so it can be tiny.
+// the beagle still needs enough fidelity for good particle sampling.
 const targets = [
-  ["beagle.jpg", "beagle.webp", 480, 74],
+  ["beagle.jpg", "beagle.webp", 900, 82],
   ["shreyan_photo.jpg", "shreyan_photo.webp", 760, 80],
   ["cats.jpg", "cats.webp", 640, 80],
   ["rubiks.png", "rubiks.webp", 900, 80],
@@ -41,8 +41,13 @@ for (const [src, out, max, quality] of targets) {
     console.warn(`skip (missing source): ${src}`);
     continue;
   }
+  const resizeOptions =
+    src === "beagle.jpg"
+      ? { fit: "cover", position: sharp.strategy.attention }
+      : { fit: "inside", withoutEnlargement: true };
+
   await sharp(srcPath)
-    .resize(max, max, { fit: "inside", withoutEnlargement: true })
+    .resize(max, max, resizeOptions)
     .webp({ quality })
     .toFile(outPath);
   before += kb(srcPath);

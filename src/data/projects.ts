@@ -15,7 +15,7 @@ export const projects: Project[] = [
     href: "https://github.com/shreyan241/RL_rubiks_visualizer",
     image: asset("images/rubiks.webp"),
     tags: ["Reinforcement Learning", "Deep Learning"],
-    demo: asset("demos/rubiks.gif"),
+    demo: asset("demos/rubiks.webp"),
     bullets: [
       "Combined MCTS with custom ResNet policy/value networks trained via self-play on 10M+ game states.",
       "Achieved a 71% solve rate on 9-move scrambles with <1s inference through efficient search-space pruning.",

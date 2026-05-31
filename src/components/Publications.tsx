@@ -2,9 +2,9 @@ import { ArrowUpRight, FileText } from "lucide-react";
 import { Container, Reveal, SectionHeading } from "./ui";
 import { publications } from "../data/publications";
 
-export function Publications() {
+export function Publications({ sectionId = "research" }: { sectionId?: string }) {
   return (
-    <section id="research" className="py-24 sm:py-32">
+    <section id={sectionId} className="py-24 sm:py-32">
       <Container>
         <SectionHeading
           index="04"

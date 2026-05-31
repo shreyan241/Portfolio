@@ -64,6 +64,8 @@ export function Highlights() {
                 <img
                   src={asset("images/amazon_logo2.webp")}
                   alt="Amazon"
+                  width={256}
+                  height={256}
                   loading="lazy"
                   decoding="async"
                   className="h-full w-full object-contain p-2"

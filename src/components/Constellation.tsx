@@ -24,7 +24,9 @@ export function Constellation() {
     let height = 0;
     let nodes: Node[] = [];
     let raf = 0;
+    let kickoffRaf = 0;
     let onScreen = true;
+    let animationStarted = false;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const mouse = { x: -9999, y: -9999 };
 
@@ -49,8 +51,8 @@ export function Constellation() {
       // Fewer nodes on phones — the node-pair loop is O(n²), so keep it light.
       const isMobile = window.matchMedia("(max-width: 640px)").matches;
       const density = Math.min(
-        Math.floor((width * height) / (isMobile ? 30000 : 18000)),
-        isMobile ? 26 : 76
+        Math.floor((width * height) / (isMobile ? 42000 : 18000)),
+        isMobile ? 18 : 76
       );
       nodes = Array.from({ length: density }, () => ({
         x: Math.random() * width,
@@ -110,8 +112,18 @@ export function Constellation() {
     const running = () => onScreen && !document.hidden;
 
     const loop = () => {
-      if (running()) draw();
+      if (!running()) {
+        animationStarted = false;
+        return;
+      }
+      draw();
       raf = requestAnimationFrame(loop);
+    };
+
+    const startLoop = () => {
+      if (reduced || animationStarted || !running()) return;
+      animationStarted = true;
+      loop();
     };
 
     const onMove = (e: MouseEvent) => {
@@ -127,27 +139,37 @@ export function Constellation() {
     const io = new IntersectionObserver(
       ([entry]) => {
         onScreen = entry.isIntersecting;
+        if (onScreen) startLoop();
       },
       { threshold: 0 }
     );
     io.observe(canvas);
 
+    const onVisibility = () => {
+      if (!document.hidden) startLoop();
+    };
+    const canHover = window.matchMedia("(hover: hover)").matches;
+
     resize();
     window.addEventListener("resize", resize);
-    window.addEventListener("mousemove", onMove);
+    document.addEventListener("visibilitychange", onVisibility);
+    if (canHover) window.addEventListener("mousemove", onMove);
     canvas.addEventListener("mouseleave", onLeave);
 
     if (reduced) {
       draw();
     } else {
-      loop();
+      // Let the hero text paint first; this background texture is decorative.
+      kickoffRaf = requestAnimationFrame(startLoop);
     }
 
     return () => {
       cancelAnimationFrame(raf);
+      cancelAnimationFrame(kickoffRaf);
       io.disconnect();
       window.removeEventListener("resize", resize);
-      window.removeEventListener("mousemove", onMove);
+      document.removeEventListener("visibilitychange", onVisibility);
+      if (canHover) window.removeEventListener("mousemove", onMove);
       canvas.removeEventListener("mouseleave", onLeave);
     };
   }, []);

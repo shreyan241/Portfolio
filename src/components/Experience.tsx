@@ -2,9 +2,9 @@ import { motion } from "framer-motion";
 import { Container, SectionHeading } from "./ui";
 import { experiences } from "../data/experience";
 
-export function Experience() {
+export function Experience({ sectionId = "experience" }: { sectionId?: string }) {
   return (
-    <section id="experience" className="section-tint py-24 sm:py-32">
+    <section id={sectionId} className="section-tint py-24 sm:py-32">
       <Container>
         <SectionHeading
           index="03"
@@ -35,6 +35,8 @@ export function Experience() {
                   <img
                     src={exp.logo}
                     alt={exp.company}
+                    width={256}
+                    height={256}
                     loading="lazy"
                     decoding="async"
                     className="h-full w-full object-contain p-1"

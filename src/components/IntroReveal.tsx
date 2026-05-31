@@ -34,7 +34,7 @@ export function IntroReveal() {
         >
           {/* warm glow behind the monogram */}
           <div
-            className="absolute h-[52vh] w-[52vh] rounded-full opacity-25 blur-[120px]"
+            className="absolute h-[42vh] w-[42vh] rounded-full opacity-20 blur-[88px] sm:h-[52vh] sm:w-[52vh] sm:opacity-25 sm:blur-[120px]"
             style={{ background: "var(--color-accent)" }}
           />
 

@@ -23,6 +23,8 @@ type Particle = {
 };
 
 type Sample = { sx: number; sy: number; L: number };
+type FocusBounds = { x0: number; y0: number; x1: number; y1: number };
+type WeightedValue = { value: number; weight: number };
 
 // Hard cap on the offscreen sampling resolution: we ALWAYS draw the source
 // image into a tiny buffer (<= this on the long side) and sample from that, so
@@ -31,6 +33,7 @@ const SAMPLE_LONG = 150;
 const SAMPLE_STEP = 3; // grid step in sampled space (desktop)
 const MAX_PARTICLES = 6000;
 const POINTER_RADIUS = 110; // px around the pointer that gets disturbed
+const FOCUS_PADDING = 0.12;
 
 // Particle portrait of the owner's beagle. Samples a photo (or a built-in
 // silhouette fallback) into a grid of dots that scatter away from the cursor
@@ -66,15 +69,17 @@ export function BeaglePortrait() {
     let resizeRetries = 0;
     let kickoffRaf = 0;
     let idleId = 0;
-    let running = true;
+    let onScreen = true;
     let dark = isDarkTheme();
     let silhouette = false;
 
     let sampled: Sample[] = [];
     let sw = 0;
     let sh = 0;
+    let focusBounds: FocusBounds = { x0: 0, y0: 0, x1: 1, y1: 1 };
     let particles: Particle[] = [];
     let r0 = 1; // base dot radius for current layout
+    let animationStarted = false;
 
     const pointer = { x: -9999, y: -9999, active: false };
 
@@ -95,16 +100,19 @@ export function BeaglePortrait() {
 
     const layout = () => {
       if (!sampled.length || !width || !height) return;
-      // Cover-fit: fill the box on the constraining axis and center, so the
-      // portrait reads large and centered at every viewport size (a landscape
-      // photo in a square box would otherwise float small with big margins).
-      const scale = Math.max(width / sw, height / sh);
-      const ox = (width - sw * scale) / 2;
-      const oy = (height - sh * scale) / 2;
+      const focusWidth = Math.max(1, focusBounds.x1 - focusBounds.x0);
+      const focusHeight = Math.max(1, focusBounds.y1 - focusBounds.y0);
+      // Cover-fit the meaningful ink/detail bounds, not the full landscape
+      // photo. The source includes couch/floor around the dog; mapping the
+      // full rectangle preserves that empty composition and leaves the beagle
+      // small/cornered in the square panel.
+      const scale = Math.max(width / focusWidth, height / focusHeight);
+      const ox = (width - focusWidth * scale) / 2;
+      const oy = (height - focusHeight * scale) / 2;
       r0 = Math.max((sampleStep * scale) / 2, 0.6);
       particles = sampled.map((s) => {
-        const hx = ox + s.sx * scale;
-        const hy = oy + s.sy * scale;
+        const hx = ox + (s.sx - focusBounds.x0) * scale;
+        const hy = oy + (s.sy - focusBounds.y0) * scale;
         return {
           hx,
           hy,
@@ -195,8 +203,101 @@ export function BeaglePortrait() {
     };
 
     const loop = () => {
-      if (running) draw();
+      if (!onScreen || document.hidden) {
+        animationStarted = false;
+        return;
+      }
+      draw();
       raf = requestAnimationFrame(loop);
+    };
+
+    const startLoop = () => {
+      if (reduced || animationStarted) return;
+      if (!onScreen || document.hidden) return;
+      animationStarted = true;
+      loop();
+    };
+
+    const weightedQuantile = (values: WeightedValue[], q: number) => {
+      values.sort((a, b) => a.value - b.value);
+      const total = values.reduce((sum, v) => sum + v.weight, 0);
+      let acc = 0;
+      for (const v of values) {
+        acc += v.weight;
+        if (acc >= total * q) return v.value;
+      }
+      return values[values.length - 1]?.value ?? 0;
+    };
+
+    const clamp = (value: number, min: number, max: number) =>
+      Math.max(min, Math.min(max, value));
+
+    const findFocusBounds = (
+      data: Uint8ClampedArray,
+      isSil: boolean
+    ): FocusBounds => {
+      if (isSil || sw < 4 || sh < 4) return { x0: 0, y0: 0, x1: sw, y1: sh };
+
+      const xs: WeightedValue[] = [];
+      const ys: WeightedValue[] = [];
+      const lumAt = (x: number, y: number) => {
+        const i = (y * sw + x) * 4;
+        return luminance(data[i], data[i + 1], data[i + 2]);
+      };
+
+      for (let y = 1; y < sh - 1; y++) {
+        for (let x = 1; x < sw - 1; x++) {
+          const i = (y * sw + x) * 4;
+          if (data[i + 3] / 255 < 0.4) continue;
+
+          const r = data[i];
+          const g = data[i + 1];
+          const b = data[i + 2];
+          const L = luminance(r, g, b);
+          const edge =
+            Math.abs(L - lumAt(x - 1, y)) +
+            Math.abs(L - lumAt(x + 1, y)) +
+            Math.abs(L - lumAt(x, y - 1)) +
+            Math.abs(L - lumAt(x, y + 1));
+          const hi = Math.max(r, g, b);
+          const lo = Math.min(r, g, b);
+          const saturation = hi === 0 ? 0 : (hi - lo) / hi;
+          const contrast = Math.abs(L - 0.5);
+          const redDominant = r > g * 1.18 && r > b * 1.18;
+          const neutralWarmBoost = saturation < 0.48 ? 0.18 : 0;
+          const redPenalty = redDominant ? 0.55 : 1;
+          const weight =
+            (edge * 2.8 + Math.max(0, contrast - 0.14) * 1.25 + neutralWarmBoost) *
+            redPenalty;
+
+          if (weight < 0.32) continue;
+          xs.push({ value: x, weight });
+          ys.push({ value: y, weight });
+        }
+      }
+
+      if (xs.length < 30 || ys.length < 30) {
+        return { x0: 0, y0: 0, x1: sw, y1: sh };
+      }
+
+      let x0 = weightedQuantile(xs, 0.05);
+      let x1 = weightedQuantile(xs, 0.95);
+      let y0 = weightedQuantile(ys, 0.05);
+      let y1 = weightedQuantile(ys, 0.95);
+      const boxW = x1 - x0;
+      const boxH = y1 - y0;
+      const pad = Math.max(sampleStep * 2, Math.max(boxW, boxH) * FOCUS_PADDING);
+
+      x0 = clamp(Math.floor(x0 - pad), 0, sw - 1);
+      y0 = clamp(Math.floor(y0 - pad), 0, sh - 1);
+      x1 = clamp(Math.ceil(x1 + pad), x0 + 1, sw);
+      y1 = clamp(Math.ceil(y1 + pad), y0 + 1, sh);
+
+      if ((x1 - x0) * (y1 - y0) < sw * sh * 0.12) {
+        return { x0: 0, y0: 0, x1: sw, y1: sh };
+      }
+
+      return { x0, y0, x1, y1 };
     };
 
     const buildSamples = (image: HTMLImageElement, isSil: boolean) => {
@@ -224,8 +325,17 @@ export function BeaglePortrait() {
       }
 
       const next: Sample[] = [];
+      const bounds = findFocusBounds(data, isSil);
       for (let y = 0; y < sh; y += sampleStep) {
         for (let x = 0; x < sw; x += sampleStep) {
+          if (
+            x < bounds.x0 ||
+            x > bounds.x1 ||
+            y < bounds.y0 ||
+            y > bounds.y1
+          ) {
+            continue;
+          }
           const i = (y * sw + x) * 4;
           const a = data[i + 3] / 255;
           if (a < 0.4) continue;
@@ -243,9 +353,14 @@ export function BeaglePortrait() {
       } else {
         sampled = next;
       }
+      focusBounds = bounds;
 
       layout();
-      if (reduced) drawStatic();
+      if (reduced) {
+        drawStatic();
+      } else {
+        startLoop();
+      }
     };
 
     // Run a callback when the main thread is idle (so the heavy-ish sampling
@@ -318,11 +433,16 @@ export function BeaglePortrait() {
 
     const io = new IntersectionObserver(
       ([entry]) => {
-        running = entry.isIntersecting;
+        onScreen = entry.isIntersecting;
+        if (onScreen && particles.length) startLoop();
       },
       { threshold: 0 }
     );
     io.observe(canvas);
+
+    const onVisibility = () => {
+      if (!document.hidden && onScreen && particles.length) startLoop();
+    };
 
     const ro = new ResizeObserver(resize);
     if (canvas.parentElement) ro.observe(canvas.parentElement);
@@ -338,9 +458,10 @@ export function BeaglePortrait() {
     });
 
     resize();
-    window.addEventListener("mousemove", onMove, { passive: true });
-    window.addEventListener("touchmove", onTouch, { passive: true });
-    window.addEventListener("touchend", onLeave, { passive: true });
+    document.addEventListener("visibilitychange", onVisibility);
+    canvas.addEventListener("mousemove", onMove, { passive: true });
+    canvas.addEventListener("touchmove", onTouch, { passive: true });
+    canvas.addEventListener("touchend", onLeave, { passive: true });
     canvas.addEventListener("mouseleave", onLeave);
 
     // Kick off the (capped, downscaled) sampling AFTER first paint so the hero
@@ -348,8 +469,6 @@ export function BeaglePortrait() {
     kickoffRaf = requestAnimationFrame(() => {
       loadImage(asset("images/beagle.webp"), false);
     });
-
-    if (!reduced) loop();
 
     return () => {
       cancelAnimationFrame(raf);
@@ -365,9 +484,10 @@ export function BeaglePortrait() {
       io.disconnect();
       ro.disconnect();
       themeObserver.disconnect();
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("touchmove", onTouch);
-      window.removeEventListener("touchend", onLeave);
+      document.removeEventListener("visibilitychange", onVisibility);
+      canvas.removeEventListener("mousemove", onMove);
+      canvas.removeEventListener("touchmove", onTouch);
+      canvas.removeEventListener("touchend", onLeave);
       canvas.removeEventListener("mouseleave", onLeave);
     };
   }, []);

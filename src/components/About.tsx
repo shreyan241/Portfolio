@@ -2,9 +2,9 @@ import { GraduationCap } from "lucide-react";
 import { Container, Reveal, SectionHeading } from "./ui";
 import { profile, skills, education } from "../data/profile";
 
-export function About() {
+export function About({ sectionId = "about" }: { sectionId?: string }) {
   return (
-    <section id="about" className="section-tint py-24 sm:py-32">
+    <section id={sectionId} className="section-tint py-24 sm:py-32">
       <Container>
         <SectionHeading index="01" label="About" title="A bit about me" />
 
@@ -83,6 +83,8 @@ export function About() {
               <img
                 src={profile.photo}
                 alt={profile.name}
+                width={760}
+                height={683}
                 loading="lazy"
                 decoding="async"
                 className="aspect-[4/5] w-full rounded-3xl border border-[var(--color-border)] object-cover"

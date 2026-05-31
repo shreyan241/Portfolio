@@ -192,12 +192,14 @@ export function CatsPolaroid() {
               transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
             >
               <img
-            src={src}
-            onError={onImgError}
-            alt="Amul and Leela, the cats"
-            loading="lazy"
-            decoding="async"
-            draggable={false}
+                src={src}
+                onError={onImgError}
+                alt="Amul and Leela, the cats"
+                width={640}
+                height={386}
+                loading="lazy"
+                decoding="async"
+                draggable={false}
                 className={`block aspect-[4/3] w-full ${
                   errored ? "object-contain p-4" : "object-cover"
                 }`}

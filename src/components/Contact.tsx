@@ -8,7 +8,7 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/mwpewzod";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
-export function Contact() {
+export function Contact({ sectionId = "contact" }: { sectionId?: string }) {
   const [status, setStatus] = useState<Status>("idle");
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -34,7 +34,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="section-tint py-24 sm:py-32">
+    <section id={sectionId} className="section-tint py-24 sm:py-32">
       <Container>
         <SectionHeading
           index="05"

@@ -30,6 +30,8 @@ function ProjectCard({
         <img
           src={project.image}
           alt={project.title}
+          width={900}
+          height={530}
           loading="lazy"
           decoding="async"
           className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.07]"
@@ -95,7 +97,7 @@ function ProjectCard({
   );
 }
 
-export function Projects() {
+export function Projects({ sectionId = "projects" }: { sectionId?: string }) {
   const [filter, setFilter] = useState<string>("All");
   const [demo, setDemo] = useState<Project | null>(null);
 
@@ -114,7 +116,7 @@ export function Projects() {
   );
 
   return (
-    <section id="projects" className="py-24 sm:py-32">
+    <section id={sectionId} className="py-24 sm:py-32">
       <Container>
         <SectionHeading
           index="02"
