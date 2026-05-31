@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 384" width="512" height="384">
+  <!-- Two sitting cats, side by side, filled solid on a transparent
+       background. Used as a graceful fallback source for the ASCII cat
+       portrait when public/images/cats.jpg is absent. Colour here is
+       irrelevant to the final render: the portrait samples this shape's alpha
+       and re-colours the characters from the theme tokens. -->
+  <g fill="#000000" fill-rule="evenodd">
+    <!-- ===== Left cat ===== -->
+    <!-- seated body -->
+    <ellipse cx="156" cy="288" rx="92" ry="86" />
+    <!-- head -->
+    <circle cx="156" cy="166" r="66" />
+    <!-- ears -->
+    <path d="M104 132 L96 56 L160 108 Z" />
+    <path d="M208 132 L216 56 L152 108 Z" />
+    <!-- tail curling round the front -->
+    <path d="M236 332
+             C300 340 300 286 262 280
+             C286 296 270 320 232 312 Z" />
+
+    <!-- ===== Right cat ===== -->
+    <!-- seated body -->
+    <ellipse cx="360" cy="288" rx="92" ry="86" />
+    <!-- head -->
+    <circle cx="360" cy="166" r="66" />
+    <!-- ears -->
+    <path d="M308 132 L300 56 L364 108 Z" />
+    <path d="M412 132 L420 56 L356 108 Z" />
+    <!-- tail curling round the front -->
+    <path d="M276 332
+             C212 340 212 286 250 280
+             C226 296 242 320 280 312 Z" />
+  </g>
+</svg>

@@ -1,674 +1,82 @@
-<!DOCTYPE HTML>
-<!--
-	Prologue by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Shreyan Sood Portfolio</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/themes.css" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="stylesheet" href="assets/css/project-carousel.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-p9U4SF9fHx8Buq1zyl2e4kS62TjGlW0DwhtY1TejH9lV1xB5b1iZDQZ5X4j+v+hyfCZoW8ErkC0g1WE3YzG3AQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-    </head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/Portfolio/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Shreyan Sood - Machine Learning Engineer & Data Scientist based in Austin, TX. Agentic AI systems, large-scale distributed data infrastructure, and causal impact modeling."
+    />
+    <title>Shreyan Sood - ML Engineer & Data Scientist</title>
+
+    <!-- Theme color (warm light / fireside dark) -->
+    <meta
+      name="theme-color"
+      content="#fbf6ec"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#1e1813"
+      media="(prefers-color-scheme: dark)"
+    />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Shreyan Sood - ML Engineer & Data Scientist" />
+    <meta
+      property="og:description"
+      content="Agentic AI systems, large-scale distributed data infrastructure, and causal impact modeling. Currently an Analytics Engineer at Amazon."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://shreyan241.github.io/Portfolio/" />
+    <meta property="og:image" content="https://shreyan241.github.io/Portfolio/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Shreyan Sood - ML Engineer & Data Scientist" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Shreyan Sood - ML Engineer & Data Scientist" />
+    <meta
+      name="twitter:description"
+      content="Agentic AI systems, large-scale distributed data infrastructure, and causal impact modeling. Currently an Analytics Engineer at Amazon."
+    />
+    <meta name="twitter:image" content="https://shreyan241.github.io/Portfolio/og.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SKC784YJPS"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-SKC784YJPS');
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-SKC784YJPS");
     </script>
-
-	<body class="is-preload">
-
-		<!-- Header -->
-			<div id="header">
-
-				<div class="top">
-                        <div id="logo">
-                            <span class="image shreyan_photo">
-                                <img src="images/shreyan_photo.jpg" alt="Shreyan Sood" />
-                            </span>
-                            <h1 id="title">Shreyan Sood</h1>
-                            <p>Austin, TX</p>
-                        </div>
-                        
-
-					<!-- Nav -->
-						<nav id="nav">
-							<ul>
-								<li><a href="#top" id="top-link"><span class="icon solid fa-school">&nbsp;&nbsp;&nbsp;&nbsp;Intro</span></a></li>
-                                <li><a href="#projects" id="projects-link"><span class="icon solid fa-th">&nbsp;&nbsp;&nbsp;&nbsp;Projects</span></a></li>
-                                <li><a href="#experience" id="experience-link"><span class="icon solid fa-briefcase">&nbsp;&nbsp;&nbsp;&nbsp;Experience</span></a></li>
-                                <li><a href="#contact" id="contact-link"><span class="icon solid fa-comments">&nbsp;&nbsp;&nbsp;&nbsp;Contact</span></a></li>
-							</ul>
-						</nav>
-
-				</div>
-
-				<div class="bottom">
-
-					<!-- Theme Toggle -->
-					<div class="theme-toggle-container">
-						<button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
-							<i class="fas fa-moon"></i>
-						</button>
-					</div>
-
-					<!-- Social Icons -->
-						<ul class="icons">
-							<li><a target="_blank" href="Shreyan_Resume.pdf" class="icon"><i class="fas fa-file-download"></i><span class="label">Resume</span></a></li>
-							<li><a target="_blank" href="https://www.linkedin.com/in/shreyan-sood-68aa71127/" class="icon"><i class="fab fa-linkedin-in"></i><span class="label">LinkedIn</span></a></li>
-							<li><a target="_blank" href="https://github.com/shreyan241" class="icon"><i class="fab fa-github"></i><span class="label">Github</span></a></li>
-							<li><a target="_blank" href="mailto:shreyansood@gmail.com" class="icon"><i class="fas fa-envelope"></i><span class="label">Email</span></a></li>
-                        </ul>
-				</div>
-
-			</div>
-
-		<!-- Main -->
-			<div id="main">
-                
-                <!-- Intro -->
-                <section id="top" class="one dark cover" style="position: relative;">
-                    <canvas id="backgroundCanvas"></canvas>
-                    <div class="container">
-                        <header style="margin-top: -50px;">
-                            <h2 class="alt" style="font-family: 'Courier New', Courier, monospace;">
-                                Hi! I'm <strong>Shreyan, <br/></strong> 
-                                <span class="typewriter"></span>
-                            </h2>
-                        </header>
-                    </div>
-                    <div class="background-animation">
-                        <canvas id="meteorCanvas"></canvas>
-                    </div>
-                </section>
-
-                <style>
-                    #projects ul {
-                        text-align: left;
-                        margin-top: 10px;
-                        margin-left: 20px;
-                        font-size: 0.9em; /* Adjust this value to make the font smaller */
-                        line-height: 1.2; /* Optional: Adjusts the line spacing for readability */
-                        color: darkslategray;
-                    }
-                </style>
-                
-                <!-- Projects Section -->
-<section id="projects" class="two">
-    <div class="container">
-        <header>
-            <h2>Projects</h2>
-            <p>A showcase of my research, academic, and personal projects across various fields:</p>
-        </header>
-        <div class="filter-buttons">
-            <button class="filter-btn" data-filter="Reinforcement Learning">Reinforcement Learning</button>
-            <button class="filter-btn" data-filter="Deep Learning">Deep Learning</button>
-            <button class="filter-btn" data-filter="Natural Language Processing">Natural Language Processing</button>
-            <button class="filter-btn" data-filter="Generative AI">Generative AI</button>
-            <button class="filter-btn" data-filter="Interpretable AI">Interpretable AI</button>
-            <button class="filter-btn" data-filter="Machine Learning">Machine Learning</button>
-            <button class="filter-btn" data-filter="Quantitative Finance">Quantitative Finance</button>
-            <button class="filter-btn" data-filter="Time Series Analysis">Time Series Analysis</button>
-            <button class="filter-btn" data-filter="Causal Inference">Causal Inference</button>
-            <button class="filter-btn" data-filter="Computer Vision">Computer Vision</button>
-            <button class="filter-btn" data-filter="Image Processing">Image Processing</button>
-        </div>
-        <div class="carousel-container">
-            <div class="carousel">
-                <!-- Project Item 1 -->
-                <div class="carousel__face" data-tags="Reinforcement Learning, Deep Learning">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <article class="item carousel-project-card">
-                                <a target="_blank" href="https://github.com/shreyan241/RL_rubiks_visualizer" class="image fit">
-                                    <img src="images/rubiks.png" alt="Rubik's Cube Project" />
-                                        <div class="overlay">
-                                            <i class="fas fa-link"></i>
-                                        </div>
-                                </a>
-                                <header>
-                                    <h3>Rubik's Cube Visualizer and RL Solver</h3>
-                                    <button class="demo-btn" data-demo="rubiks">Demo</button>
-                                    <button class="flip-btn">More Info</button>
-                                </header>
-                            </article>
-                        </div>
-                        <div class="card-back">
-                            <!-- Icon for Reinforcement Learning -->
-                            <div class="icon-container">
-                                <i class="fas fa-cubes"></i>
-                            </div>
-                            <ul>
-                                <li style="font-weight: 800;">Developed 3D Rubik's Cube visualizer using Quaternions.</li>
-                                <li style="font-weight: 800;">Implemented MCTS algorithm with a Deep RL network.</li>
-                                <li style="font-weight: 800;">Solved 71% of 9-scramble cubes, averaging less than 1 second per cube.</li>
-                            </ul>
-                            <button class="unflip-btn">Back</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project Item 2 -->
-                <div class="carousel__face" data-tags="Natural Language Processing, Generative AI">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <article class="item carousel-project-card">
-                                <a target="_blank" href="https://github.com/shreyan241/gpt-grammar-corrector" class="image fit">
-                                    <img src="images/grammar-gui.png" alt="GPT Grammar Corrector" />
-                                    <div class="overlay">
-                                        <i class="fas fa-link"></i>
-                                    </div>
-                                </a>
-                                <header>
-                                    <h3>GPT Document Proofreader App</h3>
-                                    <button class="demo-btn" data-demo="grammar">Demo</button>
-                                    <button class="flip-btn">More Info</button>
-                                </header>
-                            </article>
-                        </div>
-                        <div class="card-back">
-                            <!-- Icon for Natural Language Processing -->
-                            <div class="icon-container">
-                                <i class="fas fa-spell-check"></i>
-                            </div>
-                            <ul>
-                                <li style="font-weight: 800;">Customizable prompts with English language variant support.</li>
-                                <li style="font-weight: 800;">Real-time async text processing with GPT-4o.</li>
-                                <li style="font-weight: 800;">Efficient context window management for handling large documents.</li>
-                            </ul>
-                            <button class="unflip-btn">Back</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project Item 3 -->
-                <div class="carousel__face" data-tags="Quantitative Finance, Time Series Analysis">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <article class="item carousel-project-card">
-                                <a target="_blank" href="https://quant-mini-project.streamlit.app/" class="image fit">
-                                    <img src="images/newplot.png" alt="Quant Mini Project" style="height: 300px" />
-                                    <div class="overlay">
-                                        <i class="fas fa-link"></i>
-                                    </div>
-                                </a>
-                                <header>
-                                    <h3>Volume Breakout Trading Algorithm</h3>
-                                    <button class="demo-btn" data-demo="quant">Demo</button>
-                                    <button class="flip-btn">More Info</button>
-                                </header>
-                            </article>
-                        </div>
-                        <div class="card-back">
-                            <!-- Icon for Quantitative Analysis -->
-                            <div class="icon-container">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <ul>
-                                <li style="font-weight: 800;">Real-time volume breakout scanner with YFinance data integration.</li>
-                                <li style="font-weight: 800;">Interactive Plotly charts with volume analysis.</li>
-                                <li style="font-weight: 800;">Developed Streamlit dashboard with customizable strategy parameters.</li>
-                            </ul>
-                            <button class="unflip-btn">Back</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Project Item 4 -->
-                <div class="carousel__face" data-tags="Natural Language Processing, Deep Learning, Generative AI">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <article class="item carousel-project-card">
-                                <a target="_blank" href="https://huggingface.co/Medilora/Medilora-Mistral-7B/tree/main" class="image fit">
-                                    <img src="images/fine-tune-loss.png" alt="MediLoRA Project" />
-                                    <div class="overlay">
-                                        <i class="fas fa-link"></i>
-                                    </div>
-                                </a>
-                                <header>
-                                    <h3>MediLoRA: Mistral-7B fine-tuned for Medical Q&A with QLoRA</h3>
-                                    <button class="flip-btn">More Info</button>
-                                </header>
-                            </article>
-                        </div>
-                        <div class="card-back">
-                            <!-- Icon for Medical AI -->
-                            <div class="icon-container">
-                                <i class="fas fa-stethoscope"></i>
-                            </div>
-                            <ul>
-                                <li style="font-weight: 800;">Boosted PubMedQA and MedQA accuracy by 20%+.</li>
-                                <li style="font-weight: 800;">Matched SOTA on MMLU-Medical using minimal data.</li>
-                                <li style="font-weight: 800;">Demonstrated efficient fine-tuning with QLoRA technique.</li>
-                            </ul>
-                            <button class="unflip-btn">Back</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project Item 5 -->
-                <div class="carousel__face" data-tags="Computer Vision, Deep Learning, Generative AI">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <article class="item carousel-project-card">
-                                <a target="_blank" href="https://github.com/shreyan241/image-outpainting-sagan" class="image fit">
-                                    <img src="images/SAGAN_final.png" alt="Image Outpainting Project" />
-                                    <div class="overlay">
-                                        <i class="fas fa-link"></i>
-                                    </div>
-                                </a>
-                                <header>
-                                    <h3>Image Outpainting with Self-Attention GAN</h3>
-                                    <button class="flip-btn">More Info</button>
-                                </header>
-                            </article>
-                        </div>
-                        <div class="card-back">
-                            <!-- Icon for Generative Adversarial Networks -->
-                            <div class="icon-container">
-                                <i class="fas fa-paint-brush"></i>
-                            </div>
-                            <ul>
-                                <li style="font-weight: 800;">Implemented Self-Attention GAN from scratch.</li>
-                                <li style="font-weight: 800;">Reduced Reconstruction Loss by 3%.</li>
-                                <li style="font-weight: 800;">Improved Discriminator Loss by 2%.</li>
-                            </ul>
-                            <button class="unflip-btn">Back</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project Item 6 -->
-                <div class="carousel__face" data-tags="Interpretable AI, Machine Learning">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <article class="item carousel-project-card">
-                                <a target="_blank" href="https://github.com/shreyan241/DSC-261-FINAL" class="image fit">
-                                    <img src="images/foolinglimeshap.png" alt="Unfooling LIME and SHAP" />
-                                    <div class="overlay">
-                                        <i class="fas fa-link"></i>
-                                    </div>
-                                </a>
-                                <header>
-                                    <h3>Unfooling LIME and SHAP with superior sampling</h3>
-                                    <button class="flip-btn">More Info</button>
-                                </header>
-                            </article>
-                        </div>
-                        <div class="card-back">
-                            <!-- Icon for Interpretable AI -->
-                            <div class="icon-container">
-                                <i class="fas fa-lock"></i>
-                            </div>
-                            <ul>
-                                <li style="font-weight: 800;">Counteracted adversarial attacks on explainability techniques.</li>
-                                <li style="font-weight: 800;">Superior sampling using Tree Ensembles and RBF Generators.</li>
-                                <li style="font-weight: 800;">Robust sampling using Variational Auto Encoders and CT-GANs.</li>
-                            </ul>
-                            <button class="unflip-btn">Back</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project Item 7 -->
-                <div class="carousel__face" data-tags="Machine Learning, Quantitative Finance, Time Series Analysis">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <article class="item carousel-project-card">
-                                <a target="_blank" href="https://link.springer.com/chapter/10.1007/978-981-19-6631-6_34" class="image fit">
-                                    <img src="images/lstm.png" alt="Black–Scholes Option Pricing" />
-                                    <div class="overlay">
-                                        <i class="fas fa-link"></i>
-                                    </div>
-                                </a>
-                                <header>
-                                    <h3>Black–Scholes Option Pricing Using Machine Learning</h3>
-                                    <button class="flip-btn">More Info</button>
-                                </header>
-                            </article>
-                        </div>
-                        <div class="card-back">
-                            <!-- Icon for Quantitative Finance -->
-                            <div class="icon-container">
-                                <i class="fas fa-calculator"></i>
-                            </div>
-                            <ul>
-                                <li style="font-weight: 800;">Outperformed the Black–Scholes Model using MLP and LSTM.</li>
-                                <li style="font-weight: 800;">Also implemented XGBoost and SVM for comparison.</li>
-                                <li style="font-weight: 800;">Published in the Proceedings of ICDSA 2022.</li>
-                            </ul>
-                            <button class="unflip-btn">Back</button>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- Project Item 8 -->
-                <div class="carousel__face" data-tags="Time Series Analysis, Causal Inference">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <article class="item carousel-project-card">
-                                <a target="_blank" href="https://drive.google.com/file/d/1rcIzcATkgwsguCx66nUQF98aj6xKxwmk/view?usp=sharing" class="image fit">
-                                    <img src="images/PCMCI_1.png" alt="Causal Discovery" />
-                                    <div class="overlay">
-                                        <i class="fas fa-link"></i>
-                                    </div>
-                                </a>
-                                <header>
-                                    <h3>Causal Discovery in Lagged Time Series</h3>
-                                    <button class="flip-btn">More Info</button>
-                                </header>
-                            </article>
-                        </div>
-                        <div class="card-back">
-                            <!-- Icon for Causal Inference -->
-                            <div class="icon-container">
-                                <i class="fas fa-sitemap"></i>
-                            </div>
-                            <ul>
-                                <li style="font-weight: 800;">Evaluated PCMCI and FullCI algorithms for causal link detection.</li>
-                                <li style="font-weight: 800;">Demonstrated PCMCI's effectiveness in high-dimensional data.</li>
-                                <li style="font-weight: 800;">Showed PCMCI's robustness against extraneous variables.</li>
-                            </ul>
-                            <button class="unflip-btn">Back</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project Item 9 -->
-                <div class="carousel__face" data-tags="Computer Vision, Image Processing, Deep Learning">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <article class="item carousel-project-card">
-                                <a target="_blank" href="https://ieeexplore.ieee.org/document/9591673" class="image fit" style="display: flex; justify-content: center;">
-                                    <img src="images/stsiva.png" alt="Selective Lossy Compression" style="width: 70%;" />
-                                    <div class="overlay">
-                                        <i class="fas fa-link"></i>
-                                    </div>
-                                </a>
-                                <header>
-                                    <h3>Selective Lossy Image Compression for Autonomous Systems</h3>
-                                    <button class="flip-btn">More Info</button>
-                                </header>
-                            </article>
-                        </div>
-                        <div class="card-back">
-                            <!-- Icon for Image Processing -->
-                            <div class="icon-container">
-                                <i class="fas fa-image"></i>
-                            </div>
-                            <ul>
-                                <li style="font-weight: 800;">Self-devised algorithms for K-Means, Genetic Algorithm, and DCT.</li>
-                                <li style="font-weight: 800;">Integrated SOTA CNN-based models - CenterNet and Faster R-CNN.</li>
-                                <li style="font-weight: 800;">Presented in STSIVA 2021.</li>
-                            </ul>
-                            <button class="unflip-btn">Back</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-                <!-- ----------------------------------------------------------- -->
-                <section id="experience" class="three">
-                    <div class="container">
-                        <header>
-                            <h2>Experience</h2>
-                            <p class="experience-intro">
-                                From research labs to dynamic tech startups, I've transformed data into insights and ideas into solutions. 
-                                Explore my professional journey and discover the experience I've gained at the intersection of technology and real-world challenges.
-                            </p>
-                        </header>
-
-                        <div class="timeline-horizontal">
-                            <!-- Experience Item 1 - Amazon -->
-                            <div class="timeline-card">
-                                <div class="card-content">
-                                    <img src="images/amazon_logo2.png" alt="Amazon Logo" class="company-logo">
-                                    <h3>Business Intelligence Engineer</h3>
-                                    <h4>Amazon, Austin, Texas</h4>
-                                    <p>June – Present</p>
-                                    <div class="flip-icon">
-                                        <i class="fas fa-chart-bar"></i> 
-                                    </div>
-                                </div>
-                                <div class="year-label">2025</div>
-                                <div class="card-back">
-                                    <ul>
-                                        <li style="font-weight: 800;">Built Redshift ETL pipelines processing terabytes of customer data daily.</li>
-                                        <li style="font-weight: 800;">Developed QuickSight dashboards and SQL queries for leadership BI metrics.</li>
-                                    </ul>
-                                    <div class="unflip-icon">
-                                        <i class="fas fa-undo-alt"></i> <!-- Unflip Icon -->
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Experience Item 2 - Prompt Inversion -->
-                            <div class="timeline-card">
-                                <div class="card-content">
-                                    <img src="images/PI_logo.jpeg" alt="PI Logo" class="company-logo">
-                                    <h3>Machine Learning Engineer</h3>
-                                    <h4>Prompt Inversion, Dover, Delaware</h4>
-                                    <p>September – December</p>
-                                    <div class="flip-icon">
-                                        <i class="fas fa-robot"></i> 
-                                    </div>
-                                </div>
-                                <div class="year-label">2024</div>
-                                <div class="card-back">
-                                    <ul>
-                                        <li style="font-weight: 800;">Developing LLM-powered API for intelligent task automation.</li>
-                                        <li style="font-weight: 800;">Optimizing codebase for scalability and efficiency.</li>
-                                        <li style="font-weight: 800;">Building a modern web platform using Next.js, React and TypeScript.</li>
-                                    </ul>
-                                    <div class="unflip-icon">
-                                        <i class="fas fa-undo-alt"></i> <!-- Unflip Icon -->
-                                    </div>
-                                </div>
-                            </div>
-                
-                            <!-- Experience Item 3 - FICO -->
-                            <div class="timeline-card">
-                                <div class="card-content">
-                                    <img src="images/FICO.jpeg" alt="FICO Logo" class="company-logo" />
-                                    <h3>Analytical Scientist Intern</h3>
-                                    <h4>FICO, San Diego, California</h4>
-                                    <p>June – December</p>
-                                    <div class="flip-icon">
-                                        <i class="fas fa-shield-alt"></i> <!-- FICO Icon -->
-                                    </div>
-                                </div>
-                                <div class="year-label">2023</div>
-                                <div class="card-back">
-                                    <ul>
-                                        <li style="font-weight: 800;">Fraud Detection Neural Networks.</li>
-                                        <li style="font-weight: 800;">Adaptive Time Series Algorithm.</li>
-                                        <li style="font-weight: 800;">Real Time Monitoring System.</li>
-                                        <li style="font-weight: 800;">Terabyte-scale Datasets.</li>
-                                        <li style="font-weight: 800;">Data Simulations and Fraud Schemes.</li>
-                                    </ul>
-                                    <div class="unflip-icon">
-                                        <i class="fas fa-undo-alt"></i> <!-- Unflip Icon -->
-                                    </div>
-                                </div>
-                            </div>
-                
-                            <!-- Experience Item 4 - Collablens -->
-                            <div class="timeline-card">
-                                <div class="card-content">
-                                    <img src="images/Collablens.jpeg" alt="Collablens Logo" class="company-logo" />
-                                    <h3>Research Engineer</h3>
-                                    <h4>Collablens, Haryana, India</h4>
-                                    <p>February – August</p>
-                                    <div class="flip-icon">
-                                        <i class="fas fa-camera"></i> <!-- Factory Icon -->
-                                    </div>
-                                </div>
-                                <div class="year-label">2022</div>
-                                <div class="card-back">
-                                    <ul>
-                                        <li style="font-weight: 800;">AI station for automating drop tests.</li>
-                                        <li style="font-weight: 800;">Contract to deploy in 50 factories.</li>
-                                        <li style="font-weight: 800;">Computer Vision System for defect detection.</li>
-                                        <li style="font-weight: 800;">$200,000 in investments.</li>
-                                    </ul>
-                                    <div class="unflip-icon">
-                                        <i class="fas fa-undo-alt"></i> <!-- Unflip Icon -->
-                                    </div>
-                                </div>
-                            </div>
-                
-                            <!-- Experience Item 5 - Hypertechpreneurs -->
-                            <div class="timeline-card">
-                                <div class="card-content">
-                                    <img src="images/hypertech.jpeg" alt="Hypertechpreneurs Logo" class="company-logo" />
-                                    <h3>Machine Learning Intern</h3>
-                                    <h4>Hypertechpreneurs, Haryana, India</h4>
-                                    <p>May – December</p>
-                                    <div class="flip-icon">
-                                        <i class="fas fa-car-crash"></i> <!-- Car Icon -->
-                                    </div>
-                                </div>
-                                <div class="year-label">2021</div>
-                                <div class="card-back">
-                                    <ul>
-                                        <li style="font-weight: 800;">Vehicle Damage Detection Model.</li>
-                                        <li style="font-weight: 800;">Integration with mobile app and website.</li>
-                                        <li style="font-weight: 800;">OCR and Document Analysis.</li>
-                                        <li style="font-weight: 800;">$50,000 in investments.</li>
-                                    </ul>
-                                    <div class="unflip-icon">
-                                        <i class="fas fa-undo-alt"></i> <!-- Unflip Icon -->
-                                    </div>
-                                </div>
-                            </div>
-                
-                            <!-- Experience Item 6 - DTU Lead Research Fellow -->
-                            <div class="timeline-card">
-                                <div class="card-content">
-                                    <img src="images/dtu.png" alt="DTU Logo" class="company-logo" />
-                                    <h3>Lead Research Fellow</h3>
-                                    <h4>Delhi Technological University</h4>
-                                    <p>September – May</p>
-                                    <div class="flip-icon">
-                                        <i class="fas fa-chart-line"></i> <!-- Professor Icon -->
-                                    </div>
-                                </div>
-                                <div class="year-label">2021</div>
-                                <div class="card-back">
-                                    <ul>
-                                        <li style="font-weight: 800;">Option pricing using LSTM.</li>
-                                        <li style="font-weight: 800;">Outperformed the Black–Scholes Model.</li>
-                                        <li style="font-weight: 800;">Published research in the Proceedings of ICDSA 2022.</li>
-                                    </ul>
-                                    <div class="unflip-icon">
-                                        <i class="fas fa-undo-alt"></i> <!-- Unflip Icon -->
-                                    </div>
-                                </div>
-                            </div>
-                
-                            <!-- Experience Item 7 - DTU Research Assistant -->
-                            <div class="timeline-card">
-                                <div class="card-content">
-                                    <img src="images/dtu.png" alt="DTU Logo" class="company-logo" />
-                                    <h3>Research Assistant</h3>
-                                    <h4>Delhi Technological University</h4>
-                                    <p>February – August</p>
-                                    <div class="flip-icon">
-                                        <i class="fas fa-file-archive"></i> <!-- Professor Icon -->
-                                    </div>
-                                </div>
-                                <div class="year-label">2021</div>
-                                <div class="card-back">
-                                    <ul>
-                                        <li style="font-weight: 800;">Selective Lossy Image Compression.</li>
-                                        <li style="font-weight: 800;">CNN-based Object Detection.</li>
-                                        <li style="font-weight: 800;">Published research at STSIVA 2021.</li>
-                                    </ul>
-                                    <div class="unflip-icon">
-                                        <i class="fas fa-undo-alt"></i> <!-- Unflip Icon -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                
-                <section id="contact" class="four">
-                    <div class="container">
-                        <header>
-                            <h2>Contact</h2>
-                            <p>For any inquiries, drop me a message using the form below, and I'll get back to you shortly!</p>
-                        </header>
-
-                        <form method="post" action="https://formspree.io/f/mwpewzod">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="name">
-                                        <i class="fas fa-user"></i>
-                                        <span>Name</span>
-                                    </label>
-                                    <input type="text" id="name" name="name" placeholder="Your Name" required />
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">
-                                        <i class="fas fa-envelope"></i>
-                                        <span>Email</span>
-                                    </label>
-                                    <input type="email" id="email" name="email" placeholder="Your Email" required />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="message">
-                                    <i class="fas fa-comment-dots"></i>
-                                    <span>Message</span>
-                                </label>
-                                <textarea id="message" name="message" placeholder="Your Message" required></textarea>
-                            </div>
-                            <button type="submit" class="btn-submit">
-                                <i class="fas fa-paper-plane"></i>
-                                Send Message
-                            </button>
-                        </form>
-                    </div>
-                </section>
-			</div>
-        
-		<!-- Footer -->
-			
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-					<script src="assets/js/main.js"></script>
-		<script src="assets/js/theme-switcher.js"></script>
-		<script src="assets/js/regression_snake.js"></script>
-		<script src="assets/js/meteor_canvas.js"></script>
-		<script src="assets/js/3d_carousel.js"></script>
-		<script src="assets/js/typewriter_effect.js"></script>
-
-        <!-- Modal Structure -->
-        <div id="demoModal" class="modal">
-            <div class="modal-content">
-                <span class="close-btn">&times;</span>
-                <img id="demoGifInModal" src="" alt="Demo GIF" class="modal-gif">
-            </div>
-        </div>
->
-
-	</body>
+    <script>
+      // Apply theme before paint to avoid a flash of the wrong theme.
+      (function () {
+        try {
+          var stored = localStorage.getItem("portfolio-theme");
+          var prefersLight = window.matchMedia(
+            "(prefers-color-scheme: light)"
+          ).matches;
+          var theme = stored || (prefersLight ? "light" : "dark");
+          if (theme === "dark") document.documentElement.classList.add("dark");
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

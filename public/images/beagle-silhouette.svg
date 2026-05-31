@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Side-profile sitting beagle/hound silhouette, facing left.
+       Filled solid black on a transparent background. Used as a graceful
+       fallback source for the particle portrait when public/images/beagle.jpg
+       is absent. Colour here is irrelevant to the final render: the portrait
+       samples this shape's alpha and re-colours dots from the theme tokens. -->
+  <g fill="#000000" fill-rule="evenodd">
+    <!-- rear haunch / seated body -->
+    <ellipse cx="338" cy="352" rx="126" ry="142" />
+    <!-- front chest column down to the paws -->
+    <path d="M252 206
+             C234 212 224 234 224 272
+             L224 432
+             C224 456 240 468 264 468
+             L302 468
+             C322 468 332 452 332 430
+             L332 272
+             C332 234 322 212 302 206
+             Z" />
+    <!-- front paws spread forward -->
+    <ellipse cx="244" cy="466" rx="64" ry="20" />
+    <!-- neck bridging chest and head -->
+    <path d="M244 240
+             C238 196 250 158 292 152
+             L304 210
+             C304 232 292 240 270 240
+             Z" />
+    <!-- domed skull -->
+    <circle cx="190" cy="150" r="72" />
+    <!-- muzzle / snout -->
+    <ellipse cx="112" cy="182" rx="72" ry="39" />
+    <!-- nose tip -->
+    <circle cx="50" cy="180" r="13" />
+    <!-- long droopy hound ear hanging over the cheek -->
+    <ellipse cx="152" cy="222" rx="39" ry="104" transform="rotate(9 152 222)" />
+    <!-- tail flicking up behind -->
+    <path d="M444 366
+             C486 336 492 282 474 258
+             C470 292 452 326 424 348
+             Z" />
+  </g>
+</svg>
