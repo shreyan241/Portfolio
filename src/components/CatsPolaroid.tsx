@@ -90,9 +90,30 @@ export function CatsPolaroid() {
     }
   };
 
-  const onTap = () => {
+  // Mouse click: only on hover-capable devices, so the synthetic click that
+  // follows a tap doesn't double-fire the burst (touch is handled below).
+  const onClick = () => {
+    if (reduced || !canHover()) return;
+    spawn(7);
+  };
+
+  // Touch: emit the burst and a brief press-tilt toward the touch point that
+  // cleanly resets on release/cancel, so it feels alive and never sticks.
+  const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     if (reduced) return;
     spawn(7);
+    const t = e.touches[0];
+    if (!t || !ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const px = (t.clientX - rect.left) / rect.width - 0.5;
+    const py = (t.clientY - rect.top) / rect.height - 0.5;
+    rotateY.set(px * MAX_TILT);
+    rotateX.set(-py * MAX_TILT);
+  };
+
+  const onTouchEnd = () => {
+    rotateX.set(0);
+    rotateY.set(0);
   };
 
   const onImgError = () => {
@@ -123,7 +144,10 @@ export function CatsPolaroid() {
           onMouseMove={handleMove}
           onMouseEnter={onEnter}
           onMouseLeave={onLeave}
-          onClick={onTap}
+          onClick={onClick}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+          onTouchCancel={onTouchEnd}
           whileHover={reduced ? undefined : { scale: 1.03 }}
           style={{
             rotateX,

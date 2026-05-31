@@ -45,6 +45,13 @@ function Magnetic({ children }: { children: ReactNode }) {
   );
 }
 
+// Longest phrase drives the reserved height of the typewriter line so the
+// hero never reflows as text types/deletes/wraps.
+const longestPhrase = [...profile.typewriter].reduce(
+  (a, b) => (b.length > a.length ? b : a),
+  ""
+);
+
 export function Hero() {
   const { text: typed, mistakeIndex } = useTypewriter([...profile.typewriter]);
 
@@ -106,14 +113,23 @@ export function Hero() {
               <span className="wave" aria-hidden="true">
                 👋
               </span>
-              <br />
-              <span className="text-gradient">
-                {mistakeIndex == null ? typed : typed.slice(0, mistakeIndex)}
-                {mistakeIndex != null && (
-                  <span className="typo-error">{typed.slice(mistakeIndex)}</span>
-                )}
-                <span className="ml-1 inline-block w-[2px] animate-pulse self-stretch bg-[var(--color-accent)] align-middle text-transparent">
-                  |
+              {/* Reserve stable height for the typewriter line: an invisible
+                  sizer of the longest phrase fixes the height, while the live
+                  text is overlaid absolutely so the hero never reflows. */}
+              <span className="relative block">
+                <span aria-hidden="true" className="invisible">
+                  {longestPhrase}&nbsp;
+                </span>
+                <span className="absolute inset-0 text-gradient">
+                  {mistakeIndex == null ? typed : typed.slice(0, mistakeIndex)}
+                  {mistakeIndex != null && (
+                    <span className="typo-error">
+                      {typed.slice(mistakeIndex)}
+                    </span>
+                  )}
+                  <span className="ml-1 inline-block w-[2px] animate-pulse self-stretch bg-[var(--color-accent)] align-middle text-transparent">
+                    |
+                  </span>
                 </span>
               </span>
             </motion.h1>

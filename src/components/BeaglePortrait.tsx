@@ -82,8 +82,10 @@ export function BeaglePortrait() {
 
     const layout = () => {
       if (!sampled.length || !width || !height) return;
-      const pad = 0.84;
-      const scale = Math.min((width * pad) / sw, (height * pad) / sh);
+      // Cover-fit: fill the box on the constraining axis and center, so the
+      // portrait reads large and centered at every viewport size (a landscape
+      // photo in a square box would otherwise float small with big margins).
+      const scale = Math.max(width / sw, height / sh);
       const ox = (width - sw * scale) / 2;
       const oy = (height - sh * scale) / 2;
       r0 = Math.max((SAMPLE_STEP * scale) / 2, 0.6);
@@ -250,8 +252,17 @@ export function BeaglePortrait() {
     const resize = () => {
       const parent = canvas.parentElement;
       if (!parent) return;
-      width = parent.clientWidth;
-      height = parent.clientHeight;
+      const w = parent.clientWidth;
+      const h = parent.clientHeight;
+      // Guard against a transient 0 measurement (e.g. before an aspect-ratio
+      // box has resolved its height); retry next frame so we never lock in a
+      // tiny/mis-scaled canvas.
+      if (!w || !h) {
+        requestAnimationFrame(resize);
+        return;
+      }
+      width = w;
+      height = h;
       canvas.width = Math.max(1, Math.round(width * dpr));
       canvas.height = Math.max(1, Math.round(height * dpr));
       canvas.style.width = `${width}px`;
