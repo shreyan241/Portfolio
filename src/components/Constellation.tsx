@@ -46,7 +46,12 @@ export function Constellation() {
       canvas.style.height = `${height}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      const density = Math.min(Math.floor((width * height) / 18000), 76);
+      // Fewer nodes on phones — the node-pair loop is O(n²), so keep it light.
+      const isMobile = window.matchMedia("(max-width: 640px)").matches;
+      const density = Math.min(
+        Math.floor((width * height) / (isMobile ? 30000 : 18000)),
+        isMobile ? 26 : 76
+      );
       nodes = Array.from({ length: density }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,

@@ -24,8 +24,11 @@ type Particle = {
 
 type Sample = { sx: number; sy: number; L: number };
 
-const SAMPLE_LONG = 190; // long-side resolution of the offscreen sampling canvas
-const SAMPLE_STEP = 3; // grid step in sampled space
+// Hard cap on the offscreen sampling resolution: we ALWAYS draw the source
+// image into a tiny buffer (<= this on the long side) and sample from that, so
+// the pixel loop is cheap regardless of the source image's real dimensions.
+const SAMPLE_LONG = 150;
+const SAMPLE_STEP = 3; // grid step in sampled space (desktop)
 const MAX_PARTICLES = 6000;
 const POINTER_RADIUS = 110; // px around the pointer that gets disturbed
 
@@ -49,10 +52,20 @@ export function BeaglePortrait() {
 
     const reduced = prefersReducedMotion();
 
+    // Lighter on phones: coarser sampling grid + fewer particles so the array
+    // build and per-frame draw stay cheap on mobile CPUs.
+    const isMobile = window.matchMedia("(max-width: 640px)").matches;
+    const sampleStep = isMobile ? 4 : SAMPLE_STEP;
+    const maxParticles = isMobile ? 2600 : MAX_PARTICLES;
+
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let width = 0;
     let height = 0;
     let raf = 0;
+    let resizeRaf = 0;
+    let resizeRetries = 0;
+    let kickoffRaf = 0;
+    let idleId = 0;
     let running = true;
     let dark = isDarkTheme();
     let silhouette = false;
@@ -88,7 +101,7 @@ export function BeaglePortrait() {
       const scale = Math.max(width / sw, height / sh);
       const ox = (width - sw * scale) / 2;
       const oy = (height - sh * scale) / 2;
-      r0 = Math.max((SAMPLE_STEP * scale) / 2, 0.6);
+      r0 = Math.max((sampleStep * scale) / 2, 0.6);
       particles = sampled.map((s) => {
         const hx = ox + s.sx * scale;
         const hy = oy + s.sy * scale;
@@ -211,8 +224,8 @@ export function BeaglePortrait() {
       }
 
       const next: Sample[] = [];
-      for (let y = 0; y < sh; y += SAMPLE_STEP) {
-        for (let x = 0; x < sw; x += SAMPLE_STEP) {
+      for (let y = 0; y < sh; y += sampleStep) {
+        for (let x = 0; x < sw; x += sampleStep) {
           const i = (y * sw + x) * 4;
           const a = data[i + 3] / 255;
           if (a < 0.4) continue;
@@ -224,8 +237,8 @@ export function BeaglePortrait() {
       }
 
       // safety cap: thin out evenly if a dense photo overshoots the budget
-      if (next.length > MAX_PARTICLES) {
-        const keep = MAX_PARTICLES / next.length;
+      if (next.length > maxParticles) {
+        const keep = maxParticles / next.length;
         sampled = next.filter((_, idx) => (idx * keep) % 1 < keep);
       } else {
         sampled = next;
@@ -235,11 +248,21 @@ export function BeaglePortrait() {
       if (reduced) drawStatic();
     };
 
+    // Run a callback when the main thread is idle (so the heavy-ish sampling
+    // never blocks first paint or the typewriter), with a setTimeout fallback.
+    const idle = (cb: () => void) => {
+      if (typeof window.requestIdleCallback === "function") {
+        idleId = window.requestIdleCallback(cb, { timeout: 800 });
+      } else {
+        idleId = window.setTimeout(cb, 200);
+      }
+    };
+
     let triedFallback = false;
     const loadImage = (src: string, isSil: boolean) => {
       const image = new Image();
-      image.decoding = "async";
-      image.onload = () => buildSamples(image, isSil);
+      image.decoding = "async"; // decode off the main thread
+      image.onload = () => idle(() => buildSamples(image, isSil));
       image.onerror = () => {
         if (!triedFallback) {
           triedFallback = true;
@@ -256,11 +279,15 @@ export function BeaglePortrait() {
       const h = parent.clientHeight;
       // Guard against a transient 0 measurement (e.g. before an aspect-ratio
       // box has resolved its height); retry next frame so we never lock in a
-      // tiny/mis-scaled canvas.
+      // tiny/mis-scaled canvas. Bounded so it can't spin forever.
       if (!w || !h) {
-        requestAnimationFrame(resize);
+        if (resizeRetries < 90) {
+          resizeRetries++;
+          resizeRaf = requestAnimationFrame(resize);
+        }
         return;
       }
+      resizeRetries = 0;
       width = w;
       height = h;
       canvas.width = Math.max(1, Math.round(width * dpr));
@@ -316,12 +343,25 @@ export function BeaglePortrait() {
     window.addEventListener("touchend", onLeave, { passive: true });
     canvas.addEventListener("mouseleave", onLeave);
 
-    loadImage(asset("images/beagle.webp"), false);
+    // Kick off the (capped, downscaled) sampling AFTER first paint so the hero
+    // text and typewriter render/animate immediately — never gated on this.
+    kickoffRaf = requestAnimationFrame(() => {
+      loadImage(asset("images/beagle.webp"), false);
+    });
 
     if (!reduced) loop();
 
     return () => {
       cancelAnimationFrame(raf);
+      cancelAnimationFrame(resizeRaf);
+      cancelAnimationFrame(kickoffRaf);
+      if (idleId) {
+        if (typeof window.cancelIdleCallback === "function") {
+          window.cancelIdleCallback(idleId);
+        } else {
+          clearTimeout(idleId);
+        }
+      }
       io.disconnect();
       ro.disconnect();
       themeObserver.disconnect();
